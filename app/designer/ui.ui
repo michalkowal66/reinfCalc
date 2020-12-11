@@ -1334,7 +1334,7 @@
        <widget class="QLineEdit" name="f_fwidth_lineEdit">
         <property name="geometry">
          <rect>
-          <x>110</x>
+          <x>250</x>
           <y>280</y>
           <width>50</width>
           <height>20</height>
@@ -1440,7 +1440,7 @@
        <widget class="QLabel" name="f_fwidth_label">
         <property name="geometry">
          <rect>
-          <x>30</x>
+          <x>170</x>
           <y>280</y>
           <width>91</width>
           <height>21</height>
@@ -1453,7 +1453,7 @@
        <widget class="QLabel" name="f_flength_label">
         <property name="geometry">
          <rect>
-          <x>170</x>
+          <x>310</x>
           <y>280</y>
           <width>91</width>
           <height>21</height>
@@ -1466,7 +1466,7 @@
        <widget class="QLineEdit" name="f_flength_lineEdit">
         <property name="geometry">
          <rect>
-          <x>250</x>
+          <x>390</x>
           <y>280</y>
           <width>50</width>
           <height>20</height>
@@ -1586,7 +1586,7 @@
        <widget class="QLineEdit" name="f_fheight_lineEdit">
         <property name="geometry">
          <rect>
-          <x>390</x>
+          <x>110</x>
           <y>280</y>
           <width>50</width>
           <height>20</height>
@@ -1596,7 +1596,7 @@
        <widget class="QLabel" name="f_fheight_label">
         <property name="geometry">
          <rect>
-          <x>310</x>
+          <x>30</x>
           <y>280</y>
           <width>91</width>
           <height>21</height>
