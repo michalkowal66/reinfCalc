@@ -1,0 +1,1 @@
+pyuic5.exe ../designer/main_temp.ui -o ../templates/main_temp.py -x

@@ -1,0 +1,1 @@
+pyuic5.exe ../designer/welcome_temp.ui -o ../templates/welcome_temp.py -x

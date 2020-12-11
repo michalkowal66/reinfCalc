@@ -1,0 +1,1 @@
+pyuic5.exe ../designer/ui.ui -o ../templates/ui.py -x
