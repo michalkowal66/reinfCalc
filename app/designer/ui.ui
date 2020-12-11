@@ -29,7 +29,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Reinforcement Calculator</string>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -53,7 +53,7 @@
     <property name="currentIndex">
      <number>0</number>
     </property>
-    <widget class="QWidget" name="page">
+    <widget class="QWidget" name="welcome_page">
      <widget class="QLabel" name="info_lbl">
       <property name="geometry">
        <rect>
@@ -203,11 +203,11 @@
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="page_2">
+    <widget class="QWidget" name="main_page">
      <property name="styleSheet">
       <string notr="true">font: 12px &quot;MS Shell Dlg 2&quot;;</string>
      </property>
-     <widget class="QTabWidget" name="Tab_widget">
+     <widget class="QTabWidget" name="elements_tabs">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -1644,7 +1644,7 @@
        </widget>
       </widget>
      </widget>
-     <widget class="QFrame" name="frame">
+     <widget class="QFrame" name="result_frame">
       <property name="geometry">
        <rect>
         <x>500</x>
@@ -1748,8 +1748,26 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>800</width>
+     <height>25</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>800</width>
+     <height>25</height>
+    </size>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
@@ -1761,7 +1779,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="separator"/>
     <addaction name="actionrec_opened_file"/>
     <addaction name="separator"/>
-    <addaction name="actionclose"/>
+    <addaction name="actionClose"/>
    </widget>
    <widget class="QMenu" name="menuResources">
     <property name="title">
@@ -1797,12 +1815,63 @@ p, li { white-space: pre-wrap; }
     <string>rec_opened.file</string>
    </property>
   </action>
-  <action name="actionclose">
+  <action name="actionClose">
    <property name="text">
     <string>Close</string>
    </property>
   </action>
  </widget>
+ <tabstops>
+  <tabstop>recently_opened_list</tabstop>
+  <tabstop>plate_btn</tabstop>
+  <tabstop>beam_btn</tabstop>
+  <tabstop>column_btn</tabstop>
+  <tabstop>foot_btn</tabstop>
+  <tabstop>elements_tabs</tabstop>
+  <tabstop>p_exp_combo</tabstop>
+  <tabstop>p_concr_class_combo</tabstop>
+  <tabstop>p_concr_cover_lineEdit</tabstop>
+  <tabstop>p_steel_class_combo</tabstop>
+  <tabstop>p_bar_diam_combo</tabstop>
+  <tabstop>p_th_lineEdit</tabstop>
+  <tabstop>p_moment_lineEdit</tabstop>
+  <tabstop>b_exp_combo</tabstop>
+  <tabstop>b_concr_class_combo</tabstop>
+  <tabstop>b_concr_cover_lineEdit</tabstop>
+  <tabstop>b_steel_class_combo</tabstop>
+  <tabstop>b_bar_diam_combo</tabstop>
+  <tabstop>b_height_lineEdit</tabstop>
+  <tabstop>b_width_lineEdit</tabstop>
+  <tabstop>b_section_radioBtn</tabstop>
+  <tabstop>b_fl_th_lineEdit</tabstop>
+  <tabstop>b_fl_width_lineEdit</tabstop>
+  <tabstop>b_moment_lineEdit</tabstop>
+  <tabstop>c_exp_combo</tabstop>
+  <tabstop>c_concr_class_combo</tabstop>
+  <tabstop>c_concr_cover_lineEdit</tabstop>
+  <tabstop>c_steel_class_combo</tabstop>
+  <tabstop>c_bar_diam_combo</tabstop>
+  <tabstop>c_height_lineEdit</tabstop>
+  <tabstop>c_width_lineEdit</tabstop>
+  <tabstop>c_moment_lineEdit</tabstop>
+  <tabstop>c_vertical_lineEdit</tabstop>
+  <tabstop>f_exp_combo</tabstop>
+  <tabstop>f_concr_class_combo</tabstop>
+  <tabstop>f_concr_cover_lineEdit</tabstop>
+  <tabstop>f_steel_class_combo</tabstop>
+  <tabstop>f_bar_diam_combo</tabstop>
+  <tabstop>f_col_bar_diam_combo</tabstop>
+  <tabstop>f_fwidth_lineEdit</tabstop>
+  <tabstop>f_flength_lineEdit</tabstop>
+  <tabstop>f_fheight_lineEdit</tabstop>
+  <tabstop>f_cheight_lineEdit</tabstop>
+  <tabstop>f_cwidth_lineEdit</tabstop>
+  <tabstop>f_vert_lineEdit</tabstop>
+  <tabstop>run_btn</tabstop>
+  <tabstop>report_btn</tabstop>
+  <tabstop>results_textBrowser</tabstop>
+  <tabstop>info_textBrowser</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
