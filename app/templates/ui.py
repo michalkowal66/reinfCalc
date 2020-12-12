@@ -647,11 +647,16 @@ class Ui_MainWindow(object):
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.menuResources.setTitle(_translate("MainWindow", "Resources"))
         self.actionIncluded_Data.setText(_translate("MainWindow", "Included Data"))
+        self.actionIncluded_Data.setShortcut(_translate("MainWindow", "Ctrl+I"))
         self.actionNew.setText(_translate("MainWindow", "New"))
+        self.actionNew.setShortcut(_translate("MainWindow", "Ctrl+N"))
         self.actionOpen.setText(_translate("MainWindow", "Open"))
+        self.actionOpen.setShortcut(_translate("MainWindow", "Ctrl+O"))
         self.actionSave.setText(_translate("MainWindow", "Save"))
+        self.actionSave.setShortcut(_translate("MainWindow", "Ctrl+S"))
         self.actionrec_opened_file.setText(_translate("MainWindow", "rec_opened.file"))
         self.actionClose.setText(_translate("MainWindow", "Close"))
+        self.actionClose.setShortcut(_translate("MainWindow", "Ctrl+Q"))
 
 
 if __name__ == "__main__":
