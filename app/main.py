@@ -103,8 +103,17 @@ class Main(QtWidgets.QMainWindow):
         # TODO replace with real open method if accepted
         if fileName[0]:
             with open(fileName[0], 'r') as f:
-                data = f.read()
-            self.ui.p_concr_cover_lineEdit.setText(data)
+                data = json.load(f)
+            print(data)
+            self.ui.p_exp_combo.setCurrentText(data["element"]["plate"]["exp_class"])
+            self.ui.p_concr_class_combo.setCurrentText(data["element"]["plate"]["concrete_class"])
+            self.ui.p_steel_class_combo.setCurrentText(data["element"]["plate"]["steel_class"])
+            self.ui.p_bar_diam_combo.setCurrentText(str(data["element"]["plate"]["bar_diam"]))
+            self.ui.p_concr_cover_lineEdit.setText(str(data["element"]["plate"]["concrete_cover"]))
+            self.ui.p_th_lineEdit.setText(str(data["element"]["plate"]["thickness"]))
+            self.ui.p_moment_lineEdit.setText(str(data["element"]["plate"]["moment"]))
+            self.ui.info_textBrowser.setText(data["remarks"])
+            self.ui.results_textBrowser.setText(data["results"])
 
     def newPlate(self):
         self.ui.stackedWidget.setCurrentIndex(1)
