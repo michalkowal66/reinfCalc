@@ -1,5 +1,6 @@
 from templates.ui import Ui_MainWindow
 from resources.resources import resources
+import json
 # TODO come up with better module and containers naming
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -77,8 +78,23 @@ class Main(QtWidgets.QMainWindow):
         if fileName:
             with open(fileName, 'w') as f:
                 # TODO replace with real saving method if accepted
-                text = str(self.ui.p_concr_cover_lineEdit.text())
-                f.write(text)
+                save_raw = {
+                    "element": {
+                        "plate": {
+                            "exp_class": str(self.ui.p_exp_combo.currentText()),
+                            "concrete_class": str(self.ui.p_concr_class_combo.currentText()),
+                            "concrete_cover": float(self.ui.p_concr_cover_lineEdit.text()),
+                            "steel_class": str(self.ui.p_steel_class_combo.currentText()),
+                            "bar_diam": int(self.ui.p_bar_diam_combo.currentText()),
+                            "thickness": float(self.ui.p_th_lineEdit.text()),
+                            "moment": float(self.ui.p_moment_lineEdit.text())
+                        }
+                    },
+                    "remarks": "Remarks about calculations",
+                    "results": "Results of calculations"
+                }
+                save = json.dumps(save_raw)
+                f.write(save)
 
     def openFile(self):  # file open test
         options = QtWidgets.QFileDialog.Options()
