@@ -31,6 +31,7 @@ class Main(QtWidgets.QMainWindow):
         self.ui.actionClose.triggered.connect(self.close)
         self.ui.actionNew.triggered.connect(self.showWelcomePage)
         self.ui.actionSave.triggered.connect(self.saveFile)
+        self.ui.actionOpen.triggered.connect(self.openFile)
 
     def loadData(self):  # data loading test
         # TODO complete loading functionality if accepted
@@ -50,6 +51,16 @@ class Main(QtWidgets.QMainWindow):
                 # TODO replace with real saving method if accepted
                 text = str(self.ui.p_concr_cover_lineEdit.text())
                 f.write(text)
+
+    def openFile(self):  # file open test
+        options = QtWidgets.QFileDialog.Options()
+        options |= QtWidgets.QFileDialog.DontUseNativeDialog
+        fileName = QtWidgets.QFileDialog.getOpenFileName(self, 'Open file', '/home', options=options)
+        # TODO replace with real open method if accepted
+        if fileName[0]:
+            with open(fileName[0], 'r') as f:
+                data = f.read()
+            self.ui.p_concr_cover_lineEdit.setText(data)
 
     def newPlate(self):
         self.ui.stackedWidget.setCurrentIndex(1)
