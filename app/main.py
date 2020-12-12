@@ -30,10 +30,26 @@ class Main(QtWidgets.QMainWindow):
         self.ui.foot_btn.clicked.connect(self.newFoot)
         self.ui.actionClose.triggered.connect(self.close)
         self.ui.actionNew.triggered.connect(self.showWelcomePage)
+        self.ui.actionSave.triggered.connect(self.saveFile)
 
-    def loadData(self):
+    def loadData(self):  # data loading test
+        # TODO complete loading functionality if accepted
         for exp_combo in self.exp_combos.values():
             exp_combo.addItems([exposition_class.value["exp_class"] for exposition_class in resources["exp_classes"]])
+
+    def saveFile(self):  # saving test
+        options = QtWidgets.QFileDialog.Options()
+        options |= QtWidgets.QFileDialog.DontUseNativeDialog
+        fileName, _ = QtWidgets.QFileDialog.getSaveFileName(self,
+                                                            "QFileDialog.getSaveFileName()",
+                                                            "",
+                                                            "AllFiles(*);;TextFiles(*.txt)",
+                                                            options = options)
+        if fileName:
+            with open(fileName, 'w') as f:
+                # TODO replace with real saving method if accepted
+                text = str(self.ui.p_concr_cover_lineEdit.text())
+                f.write(text)
 
     def newPlate(self):
         self.ui.stackedWidget.setCurrentIndex(1)
