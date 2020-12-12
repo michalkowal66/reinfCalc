@@ -306,8 +306,14 @@
           <height>20</height>
          </rect>
         </property>
+        <property name="inputMethodHints">
+         <set>Qt::ImhNone</set>
+        </property>
         <property name="inputMask">
          <string/>
+        </property>
+        <property name="maxLength">
+         <number>6</number>
         </property>
        </widget>
        <widget class="QLabel" name="p_steel_label">
@@ -432,6 +438,9 @@
         <property name="inputMask">
          <string/>
         </property>
+        <property name="maxLength">
+         <number>6</number>
+        </property>
        </widget>
        <widget class="QLabel" name="p_env_label">
         <property name="geometry">
@@ -503,6 +512,9 @@
         </property>
         <property name="inputMask">
          <string/>
+        </property>
+        <property name="maxLength">
+         <number>6</number>
         </property>
        </widget>
        <widget class="QLabel" name="p_moment_label">
@@ -648,6 +660,9 @@
           <height>20</height>
          </rect>
         </property>
+        <property name="maxLength">
+         <number>6</number>
+        </property>
        </widget>
        <widget class="QLabel" name="b_bar_label">
         <property name="geometry">
@@ -744,6 +759,9 @@
           <height>20</height>
          </rect>
         </property>
+        <property name="maxLength">
+         <number>6</number>
+        </property>
        </widget>
        <widget class="QLabel" name="b_height_label">
         <property name="geometry">
@@ -780,6 +798,9 @@
           <height>20</height>
          </rect>
         </property>
+        <property name="maxLength">
+         <number>6</number>
+        </property>
        </widget>
        <widget class="QRadioButton" name="b_section_radioBtn">
         <property name="geometry">
@@ -791,7 +812,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>Support section</string>
+         <string>Span section</string>
         </property>
        </widget>
        <widget class="QLabel" name="b_fl_width_label">
@@ -821,6 +842,9 @@
         </property>
        </widget>
        <widget class="QLineEdit" name="b_fl_th_lineEdit">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="geometry">
          <rect>
           <x>170</x>
@@ -828,6 +852,9 @@
           <width>50</width>
           <height>20</height>
          </rect>
+        </property>
+        <property name="maxLength">
+         <number>6</number>
         </property>
         <property name="readOnly">
          <bool>false</bool>
@@ -837,6 +864,9 @@
         </property>
        </widget>
        <widget class="QLineEdit" name="b_fl_width_lineEdit">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="geometry">
          <rect>
           <x>350</x>
@@ -844,6 +874,9 @@
           <width>50</width>
           <height>20</height>
          </rect>
+        </property>
+        <property name="maxLength">
+         <number>6</number>
         </property>
         <property name="readOnly">
          <bool>false</bool>
@@ -873,6 +906,9 @@
           <width>50</width>
           <height>20</height>
          </rect>
+        </property>
+        <property name="maxLength">
+         <number>6</number>
         </property>
        </widget>
        <widget class="QLabel" name="b_load_label">
@@ -1104,6 +1140,9 @@
           <height>20</height>
          </rect>
         </property>
+        <property name="maxLength">
+         <number>6</number>
+        </property>
        </widget>
        <widget class="QLabel" name="c_width_label">
         <property name="geometry">
@@ -1140,6 +1179,9 @@
           <height>20</height>
          </rect>
         </property>
+        <property name="maxLength">
+         <number>6</number>
+        </property>
        </widget>
        <widget class="QLineEdit" name="c_width_lineEdit">
         <property name="geometry">
@@ -1149,6 +1191,9 @@
           <width>50</width>
           <height>20</height>
          </rect>
+        </property>
+        <property name="maxLength">
+         <number>6</number>
         </property>
        </widget>
        <widget class="QLabel" name="c_moment_label">
@@ -1173,6 +1218,9 @@
           <height>20</height>
          </rect>
         </property>
+        <property name="maxLength">
+         <number>6</number>
+        </property>
        </widget>
        <widget class="QLabel" name="c_load_label">
         <property name="geometry">
@@ -1195,6 +1243,9 @@
           <width>50</width>
           <height>19</height>
          </rect>
+        </property>
+        <property name="maxLength">
+         <number>6</number>
         </property>
        </widget>
        <widget class="QLabel" name="c_vertical_label">
@@ -1340,6 +1391,9 @@
           <height>20</height>
          </rect>
         </property>
+        <property name="maxLength">
+         <number>6</number>
+        </property>
        </widget>
        <widget class="QLabel" name="f_bar_label">
         <property name="geometry">
@@ -1436,6 +1490,9 @@
           <height>20</height>
          </rect>
         </property>
+        <property name="maxLength">
+         <number>6</number>
+        </property>
        </widget>
        <widget class="QLabel" name="f_fwidth_label">
         <property name="geometry">
@@ -1471,6 +1528,9 @@
           <width>50</width>
           <height>20</height>
          </rect>
+        </property>
+        <property name="maxLength">
+         <number>6</number>
         </property>
        </widget>
        <widget class="QLabel" name="f_col_bar_label">
@@ -1559,6 +1619,9 @@
           <height>20</height>
          </rect>
         </property>
+        <property name="maxLength">
+         <number>6</number>
+        </property>
        </widget>
        <widget class="QLineEdit" name="f_cwidth_lineEdit">
         <property name="geometry">
@@ -1568,6 +1631,9 @@
           <width>50</width>
           <height>20</height>
          </rect>
+        </property>
+        <property name="maxLength">
+         <number>6</number>
         </property>
        </widget>
        <widget class="QLabel" name="f_cwidth_label">
@@ -1591,6 +1657,9 @@
           <width>50</width>
           <height>20</height>
          </rect>
+        </property>
+        <property name="maxLength">
+         <number>6</number>
         </property>
        </widget>
        <widget class="QLabel" name="f_fheight_label">
@@ -1640,6 +1709,9 @@
           <width>50</width>
           <height>19</height>
          </rect>
+        </property>
+        <property name="maxLength">
+         <number>6</number>
         </property>
        </widget>
       </widget>
@@ -1873,5 +1945,38 @@ p, li { white-space: pre-wrap; }
   <tabstop>info_textBrowser</tabstop>
  </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>b_section_radioBtn</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>b_fl_th_lineEdit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>102</x>
+     <y>316</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>206</x>
+     <y>347</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>b_section_radioBtn</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>b_fl_width_lineEdit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>102</x>
+     <y>316</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>386</x>
+     <y>347</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
