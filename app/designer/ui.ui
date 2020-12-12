@@ -54,6 +54,17 @@
      <number>0</number>
     </property>
     <widget class="QWidget" name="welcome_page">
+     <property name="styleSheet">
+      <string notr="true">QLabel#welcome_lbl {
+font: 30px &quot;MS Shell Dlg 2&quot;;
+}
+QLabel#recently_open_lbl {
+font: 20px &quot;MS Shell Dlg 2&quot;;
+}
+QLabel#info_lbl {
+font: 15px &quot;MS Shell Dlg 2&quot;;
+}</string>
+     </property>
      <widget class="QLabel" name="info_lbl">
       <property name="geometry">
        <rect>
@@ -62,11 +73,6 @@
         <width>460</width>
         <height>51</height>
        </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
       </property>
       <property name="text">
        <string>Information label</string>
@@ -104,11 +110,6 @@
         <height>31</height>
        </rect>
       </property>
-      <property name="font">
-       <font>
-        <pointsize>18</pointsize>
-       </font>
-      </property>
       <property name="text">
        <string>Welcome label</string>
       </property>
@@ -124,11 +125,6 @@
         <width>260</width>
         <height>20</height>
        </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-       </font>
       </property>
       <property name="text">
        <string>Recently opened</string>
@@ -273,16 +269,6 @@
           <height>22</height>
          </rect>
         </property>
-        <item>
-         <property name="text">
-          <string>C30/37</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>C35/45</string>
-         </property>
-        </item>
        </widget>
        <widget class="QLabel" name="p_concr_cover_label">
         <property name="geometry">
@@ -351,16 +337,6 @@
           <height>22</height>
          </rect>
         </property>
-        <item>
-         <property name="text">
-          <string>RB500</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>RB500W</string>
-         </property>
-        </item>
        </widget>
        <widget class="QLabel" name="p_bar_label">
         <property name="geometry">
@@ -384,21 +360,6 @@
           <height>22</height>
          </rect>
         </property>
-        <item>
-         <property name="text">
-          <string>16</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>18</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>20</string>
-         </property>
-        </item>
        </widget>
        <widget class="QLabel" name="p_geom_label">
         <property name="geometry">
@@ -477,16 +438,6 @@
           <height>22</height>
          </rect>
         </property>
-        <item>
-         <property name="text">
-          <string>X0</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>XC1</string>
-         </property>
-        </item>
        </widget>
        <widget class="QLabel" name="p_load_label">
         <property name="geometry">
@@ -596,21 +547,6 @@
           <height>22</height>
          </rect>
         </property>
-        <item>
-         <property name="text">
-          <string>16</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>18</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>20</string>
-         </property>
-        </item>
        </widget>
        <widget class="QLabel" name="b_env_label">
         <property name="geometry">
@@ -686,16 +622,6 @@
           <height>22</height>
          </rect>
         </property>
-        <item>
-         <property name="text">
-          <string>X0</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>XC1</string>
-         </property>
-        </item>
        </widget>
        <widget class="QLabel" name="b_concr_class_label">
         <property name="geometry">
@@ -719,16 +645,6 @@
           <height>22</height>
          </rect>
         </property>
-        <item>
-         <property name="text">
-          <string>RB500</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>RB500W</string>
-         </property>
-        </item>
        </widget>
        <widget class="QComboBox" name="b_concr_class_combo">
         <property name="geometry">
@@ -739,16 +655,6 @@
           <height>22</height>
          </rect>
         </property>
-        <item>
-         <property name="text">
-          <string>C30/37</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>C35/45</string>
-         </property>
-        </item>
        </widget>
        <widget class="QLineEdit" name="b_concr_cover_lineEdit">
         <property name="geometry">
@@ -990,21 +896,6 @@
           <height>22</height>
          </rect>
         </property>
-        <item>
-         <property name="text">
-          <string>16</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>18</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>20</string>
-         </property>
-        </item>
        </widget>
        <widget class="QLabel" name="c_env_label">
         <property name="geometry">
@@ -1067,16 +958,6 @@
           <height>22</height>
          </rect>
         </property>
-        <item>
-         <property name="text">
-          <string>X0</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>XC1</string>
-         </property>
-        </item>
        </widget>
        <widget class="QLabel" name="c_concr_class_label">
         <property name="geometry">
@@ -1100,16 +981,6 @@
           <height>22</height>
          </rect>
         </property>
-        <item>
-         <property name="text">
-          <string>RB500</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>RB500W</string>
-         </property>
-        </item>
        </widget>
        <widget class="QComboBox" name="c_concr_class_combo">
         <property name="geometry">
@@ -1120,16 +991,6 @@
           <height>22</height>
          </rect>
         </property>
-        <item>
-         <property name="text">
-          <string>C30/37</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>C35/45</string>
-         </property>
-        </item>
        </widget>
        <widget class="QLineEdit" name="c_concr_cover_lineEdit">
         <property name="geometry">
@@ -1327,21 +1188,6 @@
           <height>22</height>
          </rect>
         </property>
-        <item>
-         <property name="text">
-          <string>16</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>18</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>20</string>
-         </property>
-        </item>
        </widget>
        <widget class="QLabel" name="f_env_label">
         <property name="geometry">
@@ -1417,16 +1263,6 @@
           <height>22</height>
          </rect>
         </property>
-        <item>
-         <property name="text">
-          <string>X0</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>XC1</string>
-         </property>
-        </item>
        </widget>
        <widget class="QLabel" name="f_concr_class_label">
         <property name="geometry">
@@ -1450,16 +1286,6 @@
           <height>22</height>
          </rect>
         </property>
-        <item>
-         <property name="text">
-          <string>RB500</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>RB500W</string>
-         </property>
-        </item>
        </widget>
        <widget class="QComboBox" name="f_concr_class_combo">
         <property name="geometry">
@@ -1470,16 +1296,6 @@
           <height>22</height>
          </rect>
         </property>
-        <item>
-         <property name="text">
-          <string>C30/37</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>C35/45</string>
-         </property>
-        </item>
        </widget>
        <widget class="QLineEdit" name="f_concr_cover_lineEdit">
         <property name="geometry">
@@ -1555,21 +1371,6 @@
           <height>22</height>
          </rect>
         </property>
-        <item>
-         <property name="text">
-          <string>16</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>18</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>20</string>
-         </property>
-        </item>
        </widget>
        <widget class="QLabel" name="f_fgeom_label">
         <property name="geometry">
