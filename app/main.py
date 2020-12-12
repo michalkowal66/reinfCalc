@@ -47,6 +47,49 @@ class Main(QtWidgets.QMainWindow):
             "f_bar_diam_combo": self.ui.f_bar_diam_combo,
             "f_col_bar_diam_combo": self.ui.f_col_bar_diam_combo
         }
+        # Another idea for elements container
+        self.elements = {
+            "plate": {
+                "exp_class": self.ui.p_exp_combo,
+                "concrete_class": self.ui.p_concr_class_combo,
+                "concrete_cover": self.ui.p_concr_cover_lineEdit,
+                "steel_class": self.ui.p_steel_class_combo,
+                "bar_diam": self.ui.p_bar_diam_combo,
+                "thickness": self.ui.p_th_lineEdit,
+                "moment": self.ui.p_moment_lineEdit
+            },
+            "beam": {
+                "exp_class": self.ui.b_exp_combo,
+                "concrete_class": self.ui.b_concr_class_combo,
+                "concrete_cover": self.ui.b_concr_cover_lineEdit,
+                "steel_class": self.ui.b_steel_class_combo,
+                "bar_diam": self.ui.b_bar_diam_combo,
+                "height": self.ui.b_height_lineEdit,
+                "width": self.ui.b_width_lineEdit,
+                "moment": self.ui.b_moment_lineEdit
+            },
+            "column": {
+                "exp_class": self.ui.c_exp_combo,
+                "concrete_class": self.ui.c_concr_class_combo,
+                "concrete_cover": self.ui.c_concr_cover_lineEdit,
+                "steel_class": self.ui.c_steel_class_combo,
+                "bar_diam": self.ui.c_bar_diam_combo,
+                "height": self.ui.c_height_lineEdit,
+                "width": self.ui.c_width_lineEdit,
+                "moment": self.ui.c_moment_lineEdit
+            },
+            "foot": {
+                "exp_class": self.ui.f_exp_combo,
+                "concrete_class": self.ui.f_concr_class_combo,
+                "concrete_cover": self.ui.f_concr_cover_lineEdit,
+                "steel_class": self.ui.f_steel_class_combo,
+                "bar_diam": self.ui.f_bar_diam_combo,
+                "col_bar_diam": self.ui.f_col_bar_diam_combo,
+                "height": self.ui.f_fheight_lineEdit,
+                "width": self.ui.f_fwidth_lineEdit,
+                "vertical": self.ui.f_vert_lineEdit
+            }
+        }
         self.ui.plate_btn.clicked.connect(self.newPlate)
         self.ui.beam_btn.clicked.connect(self.newBeam)
         self.ui.column_btn.clicked.connect(self.newColumn)
