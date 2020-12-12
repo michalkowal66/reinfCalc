@@ -48,28 +48,52 @@ class ConcreteClass(Enum):
     C12_15 = {"concrete_class": "C12/15", "fck": 12, "fck_cube": 15, "fcm": 20, "fctm": 1.6, "fctk_0.05": 1.1,
               "fctk_0.95": 2.0, "Ecm": 27}
     # Todo Add values for other classes if template accepted
+    C16_20 = {"concrete_class": "C16/20", "fck": 16, "fck_cube": 20, "fcm": None, "fctm": None, "fctk_0.05": None,
+              "fctk_0.95": None, "Ecm": None}
+    C20_25 = {"concrete_class": "C20/25", "fck": 20, "fck_cube": 25, "fcm": None, "fctm": None, "fctk_0.05": None,
+              "fctk_0.95": None, "Ecm": None}
+    C25_30 = {"concrete_class": "C25/30", "fck": 25, "fck_cube": 30, "fcm": None, "fctm": None, "fctk_0.05": None,
+              "fctk_0.95": None, "Ecm": None}
+    C30_37 = {"concrete_class": "C30/37", "fck": 30, "fck_cube": 37, "fcm": None, "fctm": None, "fctk_0.05": None,
+              "fctk_0.95": None, "Ecm": None}
+    C35_45 = {"concrete_class": "C35/45", "fck": 35, "fck_cube": 45, "fcm": None, "fctm": None, "fctk_0.05": None,
+              "fctk_0.95": None, "Ecm": None}
+    C40_50 = {"concrete_class": "C40/50", "fck": 40, "fck_cube": 50, "fcm": None, "fctm": None, "fctk_0.05": None,
+              "fctk_0.95": None, "Ecm": None}
+    C45_55 = {"concrete_class": "C45/55", "fck": 45, "fck_cube": 55, "fcm": None, "fctm": None, "fctk_0.05": None,
+              "fctk_0.95": None, "Ecm": None}
+    C50_60 = {"concrete_class": "C50/60", "fck": 50, "fck_cube": 60, "fcm": None, "fctm": None, "fctk_0.05": None,
+              "fctk_0.95": None, "Ecm": None}
 
 
 class SteelClass(Enum):
     # different structure of classes? e.g. 35G2Y = {class = AIII}, 34GS = {class = AIII}, ...
-    A_III = {"type": {
-        # keep diameters as range object, list comprehension, generator object, or simple list?
-        "35G2Y": {"type_name": "35G2Y", "diameters": range(6, 22, 2), "fyk": 410, "fyd": 350, "ftk": 550},
-        # keep fyd inside each type or in class only?
-        "34GS": {"type_name": "34GS", "diameters": [n for n in range(6, 34, 2)], "fyk": 410, "fyd": 350, "ftk": 550},
-        "RB400": {"type_name": "RB400", "diameters": (n for n in range(6, 42, 2)), "fyk": 400, "fyd": 350, "ftk": 440},
-        "RB400W": {"type_name": "RB400W",
-                   "diameters": [6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40], "fyk": 400,
-                   "fyd": 350, "ftk": 440}
-    }}
+    # A_III = {"type": {
+    #     # keep diameters as range object, list comprehension, generator object, or simple list?
+    #     "35G2Y": {"type_name": "35G2Y", "diameters": range(6, 22, 2), "fyk": 410, "fyd": 350, "ftk": 550},
+    #     # keep fyd inside each type or in class only?
+    #     "34GS": {"type_name": "34GS", "diameters": [n for n in range(6, 34, 2)], "fyk": 410, "fyd": 350, "ftk": 550},
+    #     "RB400": {"type_name": "RB400", "diameters": (n for n in range(6, 42, 2)), "fyk": 400, "fyd": 350, "ftk": 440},
+    #     "RB400W": {"type_name": "RB400W",
+    #                "diameters": [6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40], "fyk": 400,
+    #                "fyd": 350, "ftk": 440}
+    # }}
     # Todo Add values for other classes if template accepted
+    A_III = {
+        "class_name": "A-III", "diameters": [n for n in range(6, 42, 2)], "fyd": 350
+    }
+    A_IIIN = {
+        "class_name": "A-IIIN", "diameters": [n for n in range(6, 42, 2)], "fyd": 420
+    }
 
 
 # keep all resources as enum class objects, generator object of enum attributes, list of enum attributes?
 resources = {
     "exp_classes": ExpClass,
-    "concrete_classes": (concrete_class for concrete_class in ConcreteClass),
-    "steel_classes": [steel_class for steel_class in SteelClass]
+    "concrete_classes": ConcreteClass,
+    "steel_classes": SteelClass
+    # "concrete_classes": (concrete_class for concrete_class in ConcreteClass),
+    # "steel_classes": [steel_class for steel_class in SteelClass]
 }
 
 # save file template prototype
