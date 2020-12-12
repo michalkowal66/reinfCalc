@@ -6,6 +6,7 @@ class ExpClass(Enum):
     # """ class does this and that """
     X0 = {"exp_class": "X0", "concrete_class": "C12/15", "max_wc": None, "min_cem": None,
           "remarks": "No corrosion risk"}
+    # different naming of keys?
     # Todo Add values for other classes if template accepted
     XC1 = {"exp_class": "XC1", "concrete_class": None, "max_wc": None, "min_cem": None,
            "remarks": None}
@@ -50,6 +51,7 @@ class ConcreteClass(Enum):
 
 
 class SteelClass(Enum):
+    # different structure of classes? e.g. 35G2Y = {class = AIII}, 34GS = {class = AIII}, ...
     A_III = {"type": {
         # keep diameters as range object, list comprehension, generator object, or simple list?
         "35G2Y": {"type_name": "35G2Y", "diameters": range(6, 22, 2), "fyk": 410, "fyd": 350, "ftk": 550},
