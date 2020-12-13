@@ -112,13 +112,15 @@ class Main(QtWidgets.QMainWindow):
 
         # Another idea of data loading
         for element in self.elements.values():
-            element["exp_class"].addItems([exposition_class.value["exp_class"] for exposition_class in resources["exp_classes"]])
-            element["concrete_class"].addItems([concrete_class.value["concrete_class"] for concrete_class in resources["concrete_classes"]])
-            element["steel_class"].addItems([steel_class.value["class_name"] for steel_class in resources["steel_classes"]])
+            element["exp_class"].addItems(
+                [exposition_class.value["exp_class"] for exposition_class in resources["exp_classes"]])
+            element["concrete_class"].addItems(
+                [concrete_class.value["concrete_class"] for concrete_class in resources["concrete_classes"]])
+            element["steel_class"].addItems(
+                [steel_class.value["class_name"] for steel_class in resources["steel_classes"]])
             element["bar_diam"].addItems([str(n) for n in range(6, 42, 2)])
-            if element.get("col_bar_diam") != None:
+            if element.get("col_bar_diam") is not None:
                 element.get("col_bar_diam").addItems([str(n) for n in range(6, 42, 2)])
-
 
     def saveFile(self):  # saving test
         options = QtWidgets.QFileDialog.Options()
@@ -127,20 +129,20 @@ class Main(QtWidgets.QMainWindow):
                                                             "QFileDialog.getSaveFileName()",
                                                             "",
                                                             "AllFiles(*);;TextFiles(*.txt)",
-                                                            options = options)
+                                                            options=options)
         if fileName:
             with open(fileName, 'w') as f:
                 # TODO replace with real saving method if accepted
                 save_raw = {
                     "element": {
                         "plate": {
-                            "exp_class": str(self.ui.p_exp_combo.currentText()),
-                            "concrete_class": str(self.ui.p_concr_class_combo.currentText()),
-                            "concrete_cover": float(self.ui.p_concr_cover_lineEdit.text()),
-                            "steel_class": str(self.ui.p_steel_class_combo.currentText()),
-                            "bar_diam": int(self.ui.p_bar_diam_combo.currentText()),
-                            "thickness": float(self.ui.p_th_lineEdit.text()),
-                            "moment": float(self.ui.p_moment_lineEdit.text())
+                            "exp_class": self.ui.p_exp_combo.currentText(),
+                            "concrete_class": self.ui.p_concr_class_combo.currentText(),
+                            "concrete_cover": self.ui.p_concr_cover_lineEdit.text(),
+                            "steel_class": self.ui.p_steel_class_combo.currentText(),
+                            "bar_diam": self.ui.p_bar_diam_combo.currentText(),
+                            "thickness": self.ui.p_th_lineEdit.text(),
+                            "moment": self.ui.p_moment_lineEdit.text()
                         }
                     },
                     "remarks": "Remarks about calculations",
