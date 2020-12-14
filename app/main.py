@@ -131,7 +131,7 @@ class Main(QtWidgets.QMainWindow):
                                                             "Reinforcement Calculator Files (*.rcalc)",
                                                             options=options)
         if fileName:
-            with open(fileName, 'w') as f:
+            with open(self.ensureFormat(fileName), 'w') as f:
                 # TODO replace with real saving method if accepted
                 save_raw = {
                     "element": {
@@ -150,6 +150,13 @@ class Main(QtWidgets.QMainWindow):
                 }
                 save = json.dumps(save_raw)
                 f.write(save)
+
+    def ensureFormat(self, filePath):  # ensures that proper file format was selected
+        if not filePath.endswith(".rcalc"):
+            if "." not in filePath:
+                return filePath + ".rcalc"
+            return filePath.split(".")[0] + ".rcalc"
+        return filePath
 
     def openFile(self):  # file open test
         options = QtWidgets.QFileDialog.Options()
