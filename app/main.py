@@ -126,9 +126,9 @@ class Main(QtWidgets.QMainWindow):
         options = QtWidgets.QFileDialog.Options()
         options |= QtWidgets.QFileDialog.DontUseNativeDialog
         fileName, _ = QtWidgets.QFileDialog.getSaveFileName(self,
-                                                            "QFileDialog.getSaveFileName()",
+                                                            "Save File",
                                                             "",
-                                                            "AllFiles(*);;TextFiles(*.txt)",
+                                                            "Reinforcement Calculator Files (*.rcalc)",
                                                             options=options)
         if fileName:
             with open(fileName, 'w') as f:
@@ -154,7 +154,8 @@ class Main(QtWidgets.QMainWindow):
     def openFile(self):  # file open test
         options = QtWidgets.QFileDialog.Options()
         options |= QtWidgets.QFileDialog.DontUseNativeDialog
-        fileName = QtWidgets.QFileDialog.getOpenFileName(self, 'Open file', '/home', options=options)
+        fileName = QtWidgets.QFileDialog.getOpenFileName(self, 'Open file', '',
+                                                         "Reinforcement Calculator Files (*.rcalc)", options=options)
         # TODO replace with real open method if accepted
         if fileName[0]:
             with open(fileName[0], 'r') as f:
