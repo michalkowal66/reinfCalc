@@ -101,15 +101,6 @@ class Main(QtWidgets.QMainWindow):
 
     def loadData(self):  # data loading test
         # TODO complete loading functionality if accepted
-        # for exp_combo in self.exp_combos.values():
-        #     exp_combo.addItems([exposition_class.value["exp_class"] for exposition_class in resources["exp_classes"]])
-        # for concr_combo in self.concr_combos.values():
-        #     concr_combo.addItems([concrete_class.value["concrete_class"] for concrete_class in resources["concrete_classes"]])
-        # for steel_combo in self.steel_combos.values():
-        #     steel_combo.addItems([steel_class.value["class_name"] for steel_class in resources["steel_classes"]])
-        # for bars_combo in self.bars_combos.values():
-        #     bars_combo.addItems([str(n) for n in range(6, 42, 2)])
-
         # Another idea of data loading
         for element in self.elements.values():
             element["exp_class"].addItems(
