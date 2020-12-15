@@ -20,34 +20,7 @@ class Main(QtWidgets.QMainWindow):
 
     def setupUi(self):
         self.ui.setupUi(self)
-        # should this be defined in separate method?
-        # is use of such container appropriate and 'pythonic'?
-        self.exp_combos = {
-            "p_exp_combo": self.ui.p_exp_combo,
-            "b_exp_combo": self.ui.b_exp_combo,
-            "c_exp_combo": self.ui.c_exp_combo,
-            "f_exp_combo": self.ui.f_exp_combo,
-        }
-        self.concr_combos = {
-            "p_concr_class_combo": self.ui.p_concr_class_combo,
-            "b_concr_class_combo": self.ui.b_concr_class_combo,
-            "c_concr_class_combo": self.ui.c_concr_class_combo,
-            "f_concr_class_combo": self.ui.f_concr_class_combo
-        }
-        self.steel_combos = {
-            "p_steel_class_combo": self.ui.p_steel_class_combo,
-            "b_steel_class_combo": self.ui.b_steel_class_combo,
-            "c_steel_class_combo": self.ui.c_steel_class_combo,
-            "f_steel_class_combo": self.ui.f_steel_class_combo
-        }
-        self.bars_combos = {
-            "p_bar_diam_combo": self.ui.p_bar_diam_combo,
-            "b_bar_diam_combo": self.ui.b_bar_diam_combo,
-            "c_bar_diam_combo": self.ui.c_bar_diam_combo,
-            "f_bar_diam_combo": self.ui.f_bar_diam_combo,
-            "f_col_bar_diam_combo": self.ui.f_col_bar_diam_combo
-        }
-        # Another idea for elements container
+        # Idea for elements container
         self.elements = {
             "plate": {
                 "exp_class": self.ui.p_exp_combo,
