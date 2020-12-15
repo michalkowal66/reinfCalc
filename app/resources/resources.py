@@ -87,13 +87,10 @@ class SteelClass(Enum):
     }
 
 
-# keep all resources as enum class objects, generator object of enum attributes, list of enum attributes?
 resources = {
     "exp_classes": ExpClass,
     "concrete_classes": ConcreteClass,
     "steel_classes": SteelClass
-    # "concrete_classes": (concrete_class for concrete_class in ConcreteClass),
-    # "steel_classes": [steel_class for steel_class in SteelClass]
 }
 
 # save file template prototype
