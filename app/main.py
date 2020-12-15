@@ -112,7 +112,7 @@ class Main(QtWidgets.QMainWindow):
                     "remarks": "Remarks about calculations",
                     "results": "Results of calculations"
                 }
-                save = json.dumps(save_raw)
+                save = json.dumps(save_raw, indent=4)
                 f.write(save)
 
     def ensureFormat(self, filePath):  # ensures that proper file format was selected
