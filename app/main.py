@@ -17,6 +17,7 @@ class Main(QtWidgets.QMainWindow):
         # should this be initialized along with other containers in its own method?
         self.setupUi()
         self.loadData()
+        self.fileExtension = ".rcalc"
 
     def setupUi(self):
         self.ui.setupUi(self)
@@ -92,7 +93,7 @@ class Main(QtWidgets.QMainWindow):
         fileName, _ = QtWidgets.QFileDialog.getSaveFileName(self,
                                                             "Save File",
                                                             "",
-                                                            "Reinforcement Calculator Files (*.rcalc)",
+                                                            f"Reinforcement Calculator Files (*{self.fileExtension})",
                                                             options=options)
         if fileName:
             with open(self.ensureFormat(fileName), 'w') as f:
@@ -115,17 +116,18 @@ class Main(QtWidgets.QMainWindow):
                 f.write(saveJson)
 
     def ensureFormat(self, filePath):  # ensures that proper file format was selected
-        if not filePath.endswith(".rcalc"):
+        if not filePath.endswith(self.fileExtension):
             if "." not in filePath:
-                return filePath + ".rcalc"
-            return filePath.split(".")[0] + ".rcalc"
+                return filePath + self.fileExtension
+            return filePath.split(".")[0] + self.fileExtension
         return filePath
 
     def openFile(self):  # improved test file open method
         options = QtWidgets.QFileDialog.Options()
         options |= QtWidgets.QFileDialog.DontUseNativeDialog
         fileName = QtWidgets.QFileDialog.getOpenFileName(self, 'Open file', '',
-                                                         "Reinforcement Calculator Files (*.rcalc)", options=options)
+                                                         f"Reinforcement Calculator Files (*{self.fileExtension})",
+                                                         options=options)
         if fileName[0]:
             with open(fileName[0], 'r') as f:
                 dataFromSave = json.load(f)
