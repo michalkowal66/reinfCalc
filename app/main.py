@@ -107,9 +107,10 @@ class Main(QtWidgets.QMainWindow):
                            currentTab.findChildren(QtWidgets.QComboBox)},
                         **{radioButton.objectName(): radioButton.isChecked() for radioButton in
                            currentTab.findChildren(QtWidgets.QRadioButton)}
-                    }
+                    },
+                    "info": self.ui.info_textBrowser.toPlainText(),
+                    "results": self.ui.results_textBrowser.toPlainText()
                 }
-                print(saveData)
                 saveJson = json.dumps(saveData, indent=4)
                 f.write(saveJson)
 
@@ -140,6 +141,8 @@ class Main(QtWidgets.QMainWindow):
                     element.findChild(QtWidgets.QComboBox, key).setCurrentText(dataFromSave["data"][key])
                 elif key.endswith("radioBtn"):
                     element.findChild(QtWidgets.QRadioButton, key).setChecked(dataFromSave["data"][key])
+            self.ui.info_textBrowser.setText(dataFromSave["info"])
+            self.ui.results_textBrowser.setText(dataFromSave["results"])
 
     def newPlate(self):
         self.ui.stackedWidget.setCurrentIndex(1)
