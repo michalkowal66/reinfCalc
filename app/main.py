@@ -86,7 +86,7 @@ class Main(QtWidgets.QMainWindow):
             if element.get("col_bar_diam") is not None:
                 element.get("col_bar_diam").addItems([str(n) for n in range(6, 42, 2)])
 
-    def saveFile(self):  # saving test
+    def saveFile(self):  # improved test saving method
         options = QtWidgets.QFileDialog.Options()
         options |= QtWidgets.QFileDialog.DontUseNativeDialog
         fileName, _ = QtWidgets.QFileDialog.getSaveFileName(self,
@@ -96,24 +96,22 @@ class Main(QtWidgets.QMainWindow):
                                                             options=options)
         if fileName:
             with open(self.ensureFormat(fileName), 'w') as f:
-                # TODO replace with real saving method if accepted
-                save_raw = {
-                    "element": {
-                        "plate": {
-                            "exp_class": self.ui.p_exp_combo.currentText(),
-                            "concrete_class": self.ui.p_concr_class_combo.currentText(),
-                            "concrete_cover": self.ui.p_concr_cover_lineEdit.text(),
-                            "steel_class": self.ui.p_steel_class_combo.currentText(),
-                            "bar_diam": self.ui.p_bar_diam_combo.currentText(),
-                            "thickness": self.ui.p_th_lineEdit.text(),
-                            "moment": self.ui.p_moment_lineEdit.text()
-                        }
-                    },
-                    "remarks": "Remarks about calculations",
-                    "results": "Results of calculations"
+                currentTab = self.ui.elements_tabs.currentWidget()
+                saveData = {
+                    "element": currentTab.objectName(),
+                    # TODO check if data storing can be improved
+                    "data": {
+                        **{lineEdit.objectName(): lineEdit.text() for lineEdit in
+                           currentTab.findChildren(QtWidgets.QLineEdit)},
+                        **{comboBox.objectName(): comboBox.currentText() for comboBox in
+                           currentTab.findChildren(QtWidgets.QComboBox)},
+                        **{radioButton.objectName(): radioButton.isChecked() for radioButton in
+                           currentTab.findChildren(QtWidgets.QRadioButton)}
+                    }
                 }
-                save = json.dumps(save_raw, indent=4)
-                f.write(save)
+                print(saveData)
+                saveJson = json.dumps(saveData, indent=4)
+                f.write(saveJson)
 
     def ensureFormat(self, filePath):  # ensures that proper file format was selected
         if not filePath.endswith(".rcalc"):
