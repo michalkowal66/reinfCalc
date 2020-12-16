@@ -2,12 +2,10 @@ from enum import Enum
 
 
 class ExpClass(Enum):
-    # should such class be documented?
-    # """ class does this and that """
+    # TODO classes and methods documentation - sphinx
     X0 = {"exp_class": "X0", "concrete_class": "C12/15", "max_wc": None, "min_cem": None,
           "remarks": "No corrosion risk"}
-    # different naming of keys?
-    # Todo Add values for other classes if template accepted
+    # Todo Accepted - Add values
     XC1 = {"exp_class": "XC1", "concrete_class": None, "max_wc": None, "min_cem": None,
            "remarks": None}
     XC2 = {"exp_class": "XC2", "concrete_class": None, "max_wc": None, "min_cem": None,
@@ -47,7 +45,7 @@ class ExpClass(Enum):
 class ConcreteClass(Enum):
     C12_15 = {"concrete_class": "C12/15", "fck": 12, "fck_cube": 15, "fcm": 20, "fctm": 1.6, "fctk_0.05": 1.1,
               "fctk_0.95": 2.0, "Ecm": 27}
-    # Todo Add values for other classes if template accepted
+    # Todo Accepted - Add values
     C16_20 = {"concrete_class": "C16/20", "fck": 16, "fck_cube": 20, "fcm": None, "fctm": None, "fctk_0.05": None,
               "fctk_0.95": None, "Ecm": None}
     C20_25 = {"concrete_class": "C20/25", "fck": 20, "fck_cube": 25, "fcm": None, "fctm": None, "fctk_0.05": None,
@@ -66,31 +64,21 @@ class ConcreteClass(Enum):
               "fctk_0.95": None, "Ecm": None}
 
 
-class SteelClass(Enum):
-    # different structure of classes? e.g. 35G2Y = {class = AIII}, 34GS = {class = AIII}, ...
-    # A_III = {"type": {
-    #     # keep diameters as range object, list comprehension, generator object, or simple list?
-    #     "35G2Y": {"type_name": "35G2Y", "diameters": range(6, 22, 2), "fyk": 410, "fyd": 350, "ftk": 550},
-    #     # keep fyd inside each type or in class only?
-    #     "34GS": {"type_name": "34GS", "diameters": [n for n in range(6, 34, 2)], "fyk": 410, "fyd": 350, "ftk": 550},
-    #     "RB400": {"type_name": "RB400", "diameters": (n for n in range(6, 42, 2)), "fyk": 400, "fyd": 350, "ftk": 440},
-    #     "RB400W": {"type_name": "RB400W",
-    #                "diameters": [6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40], "fyk": 400,
-    #                "fyd": 350, "ftk": 440}
-    # }}
-    # Todo Add values for other classes if template accepted
+class RebarClass(Enum):  # TODO SteelRebarClass/RebarClass change class name
+    # Todo Accepted - Add values
     A_III = {
-        "class_name": "A-III", "diameters": [n for n in range(6, 42, 2)], "fyd": 350
+        "steel_class": "A-III", "diameters": [n for n in range(6, 42, 2)], "fyd": 350
     }
     A_IIIN = {
-        "class_name": "A-IIIN", "diameters": [n for n in range(6, 42, 2)], "fyd": 420
+        "steel_class": "A-IIIN", "diameters": [n for n in range(6, 42, 2)], "fyd": 420
     }
 
 
 resources = {
-    "exp_classes": ExpClass,
-    "concrete_classes": ConcreteClass,
-    "steel_classes": SteelClass
+    "exp_class": ExpClass,
+    "concrete_class": ConcreteClass,
+    "steel_class": RebarClass,
+    "diameters": [n for n in range(6, 42, 2)]
 }
 
 # save file template prototype
