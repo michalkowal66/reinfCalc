@@ -120,25 +120,26 @@ class Main(QtWidgets.QMainWindow):
             return filePath.split(".")[0] + ".rcalc"
         return filePath
 
-    def openFile(self):  # file open test
+    def openFile(self):  # improved test file open method
         options = QtWidgets.QFileDialog.Options()
         options |= QtWidgets.QFileDialog.DontUseNativeDialog
         fileName = QtWidgets.QFileDialog.getOpenFileName(self, 'Open file', '',
                                                          "Reinforcement Calculator Files (*.rcalc)", options=options)
-        # TODO replace with real open method if accepted
         if fileName[0]:
             with open(fileName[0], 'r') as f:
-                data = json.load(f)
-            print(data)
-            self.ui.p_exp_combo.setCurrentText(data["element"]["plate"]["exp_class"])
-            self.ui.p_concr_class_combo.setCurrentText(data["element"]["plate"]["concrete_class"])
-            self.ui.p_steel_class_combo.setCurrentText(data["element"]["plate"]["steel_class"])
-            self.ui.p_bar_diam_combo.setCurrentText(str(data["element"]["plate"]["bar_diam"]))
-            self.ui.p_concr_cover_lineEdit.setText(str(data["element"]["plate"]["concrete_cover"]))
-            self.ui.p_th_lineEdit.setText(str(data["element"]["plate"]["thickness"]))
-            self.ui.p_moment_lineEdit.setText(str(data["element"]["plate"]["moment"]))
-            self.ui.info_textBrowser.setText(data["remarks"])
-            self.ui.results_textBrowser.setText(data["results"])
+                dataFromSave = json.load(f)
+            element = self.ui.elements_tabs.findChild(QtWidgets.QWidget, dataFromSave["element"])
+            if self.ui.stackedWidget.currentIndex() == 0:
+                self.ui.stackedWidget.setCurrentIndex(1)
+            self.ui.elements_tabs.setCurrentWidget(element)
+            # TODO improve for loop
+            for key in dataFromSave["data"].keys():
+                if key.endswith("lineEdit"):
+                    element.findChild(QtWidgets.QLineEdit, key).setText(dataFromSave["data"][key])
+                elif key.endswith("combo"):
+                    element.findChild(QtWidgets.QComboBox, key).setCurrentText(dataFromSave["data"][key])
+                elif key.endswith("radioBtn"):
+                    element.findChild(QtWidgets.QRadioButton, key).setChecked(dataFromSave["data"][key])
 
     def newPlate(self):
         self.ui.stackedWidget.setCurrentIndex(1)
