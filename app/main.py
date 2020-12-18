@@ -6,13 +6,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Main(QtWidgets.QMainWindow):
+    fileExtension = ".rcalc"
 
     def __init__(self):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.setupUi()
         self.loadData()
-        self.fileExtension = ".rcalc"
 
     def setupUi(self):
         self.ui.setupUi(self)
@@ -45,7 +45,7 @@ class Main(QtWidgets.QMainWindow):
         fileName, _ = QtWidgets.QFileDialog.getSaveFileName(self,
                                                             "Save File",
                                                             "",
-                                                            f"Reinforcement Calculator Files (*{self.fileExtension})",
+                                                            f"Reinforcement Calculator Files (*{Main.fileExtension})",
                                                             options=options)
         if fileName:
             with open(self.ensureFormat(fileName), 'w') as f:
@@ -68,17 +68,17 @@ class Main(QtWidgets.QMainWindow):
                 f.write(saveJson)
 
     def ensureFormat(self, filePath):  # ensures that proper file format was selected
-        if not filePath.endswith(self.fileExtension):
+        if not filePath.endswith(Main.fileExtension):
             if "." not in filePath:
-                return filePath + self.fileExtension
-            return filePath.split(".")[0] + self.fileExtension
+                return filePath + Main.fileExtension
+            return filePath.split(".")[0] + Main.fileExtension
         return filePath
 
     def openFile(self):  # improved test file open method
         options = QtWidgets.QFileDialog.Options()
         options |= QtWidgets.QFileDialog.DontUseNativeDialog
         fileName = QtWidgets.QFileDialog.getOpenFileName(self, 'Open file', '',
-                                                         f"Reinforcement Calculator Files (*{self.fileExtension})",
+                                                         f"Reinforcement Calculator Files (*{Main.fileExtension})",
                                                          options=options)
         if fileName[0]:
             with open(fileName[0], 'r') as f:
@@ -119,7 +119,6 @@ class Main(QtWidgets.QMainWindow):
         element_tab = self.ui.elements_tabs.findChild(QtWidgets.QWidget, f"{element}_tab")
         self.ui.elements_tabs.setCurrentWidget(element_tab)
         self.ui.stackedWidget.setCurrentWidget(self.ui.main_page)
-
 
 
 if __name__ == "__main__":
