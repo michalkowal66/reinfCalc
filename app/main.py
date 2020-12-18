@@ -21,7 +21,7 @@ class Main(QtWidgets.QMainWindow):
         self.ui.column_btn.clicked.connect(self.newColumn)
         self.ui.foot_btn.clicked.connect(self.newFoot)
         self.ui.actionClose.triggered.connect(self.close)
-        self.ui.actionNew.triggered.connect(self.showWelcomePage)
+        self.ui.actionNew.triggered.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.main_page))
         self.ui.actionSave.triggered.connect(self.saveFile)
         self.ui.actionOpen.triggered.connect(self.openFile)
 
@@ -114,8 +114,6 @@ class Main(QtWidgets.QMainWindow):
         self.ui.stackedWidget.setCurrentIndex(1)
         self.ui.elements_tabs.setCurrentIndex(3)
 
-    def showWelcomePage(self):
-        self.ui.stackedWidget.setCurrentIndex(0)
 
 
 if __name__ == "__main__":
