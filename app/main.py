@@ -16,10 +16,10 @@ class Main(QtWidgets.QMainWindow):
 
     def setupUi(self):
         self.ui.setupUi(self)
-        self.ui.plate_btn.clicked.connect(self.newPlate)
-        self.ui.beam_btn.clicked.connect(self.newBeam)
-        self.ui.column_btn.clicked.connect(self.newColumn)
-        self.ui.foot_btn.clicked.connect(self.newFoot)
+        self.ui.plate_btn.clicked.connect(lambda: self.showElement(self.ui.plate_btn))
+        self.ui.beam_btn.clicked.connect(lambda: self.showElement(self.ui.beam_btn))
+        self.ui.column_btn.clicked.connect(lambda: self.showElement(self.ui.column_btn))
+        self.ui.foot_btn.clicked.connect(lambda: self.showElement(self.ui.foot_btn))
         self.ui.actionClose.triggered.connect(self.close)
         self.ui.actionNew.triggered.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.main_page))
         self.ui.actionSave.triggered.connect(self.saveFile)
@@ -98,21 +98,27 @@ class Main(QtWidgets.QMainWindow):
             self.ui.info_textBrowser.setText(dataFromSave["info"])
             self.ui.results_textBrowser.setText(dataFromSave["results"])
 
-    def newPlate(self):
-        self.ui.stackedWidget.setCurrentIndex(1)
-        self.ui.elements_tabs.setCurrentIndex(0)
+    def showElement(self, buttonClicked):
+        """
+        Takes PyQt5 button object and changes window view to appropriate tab
 
-    def newBeam(self):
-        self.ui.stackedWidget.setCurrentIndex(1)
-        self.ui.elements_tabs.setCurrentIndex(1)
+        Strips core name of button representing related element, finds tab having corresponding
+        element name and sets current widget of tab widget to that element and current widget
+        of stacked widget to main page
 
-    def newColumn(self):
-        self.ui.stackedWidget.setCurrentIndex(1)
-        self.ui.elements_tabs.setCurrentIndex(2)
+        Parameters
+        ----------
+        buttonClicked : PyQt5.QtWidgets.QPushButton object, mandatory
+            PyQt5 button object
 
-    def newFoot(self):
-        self.ui.stackedWidget.setCurrentIndex(1)
-        self.ui.elements_tabs.setCurrentIndex(3)
+        Returns
+        -------
+        None
+        """
+        element, _ = buttonClicked.objectName().split("_btn")
+        element_tab = self.ui.elements_tabs.findChild(QtWidgets.QWidget, f"{element}_tab")
+        self.ui.elements_tabs.setCurrentWidget(element_tab)
+        self.ui.stackedWidget.setCurrentWidget(self.ui.main_page)
 
 
 
