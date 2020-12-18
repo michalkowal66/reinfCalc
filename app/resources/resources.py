@@ -113,57 +113,20 @@ resources = {
     "diameters": [n for n in range(6, 42, 2)]
 }
 
-# save file template prototype
-file = {
-    "element": {
-        "plate": {
-            "exp_class": str,
-            "concrete_class": str,
-            "concrete_cover": float,
-            "steel_class": str,
-            "bar_diam": int,
-            "thickness": float,
-            "moment": float
-        },
-        "beam": {
-            "exp_class": str,
-            "concrete_class": str,
-            "concrete_cover": float,
-            "steel_class": str,
-            "bar_diam": int,
-            "height": float,
-            "width": float,
-            "support_section": bool,
-            "flange_thickness": float,
-            "flange_width": float,
-            "moment": float
-        },
-        "column": {
-            "exp_class": str,
-            "concrete_class": str,
-            "concrete_cover": float,
-            "steel_class": str,
-            "bar_diam": int,
-            "height": float,
-            "width": float,
-            "moment": float,
-            "vertical": float
-        },
-        "foot": {
-            "exp_class": str,
-            "concrete_class": str,
-            "concrete_cover": float,
-            "steel_class": str,
-            "bar_diam": int,
-            "column_bar_diam": int,
-            "foot_height": float,
-            "foot_width": float,
-            "foot_length": float,
-            "column_height": float,
-            "column_width": float,
-            "vertical": float
-        }
-    },
-    "remarks": str,
-    "results": str
+translate = {
+    "exp_class": "Exposition class",
+    "concrete_class": "Concrete class",
+    "max_wc": "Maximum water/cement ratio",
+    "min_cem": "Minimum cement content [kg/m^3]",
+    "remarks": "Remarks about class",
+    "concrete_class": "Concrete class",
+    "fck": "Characteristic compressive strength of cylinder sample [MPa]",
+    "fck_cube": "Characteristic compressive strength of cube sample [MPa]",
+    "fcm": "Mean compressive strength of cylinder sample [MPa]",
+    "fctm": "Mean tensile strength [MPa]",
+    "fctk_0.05": "5% fractile tensile strength [MPa]",
+    "fctk_0.95": "95% fractile tensile strength [MPa]",
+    "Ecm": "Elastic modulus [GPa]",
+    "steel_class": "Steel class",
+    "fyd": "Design yield strength"
 }
