@@ -8,7 +8,7 @@ class ExpClass(Enum):
     in accordance to PN-EN 1992-1-1:2008/NA: 2010
 
     Each attribute holds fixed number of keys that represent values of concrete properties:
-        exp_class: exposition class name,
+        exp_class: exposition class,
         concrete_class: minimum concrete class that may be used with given exposition class,
         max_wc: maximum water/cement ration
         min_cem: minimum content of cement [kg/m^3]
@@ -59,7 +59,7 @@ class ConcreteClass(Enum):
     in accordance to PN-EN 1992-1-1:2008/NA: 2010
 
     Each attribute holds fixed number of keys that represent values of concrete properties:
-        concrete_class: concrete class name,
+        concrete_class: concrete class,
         fck: characteristic compressive strength of cylinder sample [MPa],
         fck_cube: characteristic compressive strength of cube sample [MPa],
         fcm: mean compressive strength of cylinder sample [MPa],
@@ -95,7 +95,7 @@ class RebarClass(Enum):
     in accordance to PN-B-03264:2002
 
     Each attribute holds fixed number of keys that represent values of concrete properties:
-        steel_class: steel class name,
+        steel_class: steel class,
         fyd: design yield strength of steel class
     """
     A_III = {
