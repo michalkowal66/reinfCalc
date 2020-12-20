@@ -92,12 +92,27 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
       </property>
       <item>
        <property name="text">
-        <string>some.file</string>
+        <string>beam_span_example.rcalc</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>some.file</string>
+        <string>beam_support_example.rcalc</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>column_example.rcalc</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>foot_example.rcalc</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>plate_example.rcalc</string>
        </property>
       </item>
      </widget>
@@ -315,7 +330,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          <string>Steel:</string>
         </property>
        </widget>
-       <widget class="QLabel" name="p_steel_class_label">
+       <widget class="QLabel" name="p_steel_grade_label">
         <property name="geometry">
          <rect>
           <x>30</x>
@@ -325,10 +340,10 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          </rect>
         </property>
         <property name="text">
-         <string>Class of steel:</string>
+         <string>Grade of steel:</string>
         </property>
        </widget>
-       <widget class="QComboBox" name="p_steel_class_combo">
+       <widget class="QComboBox" name="p_steel_grade_combo">
         <property name="geometry">
          <rect>
           <x>140</x>
@@ -443,7 +458,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>240</y>
+          <y>280</y>
           <width>111</width>
           <height>21</height>
          </rect>
@@ -456,7 +471,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         <property name="geometry">
          <rect>
           <x>190</x>
-          <y>270</y>
+          <y>310</y>
           <width>50</width>
           <height>20</height>
          </rect>
@@ -472,13 +487,42 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>270</y>
+          <y>310</y>
           <width>151</width>
           <height>21</height>
          </rect>
         </property>
         <property name="text">
          <string>Bending moment [kN*m]:</string>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="p_span_section_radioBtn">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>250</y>
+          <width>141</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Span section</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="p_sup_section_radioBtn">
+        <property name="geometry">
+         <rect>
+          <x>170</x>
+          <y>250</y>
+          <width>141</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Support section</string>
         </property>
        </widget>
       </widget>
@@ -574,7 +618,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          <string>Steel:</string>
         </property>
        </widget>
-       <widget class="QLabel" name="b_steel_class_label">
+       <widget class="QLabel" name="b_steel_grade_label">
         <property name="geometry">
          <rect>
           <x>30</x>
@@ -584,7 +628,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          </rect>
         </property>
         <property name="text">
-         <string>Class of steel:</string>
+         <string>Grade of steel:</string>
         </property>
        </widget>
        <widget class="QLineEdit" name="b_height_lineEdit">
@@ -636,7 +680,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          <string>Class of concrete:</string>
         </property>
        </widget>
-       <widget class="QComboBox" name="b_steel_class_combo">
+       <widget class="QComboBox" name="b_steel_grade_combo">
         <property name="geometry">
          <rect>
           <x>140</x>
@@ -708,11 +752,11 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          <number>6</number>
         </property>
        </widget>
-       <widget class="QRadioButton" name="b_section_radioBtn">
+       <widget class="QRadioButton" name="b_span_section_radioBtn">
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>250</y>
+          <y>280</y>
           <width>141</width>
           <height>17</height>
          </rect>
@@ -725,7 +769,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         <property name="geometry">
          <rect>
           <x>230</x>
-          <y>280</y>
+          <y>310</y>
           <width>111</width>
           <height>21</height>
          </rect>
@@ -738,7 +782,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>280</y>
+          <y>310</y>
           <width>131</width>
           <height>21</height>
          </rect>
@@ -754,7 +798,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         <property name="geometry">
          <rect>
           <x>170</x>
-          <y>280</y>
+          <y>310</y>
           <width>50</width>
           <height>20</height>
          </rect>
@@ -776,7 +820,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         <property name="geometry">
          <rect>
           <x>350</x>
-          <y>280</y>
+          <y>310</y>
           <width>50</width>
           <height>20</height>
          </rect>
@@ -795,7 +839,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>340</y>
+          <y>370</y>
           <width>171</width>
           <height>21</height>
          </rect>
@@ -808,7 +852,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         <property name="geometry">
          <rect>
           <x>190</x>
-          <y>340</y>
+          <y>370</y>
           <width>50</width>
           <height>20</height>
          </rect>
@@ -821,13 +865,29 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>310</y>
+          <y>340</y>
           <width>111</width>
           <height>21</height>
          </rect>
         </property>
         <property name="text">
          <string>Load:</string>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="b_sup_section_radioBtn">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>250</y>
+          <width>141</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Support section</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
        </widget>
       </widget>
@@ -923,7 +983,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          <string>Steel:</string>
         </property>
        </widget>
-       <widget class="QLabel" name="c_steel_class_label">
+       <widget class="QLabel" name="c_steel_grade_label">
         <property name="geometry">
          <rect>
           <x>30</x>
@@ -933,7 +993,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          </rect>
         </property>
         <property name="text">
-         <string>Class of steel:</string>
+         <string>Grade of steel:</string>
         </property>
        </widget>
        <widget class="QLabel" name="c_bar_label">
@@ -972,7 +1032,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          <string>Class of concrete:</string>
         </property>
        </widget>
-       <widget class="QComboBox" name="c_steel_class_combo">
+       <widget class="QComboBox" name="c_steel_grade_combo">
         <property name="geometry">
          <rect>
           <x>140</x>
@@ -1215,7 +1275,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          <string>Steel:</string>
         </property>
        </widget>
-       <widget class="QLabel" name="f_steel_class_label">
+       <widget class="QLabel" name="f_steel_grade_label">
         <property name="geometry">
          <rect>
           <x>30</x>
@@ -1225,7 +1285,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          </rect>
         </property>
         <property name="text">
-         <string>Class of steel:</string>
+         <string>Grade of steel:</string>
         </property>
        </widget>
        <widget class="QLineEdit" name="f_fwidth_lineEdit">
@@ -1277,7 +1337,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          <string>Class of concrete:</string>
         </property>
        </widget>
-       <widget class="QComboBox" name="f_steel_class_combo">
+       <widget class="QComboBox" name="f_steel_grade_combo">
         <property name="geometry">
          <rect>
           <x>140</x>
@@ -1517,7 +1577,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
        </widget>
       </widget>
      </widget>
-     <widget class="QFrame" name="result_frame">
+     <widget class="QStackedWidget" name="results_stackedWidget">
       <property name="geometry">
        <rect>
         <x>500</x>
@@ -1526,90 +1586,332 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         <height>560</height>
        </rect>
       </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
+      <property name="currentIndex">
+       <number>0</number>
       </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <widget class="QPushButton" name="run_btn">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>530</y>
-         <width>110</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Run calculations</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="elementDraw">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>270</width>
-         <height>170</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);</string>
-       </property>
-       <property name="text">
-        <string>Drawing placeholder here</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="report_btn">
-       <property name="geometry">
-        <rect>
-         <x>170</x>
-         <y>530</y>
-         <width>110</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Generate report</string>
-       </property>
-      </widget>
-      <widget class="QTextBrowser" name="results_textBrowser">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>310</y>
-         <width>270</width>
-         <height>210</height>
-        </rect>
-       </property>
-       <property name="html">
-        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:12px; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12px;&quot;&gt;Reuslts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-      <widget class="QTextBrowser" name="info_textBrowser">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>200</y>
-         <width>270</width>
-         <height>100</height>
-        </rect>
-       </property>
-       <property name="html">
-        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+      <widget class="QWidget" name="plate_page">
+       <widget class="QPushButton" name="p_run_btn">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>530</y>
+          <width>110</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Run calculations</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="p_report_btn">
+        <property name="geometry">
+         <rect>
+          <x>170</x>
+          <y>530</y>
+          <width>110</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Generate report</string>
+        </property>
+       </widget>
+       <widget class="QTextBrowser" name="p_info_textBrowser">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>200</y>
+          <width>270</width>
+          <height>100</height>
+         </rect>
+        </property>
+        <property name="html">
+         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:12px; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12px;&quot;&gt;Informations about progress&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
+        </property>
+       </widget>
+       <widget class="QTextBrowser" name="p_results_textBrowser">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>310</y>
+          <width>270</width>
+          <height>210</height>
+         </rect>
+        </property>
+        <property name="html">
+         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:12px; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12px;&quot;&gt;Reuslts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="p_elementDraw">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>270</width>
+          <height>170</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>Plate drawing placeholder</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="beam_page">
+       <widget class="QPushButton" name="b_run_btn">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>530</y>
+          <width>110</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Run calculations</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="b_elementDraw">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>270</width>
+          <height>170</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>Beam drawing placeholder</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QTextBrowser" name="b_info_textBrowser">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>200</y>
+          <width>270</width>
+          <height>100</height>
+         </rect>
+        </property>
+        <property name="html">
+         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:12px; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12px;&quot;&gt;Informations about progress&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QTextBrowser" name="b_results_textBrowser">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>310</y>
+          <width>270</width>
+          <height>210</height>
+         </rect>
+        </property>
+        <property name="html">
+         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:12px; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12px;&quot;&gt;Reuslts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="b_report_btn">
+        <property name="geometry">
+         <rect>
+          <x>170</x>
+          <y>530</y>
+          <width>110</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Generate report</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="col_page">
+       <widget class="QPushButton" name="c_run_btn">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>530</y>
+          <width>110</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Run calculations</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="c_elementDraw">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>270</width>
+          <height>170</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>Column drawing placeholder</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QTextBrowser" name="c_info_textBrowser">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>200</y>
+          <width>270</width>
+          <height>100</height>
+         </rect>
+        </property>
+        <property name="html">
+         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:12px; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12px;&quot;&gt;Informations about progress&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QTextBrowser" name="c_results_textBrowser">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>310</y>
+          <width>270</width>
+          <height>210</height>
+         </rect>
+        </property>
+        <property name="html">
+         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:12px; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12px;&quot;&gt;Reuslts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="c_report_btn">
+        <property name="geometry">
+         <rect>
+          <x>170</x>
+          <y>530</y>
+          <width>110</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Generate report</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="foot_page">
+       <widget class="QPushButton" name="f_run_btn">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>530</y>
+          <width>110</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Run calculations</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="f_elementDraw">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>270</width>
+          <height>170</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>Foot drawing placeholder</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QTextBrowser" name="f_info_textBrowser">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>200</y>
+          <width>270</width>
+          <height>100</height>
+         </rect>
+        </property>
+        <property name="html">
+         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:12px; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12px;&quot;&gt;Informations about progress&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QTextBrowser" name="f_results_textBrowser">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>310</y>
+          <width>270</width>
+          <height>210</height>
+         </rect>
+        </property>
+        <property name="html">
+         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:12px; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12px;&quot;&gt;Reuslts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="f_report_btn">
+        <property name="geometry">
+         <rect>
+          <x>170</x>
+          <y>530</y>
+          <width>110</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Generate report</string>
+        </property>
+       </widget>
       </widget>
      </widget>
     </widget>
@@ -1646,7 +1948,6 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionNew"/>
     <addaction name="actionSave"/>
     <addaction name="actionOpen"/>
     <addaction name="separator"/>
@@ -1669,14 +1970,6 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+I</string>
-   </property>
-  </action>
-  <action name="actionNew">
-   <property name="text">
-    <string>New</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+N</string>
    </property>
   </action>
   <action name="actionOpen">
@@ -1719,25 +2012,25 @@ p, li { white-space: pre-wrap; }
   <tabstop>p_exp_combo</tabstop>
   <tabstop>p_concr_class_combo</tabstop>
   <tabstop>p_concr_cover_lineEdit</tabstop>
-  <tabstop>p_steel_class_combo</tabstop>
+  <tabstop>p_steel_grade_combo</tabstop>
   <tabstop>p_bar_diam_combo</tabstop>
   <tabstop>p_th_lineEdit</tabstop>
   <tabstop>p_moment_lineEdit</tabstop>
   <tabstop>b_exp_combo</tabstop>
   <tabstop>b_concr_class_combo</tabstop>
   <tabstop>b_concr_cover_lineEdit</tabstop>
-  <tabstop>b_steel_class_combo</tabstop>
+  <tabstop>b_steel_grade_combo</tabstop>
   <tabstop>b_bar_diam_combo</tabstop>
   <tabstop>b_height_lineEdit</tabstop>
   <tabstop>b_width_lineEdit</tabstop>
-  <tabstop>b_section_radioBtn</tabstop>
+  <tabstop>b_span_section_radioBtn</tabstop>
   <tabstop>b_fl_th_lineEdit</tabstop>
   <tabstop>b_fl_width_lineEdit</tabstop>
   <tabstop>b_moment_lineEdit</tabstop>
   <tabstop>c_exp_combo</tabstop>
   <tabstop>c_concr_class_combo</tabstop>
   <tabstop>c_concr_cover_lineEdit</tabstop>
-  <tabstop>c_steel_class_combo</tabstop>
+  <tabstop>c_steel_grade_combo</tabstop>
   <tabstop>c_bar_diam_combo</tabstop>
   <tabstop>c_height_lineEdit</tabstop>
   <tabstop>c_width_lineEdit</tabstop>
@@ -1746,7 +2039,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>f_exp_combo</tabstop>
   <tabstop>f_concr_class_combo</tabstop>
   <tabstop>f_concr_cover_lineEdit</tabstop>
-  <tabstop>f_steel_class_combo</tabstop>
+  <tabstop>f_steel_grade_combo</tabstop>
   <tabstop>f_bar_diam_combo</tabstop>
   <tabstop>f_col_bar_diam_combo</tabstop>
   <tabstop>f_fwidth_lineEdit</tabstop>
@@ -1755,15 +2048,27 @@ p, li { white-space: pre-wrap; }
   <tabstop>f_cheight_lineEdit</tabstop>
   <tabstop>f_cwidth_lineEdit</tabstop>
   <tabstop>f_vert_lineEdit</tabstop>
-  <tabstop>run_btn</tabstop>
-  <tabstop>report_btn</tabstop>
-  <tabstop>results_textBrowser</tabstop>
-  <tabstop>info_textBrowser</tabstop>
  </tabstops>
  <resources/>
  <connections>
   <connection>
-   <sender>b_section_radioBtn</sender>
+   <sender>b_span_section_radioBtn</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>b_fl_width_lineEdit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>102</x>
+     <y>316</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>386</x>
+     <y>347</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>b_span_section_radioBtn</sender>
    <signal>toggled(bool)</signal>
    <receiver>b_fl_th_lineEdit</receiver>
    <slot>setEnabled(bool)</slot>
@@ -1779,18 +2084,18 @@ p, li { white-space: pre-wrap; }
    </hints>
   </connection>
   <connection>
-   <sender>b_section_radioBtn</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>b_fl_width_lineEdit</receiver>
-   <slot>setEnabled(bool)</slot>
+   <sender>elements_tabs</sender>
+   <signal>currentChanged(int)</signal>
+   <receiver>results_stackedWidget</receiver>
+   <slot>setCurrentIndex(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>102</x>
-     <y>316</y>
+     <x>249</x>
+     <y>314</y>
     </hint>
     <hint type="destinationlabel">
-     <x>386</x>
-     <y>347</y>
+     <x>644</x>
+     <y>314</y>
     </hint>
    </hints>
   </connection>

@@ -57,7 +57,6 @@ class Main(QtWidgets.QMainWindow):
         self.ui.column_btn.clicked.connect(lambda: self.showElement(self.ui.column_btn))
         self.ui.foot_btn.clicked.connect(lambda: self.showElement(self.ui.foot_btn))
         self.ui.actionClose.triggered.connect(self.close)
-        self.ui.actionNew.triggered.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.main_page))
         self.ui.actionSave.triggered.connect(self.saveFile)
         self.ui.actionOpen.triggered.connect(self.openFile)
 
@@ -117,7 +116,6 @@ class Main(QtWidgets.QMainWindow):
                 currentTab = self.ui.elements_tabs.currentWidget()
                 saveData = {
                     "element": currentTab.objectName(),
-                    # TODO check if data storing can be improved
                     "data": {
                         **{lineEdit.objectName(): lineEdit.text() for lineEdit in
                            currentTab.findChildren(QtWidgets.QLineEdit)},
@@ -126,8 +124,11 @@ class Main(QtWidgets.QMainWindow):
                         **{radioButton.objectName(): radioButton.isChecked() for radioButton in
                            currentTab.findChildren(QtWidgets.QRadioButton)}
                     },
-                    "info": self.ui.info_textBrowser.toPlainText(),
-                    "results": self.ui.results_textBrowser.toPlainText()
+                    "info": {
+                        **{textBrowser.objectName(): textBrowser.toPlainText()
+                           for textBrowser in
+                           self.ui.results_stackedWidget.currentWidget().findChildren(QtWidgets.QTextBrowser)}
+                    }
                 }
                 saveJson = json.dumps(saveData, indent=4)
                 f.write(saveJson)
@@ -180,16 +181,15 @@ class Main(QtWidgets.QMainWindow):
             if self.ui.stackedWidget.currentIndex() == 0:
                 self.ui.stackedWidget.setCurrentIndex(1)
             self.ui.elements_tabs.setCurrentWidget(element)
-            # TODO improve for loop
-            for key in dataFromSave["data"].keys():
-                if key.endswith("lineEdit"):
-                    element.findChild(QtWidgets.QLineEdit, key).setText(dataFromSave["data"][key])
-                elif key.endswith("combo"):
-                    element.findChild(QtWidgets.QComboBox, key).setCurrentText(dataFromSave["data"][key])
-                elif key.endswith("radioBtn"):
-                    element.findChild(QtWidgets.QRadioButton, key).setChecked(dataFromSave["data"][key])
-            self.ui.info_textBrowser.setText(dataFromSave["info"])
-            self.ui.results_textBrowser.setText(dataFromSave["results"])
+            for dataKey in dataFromSave["data"].keys():
+                if dataKey.endswith("lineEdit"):
+                    element.findChild(QtWidgets.QLineEdit, dataKey).setText(dataFromSave["data"][dataKey])
+                elif dataKey.endswith("combo"):
+                    element.findChild(QtWidgets.QComboBox, dataKey).setCurrentText(dataFromSave["data"][dataKey])
+                elif dataKey.endswith("radioBtn"):
+                    element.findChild(QtWidgets.QRadioButton, dataKey).setChecked(dataFromSave["data"][dataKey])
+            for infoKey in dataFromSave["data"].keys():
+                self.ui.results_stackedWidget.findChild(QtWidgets.QTextBrowser, infoKey)
 
     def showElement(self, buttonClicked):
         """
