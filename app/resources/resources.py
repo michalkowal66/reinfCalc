@@ -88,30 +88,38 @@ class ConcreteClass(Enum):
               "fctk_0.95": 5.3, "Ecm": 37}
 
 
-class RebarClass(Enum):
+class RebarGrade(Enum):
     """ Enum Class containing steel classes
 
     Steel classes are stored as class attributes referring to classes' characteristic values
     in accordance to PN-B-03264:2002
 
     Each attribute holds fixed number of keys that represent values of concrete properties:
-        steel_class: steel class,
-        fyd: design yield strength of steel class
+        steel_grade: steel grade,
+        fyd: design yield strength of steel grade
     """
-    A_III = {
-        "steel_class": "A-III", "fyd": 350
+    RB500 = {
+        "steel_grade": "RB500", "fyd": 420
     }
-    A_IIIN = {
-        "steel_class": "A-IIIN", "fyd": 420
+    RB500W = {
+        "steel_grade": "RB500W", "fyd": 420
+    }
+    BSt500S = {
+        "steel_grade": "BSt500S", "fyd": 420
+    }
+    B500SP = {
+        "steel_grade": "B500SP ", "fyd": 420
     }
 
 
 resources = {
     "exp_class": ExpClass,
     "concrete_class": ConcreteClass,
-    "steel_class": RebarClass,
-    "diameters": [n for n in range(6, 42, 2)]
+    "steel_grade": RebarGrade,
+    "diameters": [*[n for n in range(6, 24, 2)], 25, 28, 30, 32, 35, 38, 40]
 }
+# proposed new bar diameters according to materials found online
+# [n for n in range(6, 42, 2)] old diameters list
 
 translate = {
     "exp_class": "Exposition class",

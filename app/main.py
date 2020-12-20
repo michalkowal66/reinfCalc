@@ -76,8 +76,7 @@ class Main(QtWidgets.QMainWindow):
         -------
         None
         """
-        # TODO check if method can be improved
-        names = {"steel": "steel_class", "concr": "concrete_class", "exp": "exp_class", "diam": "diameters"}
+        names = {"steel": "steel_grade", "concr": "concrete_class", "exp": "exp_class", "diam": "diameters"}
         combos = self.ui.elements_tabs.findChildren(QtWidgets.QComboBox)
         combosDict = {names[key]: [element for element in combos if key in element.objectName()] for key in names.keys()}
         for key in combosDict.keys():
