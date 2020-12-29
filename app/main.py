@@ -54,7 +54,7 @@ class Main(QtWidgets.QMainWindow):
         self.ui.setupUi(self)
         self.ui.plate_btn.clicked.connect(lambda: self.showElement(self.ui.plate_btn))
         self.ui.beam_btn.clicked.connect(lambda: self.showElement(self.ui.beam_btn))
-        self.ui.column_btn.clicked.connect(lambda: self.showElement(self.ui.column_btn))
+        self.ui.col_btn.clicked.connect(lambda: self.showElement(self.ui.col_btn))
         self.ui.foot_btn.clicked.connect(lambda: self.showElement(self.ui.foot_btn))
         self.ui.actionClose.triggered.connect(self.close)
         self.ui.actionSave.triggered.connect(self.saveFile)

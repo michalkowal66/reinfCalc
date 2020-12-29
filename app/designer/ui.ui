@@ -187,7 +187,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
        <string>Beam</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="column_btn">
+     <widget class="QPushButton" name="col_btn">
       <property name="geometry">
        <rect>
         <x>380</x>
@@ -2006,7 +2006,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>recently_opened_list</tabstop>
   <tabstop>plate_btn</tabstop>
   <tabstop>beam_btn</tabstop>
-  <tabstop>column_btn</tabstop>
+  <tabstop>col_btn</tabstop>
   <tabstop>foot_btn</tabstop>
   <tabstop>elements_tabs</tabstop>
   <tabstop>p_exp_combo</tabstop>
