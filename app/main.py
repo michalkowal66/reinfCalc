@@ -153,7 +153,7 @@ class Main(QtWidgets.QMainWindow):
             return filePath.split(".")[0] + Main.fileExtension
         return filePath
 
-    def openFile(self):  # improved test file open method
+    def openFile(self, filePath=None):  # improved test file open method
         """
         Open appropriate tab and loads values containers from appointed file.
 
@@ -169,13 +169,14 @@ class Main(QtWidgets.QMainWindow):
         -------
         None
         """
-        options = QtWidgets.QFileDialog.Options()
-        options |= QtWidgets.QFileDialog.DontUseNativeDialog
-        fileName = QtWidgets.QFileDialog.getOpenFileName(self, 'Open file', '',
-                                                         f"Reinforcement Calculator Files (*{Main.fileExtension})",
-                                                         options=options)
-        if fileName[0]:
-            with open(fileName[0], 'r') as f:
+        if not filePath:
+            options = QtWidgets.QFileDialog.Options()
+            options |= QtWidgets.QFileDialog.DontUseNativeDialog
+            filePath, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open file', '',
+                                                                f"Reinforcement Calculator Files (*{Main.fileExtension})",
+                                                                options=options)
+        if filePath:
+            with open(filePath, 'r') as f:
                 dataFromSave = json.load(f)
             element = self.ui.elements_tabs.findChild(QtWidgets.QWidget, dataFromSave["element"])
             if self.ui.stackedWidget.currentIndex() == 0:
