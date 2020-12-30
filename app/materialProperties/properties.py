@@ -112,7 +112,7 @@ class RebarGrade(Enum):
     }
 
 
-resources = {
+properties = {
     "exp_class": ExpClass,
     "concrete_class": ConcreteClass,
     "steel_grade": RebarGrade,

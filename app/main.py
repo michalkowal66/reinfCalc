@@ -1,5 +1,5 @@
 from templates.ui import Ui_MainWindow
-from resources.resources import resources
+from materialProperties.properties import properties
 import json
 # TODO come up with better module and containers naming
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -62,7 +62,7 @@ class Main(QtWidgets.QMainWindow):
 
     def loadData(self):  # improved test data loading method
         """
-        Load imported data from resources module to appropriate containers in application
+        Load imported data from materialProperties module to appropriate containers in application
 
         Find children of tabWidget using locally defined dictionary of element core names
         and append to them imported data.
@@ -81,11 +81,11 @@ class Main(QtWidgets.QMainWindow):
         for key in combosDict.keys():
             if key == "diameters":
                 for element in combosDict[key]:
-                    element.addItems(str(diam) for diam in resources[key])
+                    element.addItems(str(diam) for diam in properties[key])
             else:
                 for element in combosDict[key]:
                     element.addItems(
-                        [value_class.value[key] for value_class in resources[key]])
+                        [value_class.value[key] for value_class in properties[key]])
 
     def saveFile(self):  # improved test saving method
         """
