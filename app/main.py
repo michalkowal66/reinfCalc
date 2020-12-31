@@ -8,7 +8,6 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Main(QtWidgets.QMainWindow):
     """
     Main script class handling gui actions
-    Main script class handling gui actions
 
     ...
 
@@ -34,7 +33,9 @@ class Main(QtWidgets.QMainWindow):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.setupUi()
+        self.loadImgs()
         self.loadData()
+        self.loadDummies()
 
     def setupUi(self):
         """
@@ -56,6 +57,20 @@ class Main(QtWidgets.QMainWindow):
         self.ui.beam_btn.clicked.connect(lambda: self.showElement(self.ui.beam_btn))
         self.ui.col_btn.clicked.connect(lambda: self.showElement(self.ui.col_btn))
         self.ui.foot_btn.clicked.connect(lambda: self.showElement(self.ui.foot_btn))
+
+        self.ui.recently_opened_list.itemDoubleClicked.connect(
+            lambda item: self.openFile(filePath=item.data(QtCore.Qt.UserRole)))
+
+        # TODO can these radio buttons be grouped to make one signal instead?
+        self.ui.p_span_section_radioBtn.toggled.connect(
+            lambda: self.ui.results_stackedWidget.findChild(QtWidgets.QLabel, "p_span_elementDraw").raise_())
+        self.ui.p_sup_section_radioBtn.toggled.connect(
+            lambda: self.ui.results_stackedWidget.findChild(QtWidgets.QLabel, "p_sup_elementDraw").raise_())
+        self.ui.b_span_section_radioBtn.toggled.connect(
+            lambda: self.ui.results_stackedWidget.findChild(QtWidgets.QLabel, "b_span_elementDraw").raise_())
+        self.ui.b_sup_section_radioBtn.toggled.connect(
+            lambda: self.ui.results_stackedWidget.findChild(QtWidgets.QLabel, "b_sup_elementDraw").raise_())
+
         self.ui.actionClose.triggered.connect(self.close)
         self.ui.actionSave.triggered.connect(self.saveFile)
         self.ui.actionOpen.triggered.connect(self.openFile)
@@ -86,6 +101,14 @@ class Main(QtWidgets.QMainWindow):
                 for element in combosDict[key]:
                     element.addItems(
                         [value_class.value[key] for value_class in properties[key]])
+
+    def loadImgs(self):
+        for button in self.ui.welcome_page.findChildren(QtWidgets.QPushButton):
+            button.setIcon(QtGui.QIcon(f"resources/buttons/{button.objectName()}.jpg"))
+            button.setIconSize(QtCore.QSize(200, 200))
+        for drawingPlaceholder in self.ui.results_stackedWidget.findChildren(QtWidgets.QLabel):
+            drawingPlaceholder.setPixmap(QtGui.QPixmap(
+                f"resources/placeholders/{drawingPlaceholder.objectName().split('_elementDraw')[0]}.jpg"))
 
     def saveFile(self):  # improved test saving method
         """
@@ -213,6 +236,23 @@ class Main(QtWidgets.QMainWindow):
         element_tab = self.ui.elements_tabs.findChild(QtWidgets.QWidget, f"{element}_tab")
         self.ui.elements_tabs.setCurrentWidget(element_tab)
         self.ui.stackedWidget.setCurrentWidget(self.ui.main_page)
+
+    def loadDummies(self):  # testing dummy data
+        self.ui.recently_opened_list.item(0).setData(QtCore.Qt.UserRole, "../dummy_data/beam_span_example.rcalc")
+        self.ui.recently_opened_list.item(1).setData(QtCore.Qt.UserRole, "../dummy_data/beam_support_example.rcalc")
+        self.ui.recently_opened_list.item(2).setData(QtCore.Qt.UserRole, "../dummy_data/column_example.rcalc")
+        self.ui.recently_opened_list.item(3).setData(QtCore.Qt.UserRole, "../dummy_data/foot_example.rcalc")
+        self.ui.recently_opened_list.item(4).setData(QtCore.Qt.UserRole, "../dummy_data/plate_example.rcalc")
+        self.ui.menuFile.actions()[3].triggered.connect(
+            lambda: self.openFile(filePath="../dummy_data/beam_span_example.rcalc"))
+        self.ui.menuFile.actions()[4].triggered.connect(
+            lambda: self.openFile(filePath="../dummy_data/beam_support_example.rcalc"))
+        self.ui.menuFile.actions()[5].triggered.connect(
+            lambda: self.openFile(filePath="../dummy_data/column_example.rcalc"))
+        self.ui.menuFile.actions()[6].triggered.connect(
+            lambda: self.openFile(filePath="../dummy_data/foot_example.rcalc"))
+        self.ui.menuFile.actions()[7].triggered.connect(
+            lambda: self.openFile(filePath="../dummy_data/plate_example.rcalc"))
 
 
 if __name__ == "__main__":

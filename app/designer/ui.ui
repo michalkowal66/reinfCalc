@@ -280,7 +280,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          <rect>
           <x>140</x>
           <y>90</y>
-          <width>91</width>
+          <width>90</width>
           <height>22</height>
          </rect>
         </property>
@@ -348,7 +348,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          <rect>
           <x>140</x>
           <y>150</y>
-          <width>91</width>
+          <width>90</width>
           <height>22</height>
          </rect>
         </property>
@@ -371,7 +371,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          <rect>
           <x>380</x>
           <y>150</y>
-          <width>41</width>
+          <width>50</width>
           <height>22</height>
          </rect>
         </property>
@@ -449,7 +449,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          <rect>
           <x>140</x>
           <y>30</y>
-          <width>91</width>
+          <width>90</width>
           <height>22</height>
          </rect>
         </property>
@@ -587,7 +587,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          <rect>
           <x>380</x>
           <y>150</y>
-          <width>41</width>
+          <width>50</width>
           <height>22</height>
          </rect>
         </property>
@@ -662,7 +662,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          <rect>
           <x>140</x>
           <y>30</y>
-          <width>91</width>
+          <width>90</width>
           <height>22</height>
          </rect>
         </property>
@@ -685,7 +685,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          <rect>
           <x>140</x>
           <y>150</y>
-          <width>91</width>
+          <width>90</width>
           <height>22</height>
          </rect>
         </property>
@@ -695,7 +695,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          <rect>
           <x>140</x>
           <y>90</y>
-          <width>91</width>
+          <width>90</width>
           <height>22</height>
          </rect>
         </property>
@@ -952,7 +952,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          <rect>
           <x>380</x>
           <y>150</y>
-          <width>41</width>
+          <width>50</width>
           <height>22</height>
          </rect>
         </property>
@@ -1014,7 +1014,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          <rect>
           <x>140</x>
           <y>30</y>
-          <width>91</width>
+          <width>90</width>
           <height>22</height>
          </rect>
         </property>
@@ -1037,7 +1037,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          <rect>
           <x>140</x>
           <y>150</y>
-          <width>91</width>
+          <width>90</width>
           <height>22</height>
          </rect>
         </property>
@@ -1047,7 +1047,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          <rect>
           <x>140</x>
           <y>90</y>
-          <width>91</width>
+          <width>90</width>
           <height>22</height>
          </rect>
         </property>
@@ -1244,7 +1244,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          <rect>
           <x>380</x>
           <y>150</y>
-          <width>41</width>
+          <width>50</width>
           <height>22</height>
          </rect>
         </property>
@@ -1319,7 +1319,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          <rect>
           <x>140</x>
           <y>30</y>
-          <width>91</width>
+          <width>90</width>
           <height>22</height>
          </rect>
         </property>
@@ -1342,7 +1342,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          <rect>
           <x>140</x>
           <y>150</y>
-          <width>91</width>
+          <width>90</width>
           <height>22</height>
          </rect>
         </property>
@@ -1352,7 +1352,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          <rect>
           <x>140</x>
           <y>90</y>
-          <width>91</width>
+          <width>90</width>
           <height>22</height>
          </rect>
         </property>
@@ -1427,7 +1427,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          <rect>
           <x>260</x>
           <y>190</y>
-          <width>41</width>
+          <width>50</width>
           <height>22</height>
          </rect>
         </property>
@@ -1620,9 +1620,9 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>200</y>
+          <y>300</y>
           <width>270</width>
-          <height>100</height>
+          <height>90</height>
          </rect>
         </property>
         <property name="html">
@@ -1637,9 +1637,9 @@ p, li { white-space: pre-wrap; }
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>310</y>
+          <y>400</y>
           <width>270</width>
-          <height>210</height>
+          <height>120</height>
          </rect>
         </property>
         <property name="html">
@@ -1650,13 +1650,13 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12px;&quot;&gt;Reuslts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
-       <widget class="QLabel" name="p_elementDraw">
+       <widget class="QLabel" name="p_sup_elementDraw">
         <property name="geometry">
          <rect>
           <x>10</x>
           <y>20</y>
           <width>270</width>
-          <height>170</height>
+          <height>270</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -1664,6 +1664,31 @@ p, li { white-space: pre-wrap; }
         </property>
         <property name="text">
          <string>Plate drawing placeholder</string>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QLabel" name="p_span_elementDraw">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>270</width>
+          <height>270</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>Plate drawing placeholder</string>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -1684,13 +1709,13 @@ p, li { white-space: pre-wrap; }
          <string>Run calculations</string>
         </property>
        </widget>
-       <widget class="QLabel" name="b_elementDraw">
+       <widget class="QLabel" name="b_sup_elementDraw">
         <property name="geometry">
          <rect>
           <x>10</x>
           <y>20</y>
           <width>270</width>
-          <height>170</height>
+          <height>270</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -1698,6 +1723,9 @@ p, li { white-space: pre-wrap; }
         </property>
         <property name="text">
          <string>Beam drawing placeholder</string>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -1707,9 +1735,9 @@ p, li { white-space: pre-wrap; }
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>200</y>
+          <y>300</y>
           <width>270</width>
-          <height>100</height>
+          <height>90</height>
          </rect>
         </property>
         <property name="html">
@@ -1724,9 +1752,9 @@ p, li { white-space: pre-wrap; }
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>310</y>
+          <y>400</y>
           <width>270</width>
-          <height>210</height>
+          <height>120</height>
          </rect>
         </property>
         <property name="html">
@@ -1750,6 +1778,34 @@ p, li { white-space: pre-wrap; }
          <string>Generate report</string>
         </property>
        </widget>
+       <widget class="QLabel" name="b_span_elementDraw">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>270</width>
+          <height>270</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>Beam drawing placeholder</string>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <zorder>b_run_btn</zorder>
+       <zorder>b_info_textBrowser</zorder>
+       <zorder>b_results_textBrowser</zorder>
+       <zorder>b_report_btn</zorder>
+       <zorder>b_span_elementDraw</zorder>
+       <zorder>b_sup_elementDraw</zorder>
       </widget>
       <widget class="QWidget" name="col_page">
        <widget class="QPushButton" name="c_run_btn">
@@ -1771,7 +1827,7 @@ p, li { white-space: pre-wrap; }
           <x>10</x>
           <y>20</y>
           <width>270</width>
-          <height>170</height>
+          <height>270</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -1779,6 +1835,9 @@ p, li { white-space: pre-wrap; }
         </property>
         <property name="text">
          <string>Column drawing placeholder</string>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -1788,9 +1847,9 @@ p, li { white-space: pre-wrap; }
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>200</y>
+          <y>300</y>
           <width>270</width>
-          <height>100</height>
+          <height>90</height>
          </rect>
         </property>
         <property name="html">
@@ -1805,9 +1864,9 @@ p, li { white-space: pre-wrap; }
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>310</y>
+          <y>400</y>
           <width>270</width>
-          <height>210</height>
+          <height>120</height>
          </rect>
         </property>
         <property name="html">
@@ -1852,7 +1911,7 @@ p, li { white-space: pre-wrap; }
           <x>10</x>
           <y>20</y>
           <width>270</width>
-          <height>170</height>
+          <height>270</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -1860,6 +1919,9 @@ p, li { white-space: pre-wrap; }
         </property>
         <property name="text">
          <string>Foot drawing placeholder</string>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -1869,9 +1931,9 @@ p, li { white-space: pre-wrap; }
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>200</y>
+          <y>300</y>
           <width>270</width>
-          <height>100</height>
+          <height>90</height>
          </rect>
         </property>
         <property name="html">
@@ -1886,9 +1948,9 @@ p, li { white-space: pre-wrap; }
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>310</y>
+          <y>400</y>
           <width>270</width>
-          <height>210</height>
+          <height>120</height>
          </rect>
         </property>
         <property name="html">
@@ -1951,7 +2013,11 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionSave"/>
     <addaction name="actionOpen"/>
     <addaction name="separator"/>
-    <addaction name="actionrec_opened_file"/>
+    <addaction name="action_beam_span_example"/>
+    <addaction name="action_beam_sup_example"/>
+    <addaction name="action_column_example"/>
+    <addaction name="action_foot_example"/>
+    <addaction name="action_plate_example"/>
     <addaction name="separator"/>
     <addaction name="actionClose"/>
    </widget>
@@ -1988,9 +2054,9 @@ p, li { white-space: pre-wrap; }
     <string>Ctrl+S</string>
    </property>
   </action>
-  <action name="actionrec_opened_file">
+  <action name="action_beam_span_example">
    <property name="text">
-    <string>rec_opened.file</string>
+    <string>beam_span_example.rcalc</string>
    </property>
   </action>
   <action name="actionClose">
@@ -1999,6 +2065,26 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="action_beam_sup_example">
+   <property name="text">
+    <string>beam_support_example.rcalc</string>
+   </property>
+  </action>
+  <action name="action_column_example">
+   <property name="text">
+    <string>column_example.rcalc</string>
+   </property>
+  </action>
+  <action name="action_foot_example">
+   <property name="text">
+    <string>foot_example.rcalc</string>
+   </property>
+  </action>
+  <action name="action_plate_example">
+   <property name="text">
+    <string>plate_example.rcalc</string>
    </property>
   </action>
  </widget>
