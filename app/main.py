@@ -186,7 +186,8 @@ class Main(QtWidgets.QMainWindow):
 
         Parameters
         ----------
-        None
+        filePath : str, optional
+            Path to a save file
 
         Returns
         -------
@@ -212,8 +213,9 @@ class Main(QtWidgets.QMainWindow):
                     element.findChild(QtWidgets.QComboBox, dataKey).setCurrentText(dataFromSave["data"][dataKey])
                 elif dataKey.endswith("radioBtn"):
                     element.findChild(QtWidgets.QRadioButton, dataKey).setChecked(dataFromSave["data"][dataKey])
-            for infoKey in dataFromSave["data"].keys():
-                self.ui.results_stackedWidget.findChild(QtWidgets.QTextBrowser, infoKey)
+            for infoKey in dataFromSave["info"].keys():
+                self.ui.results_stackedWidget.findChild(QtWidgets.QTextBrowser, infoKey).setPlainText(
+                    dataFromSave["info"][infoKey])
 
     def showElement(self, buttonClicked):
         """
