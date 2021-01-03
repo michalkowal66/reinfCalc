@@ -135,6 +135,6 @@ translate = {
     "fctk_0.05": "5% fractile tensile strength [MPa]",
     "fctk_0.95": "95% fractile tensile strength [MPa]",
     "Ecm": "Elastic modulus [GPa]",
-    "steel_class": "Steel class",
-    "fyd": "Design yield strength"
+    "steel_grade": "Steel grade",
+    "fyd": "Design yield strength [MPa]"
 }
