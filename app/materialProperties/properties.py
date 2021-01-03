@@ -2,17 +2,17 @@ from enum import Enum
 
 
 class ExpClass(Enum):
-    """Enum Class containing concrete exposition classes
+    """Enum Class containing concrete exposure classes
 
-    Exposition classes are stored as class attributes referring to dictionaries with related values and remarks
+    exposure classes are stored as class attributes referring to dictionaries with related values and remarks
     in accordance to PN-EN 1992-1-1:2008/NA: 2010
 
     Each attribute holds fixed number of keys that represent values of concrete properties:
-        exp_class: exposition class,
-        concrete_class: minimum concrete class that may be used with given exposition class,
+        exp_class: exposure class,
+        concrete_class: minimum concrete class that may be used with given exposure class,
         max_wc: maximum water/cement ration
         min_cem: minimum content of cement [kg/m^3]
-        remarks: remarks about exposition class
+        remarks: remarks about exposure class
     """
     X0 = {"exp_class": "X0", "concrete_class": "C12/15", "max_wc": None, "min_cem": None,
           "remarks": "No corrosion risk"}
@@ -122,7 +122,7 @@ properties = {
 # [n for n in range(6, 42, 2)] old diameters list
 
 translate = {
-    "exp_class": "Exposition class",
+    "exp_class": "Exposure class",
     "concrete_class": "Concrete class",
     "max_wc": "Maximum water/cement ratio",
     "min_cem": "Minimum cement content [kg/m^3]",
