@@ -75,10 +75,13 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
        </rect>
       </property>
       <property name="text">
-       <string>Information label</string>
+       <string>Click one of presented below elements to start or double click one of recently opened files to resume work.</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
       </property>
      </widget>
      <widget class="QListWidget" name="recently_opened_list">
@@ -126,7 +129,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
        </rect>
       </property>
       <property name="text">
-       <string>Welcome label</string>
+       <string>Reinforcement Calculator</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -165,7 +168,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
       <property name="geometry">
        <rect>
         <x>330</x>
-        <y>130</y>
+        <y>110</y>
         <width>200</width>
         <height>200</height>
        </rect>
@@ -178,7 +181,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
       <property name="geometry">
        <rect>
         <x>560</x>
-        <y>130</y>
+        <y>110</y>
         <width>200</width>
         <height>200</height>
        </rect>
@@ -191,7 +194,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
       <property name="geometry">
        <rect>
         <x>330</x>
-        <y>360</y>
+        <y>340</y>
         <width>200</width>
         <height>200</height>
        </rect>
@@ -204,13 +207,32 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
       <property name="geometry">
        <rect>
         <x>560</x>
-        <y>360</y>
+        <y>340</y>
         <width>200</width>
         <height>200</height>
        </rect>
       </property>
       <property name="text">
        <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="info_lbl_2">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>540</y>
+        <width>460</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Supervisor: Ph.D. Eng. Roman Putanowicz, Author: Michał Kowal </string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
       </property>
      </widget>
     </widget>
