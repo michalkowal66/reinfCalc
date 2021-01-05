@@ -98,17 +98,14 @@ class RebarGrade(Enum):
         steel_grade: steel grade,
         fyd: design yield strength of steel grade
     """
+    A_20G2VY = {
+        "steel_grade": "20G2VY", "fyd": 420
+    }
     RB500 = {
         "steel_grade": "RB500", "fyd": 420
     }
     RB500W = {
         "steel_grade": "RB500W", "fyd": 420
-    }
-    BSt500S = {
-        "steel_grade": "BSt500S", "fyd": 420
-    }
-    B500SP = {
-        "steel_grade": "B500SP ", "fyd": 420
     }
 
 
@@ -116,10 +113,9 @@ properties = {
     "exp_class": ExpClass,
     "concrete_class": ConcreteClass,
     "steel_grade": RebarGrade,
-    "diameters": [*[n for n in range(6, 24, 2)], 25, 28, 30, 32, 35, 38, 40]
 }
-# proposed new bar diameters according to materials found online
-# [n for n in range(6, 42, 2)] old diameters list
+
+diameters = [*[n for n in range(6, 24, 2)], 25, 28, 30, 32, 35, 38, 40]
 
 translate = {
     "exp_class": "Exposure class",

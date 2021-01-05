@@ -1,7 +1,8 @@
 from templates.ui import Ui_MainWindow
 from materialProperties.properties import properties
+from materialProperties.properties import diameters
+from materialProperties.properties import translate
 import json
-# TODO come up with better module and containers naming
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
@@ -96,7 +97,7 @@ class Main(QtWidgets.QMainWindow):
         for key in combosDict.keys():
             if key == "diameters":
                 for element in combosDict[key]:
-                    element.addItems(str(diam) for diam in properties[key])
+                    element.addItems(str(diam) for diam in diameters)
             else:
                 for element in combosDict[key]:
                     element.addItems(
