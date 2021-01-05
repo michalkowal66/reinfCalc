@@ -138,7 +138,7 @@ class Main(QtWidgets.QMainWindow):
 
     def loadImgs(self):
         for button in self.ui.welcome_page.findChildren(QtWidgets.QPushButton):
-            button.setIcon(QtGui.QIcon(f"resources/buttons/{button.objectName()}.jpg"))
+            button.setIcon(QtGui.QIcon(f"resources/buttons/{button.objectName()}.png"))
             button.setIconSize(QtCore.QSize(200, 200))
         for drawingPlaceholder in self.ui.results_stackedWidget.findChildren(QtWidgets.QLabel):
             drawingPlaceholder.setPixmap(QtGui.QPixmap(
