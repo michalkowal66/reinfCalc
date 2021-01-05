@@ -1,0 +1,1 @@
+pyuic5.exe ../designer/dialog.ui -o ../templates/dialog.py -x

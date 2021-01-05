@@ -1,4 +1,5 @@
 from templates.ui import Ui_MainWindow
+from templates.dialog import Ui_Dialog
 from materialProperties.properties import properties
 from materialProperties.properties import diameters
 from materialProperties.properties import translate
@@ -33,7 +34,9 @@ class Main(QtWidgets.QMainWindow):
         """
         super().__init__()
         self.ui = Ui_MainWindow()
+        self.dialog_window = Ui_Dialog()
         self.setupUi()
+        self.setupDialog()
         self.loadImgs()
         self.loadData()
         self.loadDummies()
@@ -62,19 +65,49 @@ class Main(QtWidgets.QMainWindow):
         self.ui.recently_opened_list.itemDoubleClicked.connect(
             lambda item: self.openFile(filePath=item.data(QtCore.Qt.UserRole)))
 
-        # TODO can these radio buttons be grouped to make one signal instead?
-        self.ui.p_span_section_radioBtn.toggled.connect(
-            lambda: self.ui.results_stackedWidget.findChild(QtWidgets.QLabel, "p_span_elementDraw").raise_())
-        self.ui.p_sup_section_radioBtn.toggled.connect(
-            lambda: self.ui.results_stackedWidget.findChild(QtWidgets.QLabel, "p_sup_elementDraw").raise_())
-        self.ui.b_span_section_radioBtn.toggled.connect(
-            lambda: self.ui.results_stackedWidget.findChild(QtWidgets.QLabel, "b_span_elementDraw").raise_())
-        self.ui.b_sup_section_radioBtn.toggled.connect(
-            lambda: self.ui.results_stackedWidget.findChild(QtWidgets.QLabel, "b_sup_elementDraw").raise_())
+        self.ui.menuResources.actions()[0].triggered.connect(dialog.show)
+
+        self.ui.p_span_section_radioBtn.toggled.connect(self.ui.p_span_elementDraw.raise_)
+        self.ui.p_sup_section_radioBtn.toggled.connect(self.ui.p_sup_elementDraw.raise_)
+        self.ui.b_span_section_radioBtn.toggled.connect(self.ui.b_span_elementDraw.raise_)
+        self.ui.b_sup_section_radioBtn.toggled.connect(self.ui.b_sup_elementDraw.raise_)
 
         self.ui.actionClose.triggered.connect(self.close)
         self.ui.actionSave.triggered.connect(self.saveFile)
         self.ui.actionOpen.triggered.connect(self.openFile)
+
+    def setupDialog(self):
+        self.dialog_window.setupUi(dialog)
+        for material_property in properties:
+            row = 0
+            col = 0
+            table = self.dialog_window.tabWidget.findChild(QtWidgets.QTableWidget, material_property)
+            material_classes = list(properties[material_property])
+            # can create class attribute called headers?
+            for key in material_classes[0].value.keys():
+                table.insertColumn(col)
+                header_item = QtWidgets.QTableWidgetItem()
+                header_item.setText(translate[key])
+                table.setHorizontalHeaderItem(col, header_item)
+                col += 1
+
+            for material_class in material_classes:
+                table.insertRow(row)
+                col = 0
+                for property_key in material_class.value.keys():
+                    table_item = QtWidgets.QTableWidgetItem()
+                    table_item.setText(str(material_class.value[property_key]))
+                    table_item.setTextAlignment(4)  # find align to center
+                    table.setItem(row, col, table_item)
+                    col += 1
+                row += 1
+
+            table.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
+
+        self.dialog_window.reinf_grade_graph.setPixmap(QtGui.QPixmap(
+            f"resources/graphs/min_reinf_foot.png"))
+        self.dialog_window.ah_ratio_graph.setPixmap(QtGui.QPixmap(
+            f"resources/graphs/a_h_foot.png"))
 
     def loadData(self):  # improved test data loading method
         """
@@ -261,6 +294,7 @@ class Main(QtWidgets.QMainWindow):
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
+    dialog = QtWidgets.QDialog()
     window = Main()
     window.show()
     sys.exit(app.exec_())
