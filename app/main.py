@@ -39,7 +39,7 @@ class Main(QtWidgets.QMainWindow):
         self.setupDialog()
         self.loadImgs()
         self.loadData()
-        self.loadDummies()
+        self.loadDemo()
 
     def setupUi(self):
         """
@@ -273,22 +273,36 @@ class Main(QtWidgets.QMainWindow):
         self.ui.elements_tabs.setCurrentWidget(element_tab)
         self.ui.stackedWidget.setCurrentWidget(self.ui.main_page)
 
-    def loadDummies(self):  # testing dummy data
-        self.ui.recently_opened_list.item(0).setData(QtCore.Qt.UserRole, "../dummy_data/beam_span_example.rcalc")
-        self.ui.recently_opened_list.item(1).setData(QtCore.Qt.UserRole, "../dummy_data/beam_support_example.rcalc")
-        self.ui.recently_opened_list.item(2).setData(QtCore.Qt.UserRole, "../dummy_data/column_example.rcalc")
-        self.ui.recently_opened_list.item(3).setData(QtCore.Qt.UserRole, "../dummy_data/foot_example.rcalc")
-        self.ui.recently_opened_list.item(4).setData(QtCore.Qt.UserRole, "../dummy_data/plate_example.rcalc")
+    def loadDemo(self):
+        """
+        Connect demo elements to files, link with open file method
+
+        Set data to list view items which will be passed to open file method,
+        link menu file actions trigger with open file method.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+        """
+        self.ui.recently_opened_list.item(0).setData(QtCore.Qt.UserRole, "demo/beam_span_example.rcalc")
+        self.ui.recently_opened_list.item(1).setData(QtCore.Qt.UserRole, "demo/beam_support_example.rcalc")
+        self.ui.recently_opened_list.item(2).setData(QtCore.Qt.UserRole, "demo/column_example.rcalc")
+        self.ui.recently_opened_list.item(3).setData(QtCore.Qt.UserRole, "demo/foot_example.rcalc")
+        self.ui.recently_opened_list.item(4).setData(QtCore.Qt.UserRole, "demo/plate_example.rcalc")
         self.ui.menuFile.actions()[3].triggered.connect(
-            lambda: self.openFile(filePath="../dummy_data/beam_span_example.rcalc"))
+            lambda: self.openFile(filePath="demo/beam_span_example.rcalc"))
         self.ui.menuFile.actions()[4].triggered.connect(
-            lambda: self.openFile(filePath="../dummy_data/beam_support_example.rcalc"))
+            lambda: self.openFile(filePath="demo/beam_support_example.rcalc"))
         self.ui.menuFile.actions()[5].triggered.connect(
-            lambda: self.openFile(filePath="../dummy_data/column_example.rcalc"))
+            lambda: self.openFile(filePath="demo/column_example.rcalc"))
         self.ui.menuFile.actions()[6].triggered.connect(
-            lambda: self.openFile(filePath="../dummy_data/foot_example.rcalc"))
+            lambda: self.openFile(filePath="demo/foot_example.rcalc"))
         self.ui.menuFile.actions()[7].triggered.connect(
-            lambda: self.openFile(filePath="../dummy_data/plate_example.rcalc"))
+            lambda: self.openFile(filePath="demo/plate_example.rcalc"))
 
 
 if __name__ == "__main__":
