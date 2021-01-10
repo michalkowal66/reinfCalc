@@ -1,10 +1,10 @@
+from PyQt5 import QtCore, QtGui, QtWidgets
 from templates.ui import Ui_MainWindow
 from templates.dialog import Ui_Dialog
 from materialProperties.properties import properties
 from materialProperties.properties import diameters
 from materialProperties.properties import translate
 import json
-from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Main(QtWidgets.QMainWindow):
@@ -188,7 +188,7 @@ class Main(QtWidgets.QMainWindow):
         """
         options = QtWidgets.QFileDialog.Options()
         options |= QtWidgets.QFileDialog.DontUseNativeDialog
-        fileName, _ = QtWidgets.QFileDialog.getSaveFileName(self,
+        fileName, *_ = QtWidgets.QFileDialog.getSaveFileName(self,
                                                             "Save File",
                                                             "",
                                                             f"Reinforcement Calculator Files (*{Main.fileExtension})",
