@@ -8,11 +8,12 @@ class ExpClass(Enum):
     in accordance to PN-EN 1992-1-1:2008/NA: 2010
 
     Each attribute holds fixed number of keys that represent values of concrete properties:
-        exp_class: exposure class,
-        concrete_class: minimum concrete class that may be used with given exposure class,
-        max_wc: maximum water/cement ration
-        min_cem: minimum content of cement [kg/m^3]
-        remarks: remarks about exposure class
+    
+    - exp_class: exposure class,
+    - concrete_class: minimum concrete class that may be used with given exposure class,
+    - max_wc: maximum water/cement ration
+    - min_cem: minimum content of cement [kg/m^3]
+    - remarks: remarks about exposure class
     """
     X0 = {"exp_class": "X0", "concrete_class": "C12/15", "max_wc": None, "min_cem": None,
           "remarks": "No corrosion risk"}
@@ -59,14 +60,15 @@ class ConcreteClass(Enum):
     in accordance to PN-EN 1992-1-1:2008/NA: 2010
 
     Each attribute holds fixed number of keys that represent values of concrete properties:
-        concrete_class: concrete class,
-        fck: characteristic compressive strength of cylinder sample [MPa],
-        fck_cube: characteristic compressive strength of cube sample [MPa],
-        fcm: mean compressive strength of cylinder sample [MPa],
-        fctm: mean tensile strength [MPa],
-        fctk_0.05: 5% fractile tensile strength [MPa],
-        fctk_0.95: 95% fractile tensile strength [MPa],
-        Ecm: Elastic modulus [GPa]
+
+    - concrete_class: concrete class,
+    - fck: characteristic compressive strength of cylinder sample [MPa],
+    - fck_cube: characteristic compressive strength of cube sample [MPa],
+    - fcm: mean compressive strength of cylinder sample [MPa],
+    - fctm: mean tensile strength [MPa],
+    - fctk_0.05: 5% fractile tensile strength [MPa],
+    - fctk_0.95: 95% fractile tensile strength [MPa],
+    - Ecm: Elastic modulus [GPa]
      """
     C12_15 = {"concrete_class": "C12/15", "fck": 12, "fck_cube": 15, "fcm": 20, "fctm": 1.6, "fctk_0.05": 1.1,
               "fctk_0.95": 2.0, "Ecm": 27}
@@ -95,8 +97,9 @@ class RebarGrade(Enum):
     in accordance to PN-B-03264:2002
 
     Each attribute holds fixed number of keys that represent values of concrete properties:
-        steel_grade: steel grade,
-        fyd: design yield strength of steel grade
+    
+    - steel_grade: steel grade,
+    - fyd: design yield strength of steel grade
     """
     A_20G2VY = {
         "steel_grade": "20G2VY", "fyd": 420
@@ -114,8 +117,12 @@ properties = {
     "concrete_class": ConcreteClass,
     "steel_grade": RebarGrade,
 }
+"""dict: Dictionary with material property classes
+"""
 
 diameters = [*[n for n in range(6, 24, 2)], 25, 28, 30, 32, 35, 38, 40]
+"""list: List of popular rebar diameters
+"""
 
 translate = {
     "exp_class": "Exposure class",
@@ -134,3 +141,5 @@ translate = {
     "steel_grade": "Steel grade",
     "fyd": "Design yield strength [MPa]"
 }
+"""dict: Dictionary with elaborated keys of property classes
+"""
