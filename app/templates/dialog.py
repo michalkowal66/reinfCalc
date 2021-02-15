@@ -78,7 +78,7 @@ class Ui_Dialog(object):
         self.exp_class.horizontalHeader().setDefaultSectionSize(120)
         self.exp_class.horizontalHeader().setStretchLastSection(True)
         self.exp_class.verticalHeader().setVisible(False)
-        self.exp_class.verticalHeader().setStretchLastSection(True)
+        self.exp_class.verticalHeader().setStretchLastSection(False)
         self.info_label = QtWidgets.QLabel(self.exp_tab)
         self.info_label.setGeometry(QtCore.QRect(10, 20, 765, 25))
         self.info_label.setAlignment(QtCore.Qt.AlignCenter)
@@ -197,9 +197,9 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Included data"))
-        self.info_label.setText(_translate("Dialog", "Exposure classes according to EN 1992: 1-1"))
+        self.info_label.setText(_translate("Dialog", "Exposure classes according to EN 1992-1-1:2004"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.exp_tab), _translate("Dialog", "Exposure classes"))
-        self.info_label_2.setText(_translate("Dialog", "Concrete classes according to EN 1992: 1-1"))
+        self.info_label_2.setText(_translate("Dialog", "Concrete classes according to EN 1992-1-1:2004"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.concrete_tab), _translate("Dialog", "Concrete classes"))
         self.info_label_3.setText(_translate("Dialog", "Chosen reinforcement steel grades according to EN 1992-1-1:2004 and PN-B-03264:2002"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.steel_tab), _translate("Dialog", "Reinforcement steel grades"))

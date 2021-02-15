@@ -168,7 +168,7 @@ font: 12px &quot;MS Shell Dlg 2&quot;;
       </rect>
      </property>
      <property name="text">
-      <string>Exposure classes according to EN 1992: 1-1</string>
+      <string>Exposure classes according to EN 1992-1-1:2004</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -253,7 +253,7 @@ font: 12px &quot;MS Shell Dlg 2&quot;;
       </rect>
      </property>
      <property name="text">
-      <string>Concrete classes according to EN 1992: 1-1</string>
+      <string>Concrete classes according to EN 1992-1-1:2004</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
