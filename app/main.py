@@ -206,7 +206,7 @@ class Main(QtWidgets.QMainWindow):
                     "element": currentTab.objectName(),
                     "data": {
                         **{lineEdit.objectName(): float(lineEdit.text()) for lineEdit in
-                            currentTab.findChildren(QtWidgets.QLineEdit)},
+                            currentTab.findChildren(QtWidgets.QLineEdit) if lineEdit.isEnabled()},
                         **{comboBox.objectName(): comboBox.currentText() for comboBox in
                             currentTab.findChildren(QtWidgets.QComboBox)},
                         **{radioButton.objectName(): radioButton.isChecked() for radioButton in
