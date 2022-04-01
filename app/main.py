@@ -74,6 +74,12 @@ class Main(QtWidgets.QMainWindow):
         self.ui.actionSave.triggered.connect(self.saveFile)
         self.ui.actionOpen.triggered.connect(self.openFile)
 
+        double_regex = QtCore.QRegExp('[+-]?([0-9]*[.])?[0-9]+')
+        double_validator = QtGui.QRegExpValidator(double_regex)
+
+        for lineEdit in self.ui.elements_tabs.findChildren(QtWidgets.QLineEdit):
+            lineEdit.setValidator(double_validator)
+
     def setupDialog(self):
         """
         Construct dialog window's ui elements and load data
@@ -199,17 +205,17 @@ class Main(QtWidgets.QMainWindow):
                 saveData = {
                     "element": currentTab.objectName(),
                     "data": {
-                        **{lineEdit.objectName(): lineEdit.text() for lineEdit in
-                           currentTab.findChildren(QtWidgets.QLineEdit)},
+                        **{lineEdit.objectName(): float(lineEdit.text()) for lineEdit in
+                            currentTab.findChildren(QtWidgets.QLineEdit)},
                         **{comboBox.objectName(): comboBox.currentText() for comboBox in
-                           currentTab.findChildren(QtWidgets.QComboBox)},
+                            currentTab.findChildren(QtWidgets.QComboBox)},
                         **{radioButton.objectName(): radioButton.isChecked() for radioButton in
-                           currentTab.findChildren(QtWidgets.QRadioButton)}
+                            currentTab.findChildren(QtWidgets.QRadioButton)}
                     },
                     "info": {
                         **{textBrowser.objectName(): textBrowser.toPlainText()
-                           for textBrowser in
-                           self.ui.results_stackedWidget.currentWidget().findChildren(QtWidgets.QTextBrowser)}
+                            for textBrowser in
+                            self.ui.results_stackedWidget.currentWidget().findChildren(QtWidgets.QTextBrowser)}
                     }
                 }
                 saveJson = json.dumps(saveData, indent=4)
@@ -267,7 +273,7 @@ class Main(QtWidgets.QMainWindow):
             self.ui.elements_tabs.setCurrentWidget(element)
             for dataKey in dataFromSave["data"].keys():
                 if dataKey.endswith("lineEdit"):
-                    element.findChild(QtWidgets.QLineEdit, dataKey).setText(dataFromSave["data"][dataKey])
+                    element.findChild(QtWidgets.QLineEdit, dataKey).setText(str(dataFromSave["data"][dataKey]))
                 elif dataKey.endswith("combo"):
                     element.findChild(QtWidgets.QComboBox, dataKey).setCurrentText(dataFromSave["data"][dataKey])
                 elif dataKey.endswith("radioBtn"):
