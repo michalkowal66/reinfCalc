@@ -420,7 +420,7 @@ class Main(QtWidgets.QMainWindow):
         QDesktopServices.openUrl(url)
 
     def generateReport(self):
-        url = QUrl(f'{Main.host}/results')
+        url = QUrl(f'{Main.host}/results/1')
         QDesktopServices.openUrl(url)
 
     def calculateElement(self):
