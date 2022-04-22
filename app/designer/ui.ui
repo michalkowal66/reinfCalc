@@ -1807,6 +1807,9 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         </property>
        </widget>
        <widget class="QPushButton" name="p_report_btn">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="geometry">
          <rect>
           <x>170</x>
@@ -1969,6 +1972,9 @@ p, li { white-space: pre-wrap; }
         </property>
        </widget>
        <widget class="QPushButton" name="b_report_btn">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="geometry">
          <rect>
           <x>170</x>
@@ -2081,6 +2087,9 @@ p, li { white-space: pre-wrap; }
         </property>
        </widget>
        <widget class="QPushButton" name="c_report_btn">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="geometry">
          <rect>
           <x>170</x>
@@ -2165,6 +2174,9 @@ p, li { white-space: pre-wrap; }
         </property>
        </widget>
        <widget class="QPushButton" name="f_report_btn">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="geometry">
          <rect>
           <x>170</x>
