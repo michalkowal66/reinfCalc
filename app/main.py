@@ -1,9 +1,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.Qt import QUrl, QDesktopServices
 from templates.ui import Ui_MainWindow
 from templates.dialog import Ui_Dialog
 from materialProperties.properties import properties
 from materialProperties.properties import diameters
 from materialProperties.properties import translate
+import requests
 import json
 
 
@@ -16,7 +18,8 @@ class Main(QtWidgets.QMainWindow):
     fileExtension : str
         File extension used by application
     """
-    fileExtension = ".rcalc"
+    fileExtension = '.rcalc'
+    host = 'http://127.0.0.1:8000'
 
     def __init__(self):
         """
@@ -39,6 +42,8 @@ class Main(QtWidgets.QMainWindow):
         self.loadData()
         self.loadDemo()
 
+        self.session = requests.session()
+
     def setupUi(self):
         """
         Construct window's ui elements and create buttons and menu actions connections.
@@ -55,6 +60,10 @@ class Main(QtWidgets.QMainWindow):
         None
         """
         self.ui.setupUi(self)
+
+        self.ui.login_btn.clicked.connect(self.login)
+        self.ui.signup_btn.clicked.connect(self.signup)
+
         self.ui.plate_btn.clicked.connect(lambda: self.showElement(self.ui.plate_btn))
         self.ui.beam_btn.clicked.connect(lambda: self.showElement(self.ui.beam_btn))
         self.ui.col_btn.clicked.connect(lambda: self.showElement(self.ui.col_btn))
@@ -65,6 +74,9 @@ class Main(QtWidgets.QMainWindow):
 
         self.ui.menuResources.actions()[0].triggered.connect(dialog.show)
 
+        self.ui.p_report_btn.clicked.connect(self.generateReport)
+        self.ui.p_run_btn.clicked.connect(self.calculateElement)
+
         self.ui.p_span_section_radioBtn.toggled.connect(self.ui.p_span_elementDraw.raise_)
         self.ui.p_sup_section_radioBtn.toggled.connect(self.ui.p_sup_elementDraw.raise_)
         self.ui.b_span_section_radioBtn.toggled.connect(self.ui.b_span_elementDraw.raise_)
@@ -73,6 +85,7 @@ class Main(QtWidgets.QMainWindow):
         self.ui.actionClose.triggered.connect(self.close)
         self.ui.actionSave.triggered.connect(self.saveFile)
         self.ui.actionOpen.triggered.connect(self.openFile)
+        self.ui.actionLog_Out.triggered.connect(self.logout)
 
         double_regex = QtCore.QRegExp('[+-]?([0-9]*[.])?[0-9]+')
         double_validator = QtGui.QRegExpValidator(double_regex)
@@ -101,7 +114,7 @@ class Main(QtWidgets.QMainWindow):
             col = 0
             table = self.dialog_window.tabWidget.findChild(QtWidgets.QTableWidget, material_property)
             material_classes = list(properties[material_property])
-            # can create class attribute called headers?
+
             for key in material_classes[0].value.keys():
                 table.insertColumn(col)
                 header_item = QtWidgets.QTableWidgetItem()
@@ -115,7 +128,7 @@ class Main(QtWidgets.QMainWindow):
                 for property_key in material_class.value.keys():
                     table_item = QtWidgets.QTableWidgetItem()
                     table_item.setText(str(material_class.value[property_key]))
-                    table_item.setTextAlignment(4)  # find align to center
+                    table_item.setTextAlignment(4)
                     table.setItem(row, col, table_item)
                     col += 1
                 row += 1
@@ -123,9 +136,9 @@ class Main(QtWidgets.QMainWindow):
             table.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
 
         self.dialog_window.reinf_grade_graph.setPixmap(QtGui.QPixmap(
-            f"resources/graphs/min_reinf_foot.png"))
+            f'resources/graphs/min_reinf_foot.png'))
         self.dialog_window.ah_ratio_graph.setPixmap(QtGui.QPixmap(
-            f"resources/graphs/a_h_foot.png"))
+            f'resources/graphs/a_h_foot.png'))
 
     def loadData(self):
         """
@@ -142,7 +155,7 @@ class Main(QtWidgets.QMainWindow):
         -------
         None
         """
-        names = {"steel": "steel_grade", "concr": "concrete_class", "exp": "exp_class", "diam": "diameters"}
+        names = {'steel': 'steel_grade', 'concr': 'concrete_class', 'exp': 'exp_class', 'diam': 'diameters'}
         combos = self.ui.elements_tabs.findChildren(QtWidgets.QComboBox)
         combosDict = {names[key]: [element for element in combos if key in element.objectName()] for key in names.keys()}
         for key in combosDict.keys():
@@ -169,11 +182,11 @@ class Main(QtWidgets.QMainWindow):
         None
         """
         for button in self.ui.welcome_page.findChildren(QtWidgets.QPushButton):
-            button.setIcon(QtGui.QIcon(f"resources/buttons/{button.objectName()}.png"))
+            button.setIcon(QtGui.QIcon(f'resources/buttons/{button.objectName()}.png'))
             button.setIconSize(QtCore.QSize(200, 200))
         for drawingPlaceholder in self.ui.results_stackedWidget.findChildren(QtWidgets.QLabel):
             drawingPlaceholder.setPixmap(QtGui.QPixmap(
-                f"resources/placeholders/{drawingPlaceholder.objectName().split('_elementDraw')[0]}.jpg"))
+                f'resources/placeholders/{drawingPlaceholder.objectName().split("_elementDraw")[0]}.jpg'))
 
     def saveFile(self):
         """
@@ -192,34 +205,25 @@ class Main(QtWidgets.QMainWindow):
         -------
         None
         """
+        if self.ui.stackedWidget.currentIndex() == 0:
+            return False
         options = QtWidgets.QFileDialog.Options()
         options |= QtWidgets.QFileDialog.DontUseNativeDialog
         fileName, *_ = QtWidgets.QFileDialog.getSaveFileName(self,
-                                                            "Save File",
-                                                            "",
-                                                            f"Reinforcement Calculator Files (*{Main.fileExtension})",
+                                                            'Save File',
+                                                            '',
+                                                            f'Reinforcement Calculator Files (*{Main.fileExtension})',
                                                             options=options)
         if fileName:
             with open(self.ensureFormat(fileName), 'w') as f:
-                currentTab = self.ui.elements_tabs.currentWidget()
-                saveData = {
-                    "element": currentTab.objectName(),
-                    "data": {
-                        **{lineEdit.objectName(): float(lineEdit.text()) for lineEdit in
-                            currentTab.findChildren(QtWidgets.QLineEdit) if lineEdit.isEnabled()},
-                        **{comboBox.objectName(): comboBox.currentText() for comboBox in
-                            currentTab.findChildren(QtWidgets.QComboBox)},
-                        **{radioButton.objectName(): radioButton.isChecked() for radioButton in
-                            currentTab.findChildren(QtWidgets.QRadioButton)}
-                    },
-                    "info": {
-                        **{textBrowser.objectName(): textBrowser.toPlainText()
-                            for textBrowser in
-                            self.ui.results_stackedWidget.currentWidget().findChildren(QtWidgets.QTextBrowser)}
-                    }
-                }
-                saveJson = json.dumps(saveData, indent=4)
-                f.write(saveJson)
+                element_properties = self.getElementProperties()
+                if not element_properties:
+                    return False
+                element_info = self.getElementInfo()
+                save_dict = {**element_properties, **element_info}
+                save_json = json.dumps(save_dict, indent=4)
+                f.write(save_json)
+                self.clearStatusLabels()
 
     def ensureFormat(self, filePath):
         """
@@ -236,9 +240,9 @@ class Main(QtWidgets.QMainWindow):
             Modified path to file with proper save file format '.rcalc'
         """
         if not filePath.endswith(Main.fileExtension):
-            if "." not in filePath:
+            if '.' not in filePath:
                 return filePath + Main.fileExtension
-            return filePath.split(".")[0] + Main.fileExtension
+            return filePath.split('.')[0] + Main.fileExtension
         return filePath
 
     def openFile(self, filePath=None):
@@ -258,29 +262,32 @@ class Main(QtWidgets.QMainWindow):
         -------
         None
         """
+        if self.ui.stackedWidget.currentIndex() == 0:
+            return False
         if not filePath:
             options = QtWidgets.QFileDialog.Options()
             options |= QtWidgets.QFileDialog.DontUseNativeDialog
             filePath, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open file', '',
-                                                                f"Reinforcement Calculator Files (*{Main.fileExtension})",
+                                                                f'Reinforcement Calculator Files (*{Main.fileExtension})',
                                                                 options=options)
         if filePath:
             with open(filePath, 'r') as f:
                 dataFromSave = json.load(f)
-            element = self.ui.elements_tabs.findChild(QtWidgets.QWidget, dataFromSave["element"])
-            if self.ui.stackedWidget.currentIndex() == 0:
-                self.ui.stackedWidget.setCurrentIndex(1)
+            element = self.ui.elements_tabs.findChild(QtWidgets.QWidget, dataFromSave['element'])
+            if self.ui.stackedWidget.currentIndex() == 1:
+                self.ui.stackedWidget.setCurrentIndex(2)
             self.ui.elements_tabs.setCurrentWidget(element)
-            for dataKey in dataFromSave["data"].keys():
-                if dataKey.endswith("lineEdit"):
-                    element.findChild(QtWidgets.QLineEdit, dataKey).setText(str(dataFromSave["data"][dataKey]))
-                elif dataKey.endswith("combo"):
-                    element.findChild(QtWidgets.QComboBox, dataKey).setCurrentText(dataFromSave["data"][dataKey])
-                elif dataKey.endswith("radioBtn"):
-                    element.findChild(QtWidgets.QRadioButton, dataKey).setChecked(dataFromSave["data"][dataKey])
-            for infoKey in dataFromSave["info"].keys():
+            for dataKey in dataFromSave['data'].keys():
+                if dataKey.endswith('lineEdit'):
+                    element.findChild(QtWidgets.QLineEdit, dataKey).setText(str(dataFromSave['data'][dataKey]))
+                elif dataKey.endswith('combo'):
+                    element.findChild(QtWidgets.QComboBox, dataKey).setCurrentText(dataFromSave['data'][dataKey])
+                elif dataKey.endswith('radioBtn'):
+                    element.findChild(QtWidgets.QRadioButton, dataKey).setChecked(dataFromSave['data'][dataKey])
+            for infoKey in dataFromSave['info'].keys():
                 self.ui.results_stackedWidget.findChild(QtWidgets.QTextBrowser, infoKey).setPlainText(
-                    dataFromSave["info"][infoKey])
+                    dataFromSave['info'][infoKey])
+        self.clearStatusLabels()
 
     def showElement(self, buttonClicked):
         """
@@ -299,10 +306,45 @@ class Main(QtWidgets.QMainWindow):
         -------
         None
         """
-        element, _ = buttonClicked.objectName().split("_btn")
-        element_tab = self.ui.elements_tabs.findChild(QtWidgets.QWidget, f"{element}_tab")
+        element, _ = buttonClicked.objectName().split('_btn')
+        element_tab = self.ui.elements_tabs.findChild(QtWidgets.QWidget, f'{element}_tab')
         self.ui.elements_tabs.setCurrentWidget(element_tab)
         self.ui.stackedWidget.setCurrentWidget(self.ui.main_page)
+
+    def getElementProperties(self):
+        current_tab = self.ui.elements_tabs.currentWidget()
+        status_label = current_tab.findChild(QtWidgets.QLabel, f'{current_tab.objectName()[0]}_status_label')
+        for lineEdit in current_tab.findChildren(QtWidgets.QLineEdit):
+            if lineEdit.isEnabled():
+                if not lineEdit.text():
+                    status_label.setText("No box can be left empty. Action was interrupted.")
+                    return False
+
+        element_properties = {
+            'element': current_tab.objectName(),
+            'data': {
+                **{lineEdit.objectName(): float(lineEdit.text()) for lineEdit in
+                    current_tab.findChildren(QtWidgets.QLineEdit) if lineEdit.isEnabled()},
+                **{comboBox.objectName(): comboBox.currentText() for comboBox in
+                    current_tab.findChildren(QtWidgets.QComboBox)},
+                **{radioButton.objectName(): radioButton.isChecked() for radioButton in
+                    current_tab.findChildren(QtWidgets.QRadioButton)}
+            }
+        }
+        status_label.setText('')
+
+        return element_properties
+
+    def getElementInfo(self):
+        element_info = {
+            'info': {
+                **{textBrowser.objectName(): textBrowser.toPlainText()
+                    for textBrowser in
+                    self.ui.results_stackedWidget.currentWidget().findChildren(QtWidgets.QTextBrowser)}
+            }
+        }
+
+        return element_info
 
     def loadDemo(self):
         """
@@ -319,24 +361,85 @@ class Main(QtWidgets.QMainWindow):
         -------
         None
         """
-        self.ui.recently_opened_list.item(0).setData(QtCore.Qt.UserRole, "demo/beam_span_example.rcalc")
-        self.ui.recently_opened_list.item(1).setData(QtCore.Qt.UserRole, "demo/beam_support_example.rcalc")
-        self.ui.recently_opened_list.item(2).setData(QtCore.Qt.UserRole, "demo/column_example.rcalc")
-        self.ui.recently_opened_list.item(3).setData(QtCore.Qt.UserRole, "demo/foot_example.rcalc")
-        self.ui.recently_opened_list.item(4).setData(QtCore.Qt.UserRole, "demo/plate_example.rcalc")
+        self.ui.recently_opened_list.item(0).setData(QtCore.Qt.UserRole, 'demo/beam_span_example.rcalc')
+        self.ui.recently_opened_list.item(1).setData(QtCore.Qt.UserRole, 'demo/beam_support_example.rcalc')
+        self.ui.recently_opened_list.item(2).setData(QtCore.Qt.UserRole, 'demo/column_example.rcalc')
+        self.ui.recently_opened_list.item(3).setData(QtCore.Qt.UserRole, 'demo/foot_example.rcalc')
+        self.ui.recently_opened_list.item(4).setData(QtCore.Qt.UserRole, 'demo/plate_example.rcalc')
         self.ui.menuFile.actions()[3].triggered.connect(
-            lambda: self.openFile(filePath="demo/beam_span_example.rcalc"))
+            lambda: self.openFile(filePath='demo/beam_span_example.rcalc'))
         self.ui.menuFile.actions()[4].triggered.connect(
-            lambda: self.openFile(filePath="demo/beam_support_example.rcalc"))
+            lambda: self.openFile(filePath='demo/beam_support_example.rcalc'))
         self.ui.menuFile.actions()[5].triggered.connect(
-            lambda: self.openFile(filePath="demo/column_example.rcalc"))
+            lambda: self.openFile(filePath='demo/column_example.rcalc'))
         self.ui.menuFile.actions()[6].triggered.connect(
-            lambda: self.openFile(filePath="demo/foot_example.rcalc"))
+            lambda: self.openFile(filePath='demo/foot_example.rcalc'))
         self.ui.menuFile.actions()[7].triggered.connect(
-            lambda: self.openFile(filePath="demo/plate_example.rcalc"))
+            lambda: self.openFile(filePath='demo/plate_example.rcalc'))
+
+    def login(self):
+        username = self.ui.username_lineEdit.text()
+        password = self.ui.password_lineEdit.text()
+
+        # TODO hash the password
+
+        token = self.session.get(f'{Main.host}/auth-app-user/')
+        response = self.session.post(f'{Main.host}/auth-app-user/',
+                     data={
+                         'username': username,
+                         'password': password,
+                         'csrfmiddlewaretoken': token})
+
+        if response.ok:
+            self.ui.login_status_lbl.setText('')
+            self.ui.password_lineEdit.clear()
+            self.ui.username_lineEdit.clear()
+
+            self.ui.stackedWidget.setCurrentIndex(1)
+        else:
+            self.ui.login_status_lbl.setText("Failed to log in.")
+            return False
+
+    def clearStatusLabels(self):
+        status_labels = [status_label for status_label in self.ui.elements_tabs.findChildren(QtWidgets.QLabel) if
+                            status_label.objectName().endswith('_status_label')]
+        for label in status_labels:
+            label.setText('')
+
+    def clearInterface(self):
+        self.clearStatusLabels()
+        # TODO clear all remaining widgets
+
+    def logout(self):
+        self.ui.stackedWidget.setCurrentIndex(0)
+        self.clearInterface()
+        self.session.get(f'{Main.host}/accounts/logout/', headers={'Connection':'close'})
+
+    def signup(self):
+        url = QUrl(f'{Main.host}/accounts/signup/')
+        QDesktopServices.openUrl(url)
+
+    def generateReport(self):
+        url = QUrl(f'{Main.host}/results')
+        QDesktopServices.openUrl(url)
+
+    def calculateElement(self):
+        element_parameters = self.getElementProperties()
+        if element_parameters:
+            parameters_json_string = json.dumps(element_parameters)
+            token = self.session.get(f'{Main.host}/run-calculations/')
+            response = self.session.post(f'{Main.host}/run-calculations/', data={
+                'csrfmiddlewaretoken': token,
+                'task_parameters': parameters_json_string,
+            })
+            if response.ok:
+                # load response to dict using json.loads
+                # pass results to the app widgets
+                # enable generate report button
+                pass
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     import sys
     app = QtWidgets.QApplication(sys.argv)
     dialog = QtWidgets.QDialog()
