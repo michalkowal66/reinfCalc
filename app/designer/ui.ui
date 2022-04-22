@@ -53,6 +53,154 @@
     <property name="currentIndex">
      <number>0</number>
     </property>
+    <widget class="QWidget" name="login_page">
+     <property name="styleSheet">
+      <string notr="true">QLabel#welcome_login_lbl {
+font: 30px &quot;MS Shell Dlg 2&quot;;
+}
+QLabel {
+font: 20px &quot;MS Shell Dlg 2&quot;;
+}
+QPushButton {
+font: 15px &quot;MS Shell Dlg 2&quot;;
+}</string>
+     </property>
+     <widget class="QLabel" name="welcome_login_lbl">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>780</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Welcome to the Reinforcement Calculator!</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="login_btn">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>330</y>
+        <width>80</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Log In</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="signup_btn">
+      <property name="geometry">
+       <rect>
+        <x>410</x>
+        <y>330</y>
+        <width>80</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Sign Up</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="username_lbl">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>180</y>
+        <width>100</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Username</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="password_lbl">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>260</y>
+        <width>100</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Password</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="username_lineEdit">
+      <property name="geometry">
+       <rect>
+        <x>275</x>
+        <y>210</y>
+        <width>250</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="password_lineEdit">
+      <property name="geometry">
+       <rect>
+        <x>275</x>
+        <y>290</y>
+        <width>250</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="inputMethodHints">
+       <set>Qt::ImhHiddenText|Qt::ImhNoAutoUppercase|Qt::ImhNoPredictiveText|Qt::ImhSensitiveData</set>
+      </property>
+      <property name="echoMode">
+       <enum>QLineEdit::Password</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="login_info_lbl">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>780</width>
+        <height>50</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Log in to the application using your account or sign up if you don't have one yet!</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="login_status_lbl">
+      <property name="geometry">
+       <rect>
+        <x>275</x>
+        <y>370</y>
+        <width>250</width>
+        <height>45</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </widget>
     <widget class="QWidget" name="welcome_page">
      <property name="styleSheet">
       <string notr="true">QLabel#welcome_lbl {
@@ -444,7 +592,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          </rect>
         </property>
         <property name="text">
-         <string>Exposition class:</string>
+         <string>Exposure class:</string>
         </property>
        </widget>
        <widget class="QComboBox" name="p_exp_combo">
@@ -528,6 +676,19 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          <string>Support section</string>
         </property>
        </widget>
+       <widget class="QLabel" name="p_status_label">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>500</y>
+          <width>450</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="beam_tab">
        <attribute name="title">
@@ -543,7 +704,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          </rect>
         </property>
         <property name="text">
-         <string>Exposition class:</string>
+         <string>Exposure class:</string>
         </property>
        </widget>
        <widget class="QLabel" name="b_geom_label">
@@ -893,6 +1054,19 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          <bool>true</bool>
         </property>
        </widget>
+       <widget class="QLabel" name="b_status_label">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>500</y>
+          <width>450</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="col_tab">
        <attribute name="title">
@@ -908,7 +1082,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          </rect>
         </property>
         <property name="text">
-         <string>Exposition class:</string>
+         <string>Exposure class:</string>
         </property>
        </widget>
        <widget class="QLabel" name="c_geom_label">
@@ -1185,6 +1359,19 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          <string>Vertical force [kN]:</string>
         </property>
        </widget>
+       <widget class="QLabel" name="c_status_label">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>500</y>
+          <width>450</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="foot_tab">
        <attribute name="title">
@@ -1200,7 +1387,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
          </rect>
         </property>
         <property name="text">
-         <string>Exposition class:</string>
+         <string>Exposure class:</string>
         </property>
        </widget>
        <widget class="QLabel" name="f_geom_label">
@@ -1576,6 +1763,19 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         </property>
         <property name="maxLength">
          <number>6</number>
+        </property>
+       </widget>
+       <widget class="QLabel" name="f_status_label">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>500</y>
+          <width>450</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
         </property>
        </widget>
       </widget>
@@ -2022,6 +2222,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="action_foot_example"/>
     <addaction name="action_plate_example"/>
     <addaction name="separator"/>
+    <addaction name="actionLog_Out"/>
     <addaction name="actionClose"/>
    </widget>
    <widget class="QMenu" name="menuResources">
@@ -2088,6 +2289,11 @@ p, li { white-space: pre-wrap; }
   <action name="action_plate_example">
    <property name="text">
     <string>plate_example.rcalc</string>
+   </property>
+  </action>
+  <action name="actionLog_Out">
+   <property name="text">
+    <string>Log Out</string>
    </property>
   </action>
  </widget>
