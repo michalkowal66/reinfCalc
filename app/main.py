@@ -75,7 +75,14 @@ class Main(QtWidgets.QMainWindow):
         self.ui.menuResources.actions()[0].triggered.connect(dialog.show)
 
         self.ui.p_report_btn.clicked.connect(self.generateReport)
+        self.ui.b_report_btn.clicked.connect(self.generateReport)
+        self.ui.c_report_btn.clicked.connect(self.generateReport)
+        self.ui.f_report_btn.clicked.connect(self.generateReport)
+
         self.ui.p_run_btn.clicked.connect(self.calculateElement)
+        self.ui.b_run_btn.clicked.connect(self.calculateElement)
+        self.ui.c_run_btn.clicked.connect(self.calculateElement)
+        self.ui.f_run_btn.clicked.connect(self.calculateElement)
 
         self.ui.p_span_section_radioBtn.toggled.connect(self.ui.p_span_elementDraw.raise_)
         self.ui.p_sup_section_radioBtn.toggled.connect(self.ui.p_sup_elementDraw.raise_)
@@ -424,6 +431,9 @@ class Main(QtWidgets.QMainWindow):
         QDesktopServices.openUrl(url)
 
     def calculateElement(self):
+        # TODO generate report button enabled only on the page that run calculations last
+        current_results_tab = self.ui.results_stackedWidget.currentWidget()
+        tab_code = current_results_tab.objectName()[0]
         element_parameters = self.getElementProperties()
         if element_parameters:
             parameters_json_string = json.dumps(element_parameters)
@@ -433,10 +443,45 @@ class Main(QtWidgets.QMainWindow):
                 'task_parameters': parameters_json_string,
             })
             if response.ok:
-                # load response to dict using json.loads
-                # pass results to the app widgets
-                # enable generate report button
-                pass
+                task_results = json.loads(response.text)
+                self.loadResults(results=task_results, results_tab=current_results_tab, tab_code=tab_code)
+                current_results_tab.findChild(QtWidgets.QPushButton, f'{tab_code}_report_btn').setEnabled(True)
+
+    def loadResults(self, results, results_tab, tab_code):
+        task_info = results_tab.findChild(QtWidgets.QTextBrowser, f'{tab_code}_info_textBrowser')
+        task_results = results_tab.findChild(QtWidgets.QTextBrowser, f'{tab_code}_results_textBrowser')
+
+        task_info.clear()
+        task_results.clear()
+
+        if all(results['required_area']):
+            required_area = f"Required reinforcement area for reinforcement group/s: " \
+                f"{', '.join([str(round(area*10_000, 4)) for area in results['required_area']],)} cm^2."
+            task_results.append(required_area)
+
+            if all(results['provided_area']):
+                provided_area = f"Assumed reinforcement area for reinforcement group/s: " \
+                    f"{', '.join([str(round(area*10_000, 4)) for area in results['provided_area']])} cm^2."
+                task_results.append(provided_area)
+                if tab_code == 'b' or tab_code == 'c':
+                    provided_reinforcement = f"Resulting reinforcement for reinforcement group/s: " \
+                        f"{', '.join([str(round(bars, 2)) for bars in results['provided_reinforcement']])} rebars."
+                elif tab_code == 'p' or tab_code == 'f':
+                    provided_reinforcement = f"Resulting reinforcement for reinforcement group/s: rebars placed every" \
+                        f" {', '.join([str(round(spacing*100, 2)) for spacing in results['provided_reinforcement']])} cm."
+            else:
+                provided_reinforcement = "Wasn't able to find reinforcement fulfilling requirements for selected element."
+        else:
+            provided_reinforcement = "Wasn't able to find reinforcement fulfilling requirements for selected element."
+
+        task_results.append(provided_reinforcement)
+
+        for remark in results['remarks']:
+            task_info.append(remark)
+
+    def closeEvent(self, event):
+        self.logout()
+        event.accept()
 
 
 if __name__ == '__main__':
