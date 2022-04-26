@@ -2243,8 +2243,21 @@ p, li { white-space: pre-wrap; }
     </property>
     <addaction name="actionIncluded_Data"/>
    </widget>
+   <widget class="QMenu" name="menuWebsite">
+    <property name="title">
+     <string>Website</string>
+    </property>
+    <addaction name="actionHome"/>
+    <addaction name="separator"/>
+    <addaction name="actionResults"/>
+    <addaction name="actionProfile"/>
+    <addaction name="separator"/>
+    <addaction name="actionLog_In"/>
+    <addaction name="actionSign_Up"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuResources"/>
+   <addaction name="menuWebsite"/>
   </widget>
   <action name="actionIncluded_Data">
    <property name="text">
@@ -2306,6 +2319,36 @@ p, li { white-space: pre-wrap; }
   <action name="actionLog_Out">
    <property name="text">
     <string>Log Out</string>
+   </property>
+  </action>
+  <action name="actionWebsite">
+   <property name="text">
+    <string>Website</string>
+   </property>
+  </action>
+  <action name="actionHome">
+   <property name="text">
+    <string>Home</string>
+   </property>
+  </action>
+  <action name="actionResults">
+   <property name="text">
+    <string>Results</string>
+   </property>
+  </action>
+  <action name="actionLog_In">
+   <property name="text">
+    <string>Log In</string>
+   </property>
+  </action>
+  <action name="actionSign_Up">
+   <property name="text">
+    <string>Sign Up</string>
+   </property>
+  </action>
+  <action name="actionProfile">
+   <property name="text">
+    <string>Profile</string>
    </property>
   </action>
  </widget>

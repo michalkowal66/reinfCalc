@@ -93,6 +93,11 @@ class Main(QtWidgets.QMainWindow):
         self.ui.actionSave.triggered.connect(self.saveFile)
         self.ui.actionOpen.triggered.connect(self.openFile)
         self.ui.actionLog_Out.triggered.connect(self.logout)
+        self.ui.actionHome.triggered.connect(lambda: QDesktopServices.openUrl(QUrl(f'{Main.host}')))
+        self.ui.actionResults.triggered.connect(lambda: QDesktopServices.openUrl(QUrl(f'{Main.host}/results/')))
+        self.ui.actionProfile.triggered.connect(lambda: QDesktopServices.openUrl(QUrl(f'{Main.host}/profile/')))
+        self.ui.actionLog_In.triggered.connect(lambda: QDesktopServices.openUrl(QUrl(f'{Main.host}/accounts/login/')))
+        self.ui.actionSign_Up.triggered.connect(lambda: QDesktopServices.openUrl(QUrl(f'{Main.host}/accounts/signup/')))
 
         double_regex = QtCore.QRegExp('[+-]?([0-9]*[.])?[0-9]+')
         double_validator = QtGui.QRegExpValidator(double_regex)
@@ -431,7 +436,6 @@ class Main(QtWidgets.QMainWindow):
         QDesktopServices.openUrl(url)
 
     def calculateElement(self):
-        # TODO generate report button enabled only on the page that run calculations last
         current_results_tab = self.ui.results_stackedWidget.currentWidget()
         tab_code = current_results_tab.objectName()[0]
         element_parameters = self.getElementProperties()
@@ -446,6 +450,7 @@ class Main(QtWidgets.QMainWindow):
                 task_results = json.loads(response.text)
                 self.loadResults(results=task_results, results_tab=current_results_tab, tab_code=tab_code)
                 current_results_tab.findChild(QtWidgets.QPushButton, f'{tab_code}_report_btn').setEnabled(True)
+                self.disableReportButtons(current_tab=current_results_tab)
 
     def loadResults(self, results, results_tab, tab_code):
         task_info = results_tab.findChild(QtWidgets.QTextBrowser, f'{tab_code}_info_textBrowser')
@@ -478,6 +483,12 @@ class Main(QtWidgets.QMainWindow):
 
         for remark in results['remarks']:
             task_info.append(remark)
+
+    def disableReportButtons(self, current_tab):
+        other_report_buttons = [button for button in self.ui.results_stackedWidget.findChildren(QtWidgets.QPushButton)
+                                if button.objectName().endswith('_report_btn') and button.parent() != current_tab]
+        for button in other_report_buttons:
+            button.setEnabled(False)
 
     def closeEvent(self, event):
         self.logout()
