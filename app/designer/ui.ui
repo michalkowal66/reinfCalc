@@ -1479,16 +1479,22 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         </property>
        </widget>
        <widget class="QLineEdit" name="f_fwidth_lineEdit">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="geometry">
          <rect>
           <x>250</x>
-          <y>280</y>
+          <y>310</y>
           <width>50</width>
           <height>20</height>
          </rect>
         </property>
         <property name="maxLength">
          <number>6</number>
+        </property>
+        <property name="readOnly">
+         <bool>false</bool>
         </property>
        </widget>
        <widget class="QLabel" name="f_bar_label">
@@ -1564,7 +1570,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         <property name="geometry">
          <rect>
           <x>170</x>
-          <y>280</y>
+          <y>310</y>
           <width>91</width>
           <height>21</height>
          </rect>
@@ -1577,7 +1583,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         <property name="geometry">
          <rect>
           <x>310</x>
-          <y>280</y>
+          <y>310</y>
           <width>91</width>
           <height>21</height>
          </rect>
@@ -1590,13 +1596,16 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         <property name="geometry">
          <rect>
           <x>390</x>
-          <y>280</y>
+          <y>310</y>
           <width>50</width>
           <height>20</height>
          </rect>
         </property>
         <property name="maxLength">
          <number>6</number>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
         </property>
        </widget>
        <widget class="QLabel" name="f_col_bar_label">
@@ -1626,7 +1635,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>250</y>
+          <y>280</y>
           <width>111</width>
           <height>21</height>
          </rect>
@@ -1639,7 +1648,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>340</y>
+          <y>370</y>
           <width>91</width>
           <height>21</height>
          </rect>
@@ -1652,7 +1661,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>310</y>
+          <y>340</y>
           <width>151</width>
           <height>21</height>
          </rect>
@@ -1665,7 +1674,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         <property name="geometry">
          <rect>
           <x>110</x>
-          <y>340</y>
+          <y>370</y>
           <width>50</width>
           <height>20</height>
          </rect>
@@ -1678,7 +1687,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         <property name="geometry">
          <rect>
           <x>250</x>
-          <y>340</y>
+          <y>370</y>
           <width>50</width>
           <height>20</height>
          </rect>
@@ -1686,12 +1695,15 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         <property name="maxLength">
          <number>6</number>
         </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
        </widget>
        <widget class="QLabel" name="f_cwidth_label">
         <property name="geometry">
          <rect>
           <x>170</x>
-          <y>340</y>
+          <y>370</y>
           <width>91</width>
           <height>21</height>
          </rect>
@@ -1704,7 +1716,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         <property name="geometry">
          <rect>
           <x>110</x>
-          <y>280</y>
+          <y>310</y>
           <width>50</width>
           <height>20</height>
          </rect>
@@ -1717,7 +1729,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>280</y>
+          <y>310</y>
           <width>91</width>
           <height>21</height>
          </rect>
@@ -1730,7 +1742,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>400</y>
+          <y>430</y>
           <width>111</width>
           <height>20</height>
          </rect>
@@ -1743,7 +1755,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>370</y>
+          <y>400</y>
           <width>111</width>
           <height>21</height>
          </rect>
@@ -1756,7 +1768,7 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         <property name="geometry">
          <rect>
           <x>150</x>
-          <y>400</y>
+          <y>430</y>
           <width>50</width>
           <height>19</height>
          </rect>
@@ -1776,6 +1788,47 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         </property>
         <property name="text">
          <string/>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="f_rect_section_radioBtn">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>250</y>
+          <width>171</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="toolTip">
+         <string/>
+        </property>
+        <property name="whatsThis">
+         <string/>
+        </property>
+        <property name="text">
+         <string>Rectangular cross-sections</string>
+        </property>
+        <property name="checkable">
+         <bool>false</bool>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="f_square_section_radioBtn">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>250</y>
+          <width>141</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Square cross-sections</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
        </widget>
       </widget>
@@ -2245,7 +2298,7 @@ p, li { white-space: pre-wrap; }
    </widget>
    <widget class="QMenu" name="menuWebsite">
     <property name="title">
-     <string>Website</string>
+     <string>Pages</string>
     </property>
     <addaction name="actionHome"/>
     <addaction name="separator"/>
@@ -2446,6 +2499,38 @@ p, li { white-space: pre-wrap; }
     <hint type="destinationlabel">
      <x>644</x>
      <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>f_cheight_lineEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>f_cwidth_lineEdit</receiver>
+   <slot>setText(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>146</x>
+     <y>437</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>437</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>f_fwidth_lineEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>f_flength_lineEdit</receiver>
+   <slot>setText(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>286</x>
+     <y>377</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>426</x>
+     <y>377</y>
     </hint>
    </hints>
   </connection>

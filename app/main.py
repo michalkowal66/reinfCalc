@@ -36,6 +36,13 @@ class Main(QtWidgets.QMainWindow):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.dialog_window = Ui_Dialog()
+
+        self.line_edits = None
+        self.combo_boxes = None
+        self.text_browsers = None
+        self.report_buttons = None
+        self.status_labels = None
+
         self.setupUi()
         self.setupDialog()
         self.loadImgs()
@@ -102,7 +109,17 @@ class Main(QtWidgets.QMainWindow):
         double_regex = QtCore.QRegExp('[+-]?([0-9]*[.])?[0-9]+')
         double_validator = QtGui.QRegExpValidator(double_regex)
 
-        for lineEdit in self.ui.elements_tabs.findChildren(QtWidgets.QLineEdit):
+        self.line_edits = self.ui.elements_tabs.findChildren(QtWidgets.QLineEdit)
+        self.combo_boxes = self.ui.elements_tabs.findChildren(QtWidgets.QComboBox)
+        self.text_browsers = self.ui.results_stackedWidget.findChildren(QtWidgets.QTextBrowser)
+        self.report_buttons = [button for button in self.ui.results_stackedWidget.findChildren(QtWidgets.QPushButton)
+                               if button.objectName().endswith('report_btn')]
+        self.element_status_labels = [label for label in self.ui.elements_tabs.findChildren(QtWidgets.QLabel) if
+                                      label.objectName().endswith('_status_label')]
+
+        self.ui.f_rect_section_radioBtn.clicked.connect(lambda: self.ui.f_status_label.setText("Function not available yet."))
+
+        for lineEdit in self.line_edits:
             lineEdit.setValidator(double_validator)
 
     def setupDialog(self):
@@ -169,7 +186,8 @@ class Main(QtWidgets.QMainWindow):
         """
         names = {'steel': 'steel_grade', 'concr': 'concrete_class', 'exp': 'exp_class', 'diam': 'diameters'}
         combos = self.ui.elements_tabs.findChildren(QtWidgets.QComboBox)
-        combosDict = {names[key]: [element for element in combos if key in element.objectName()] for key in names.keys()}
+        combosDict = {names[key]: [element for element in combos if key in element.objectName()] for key in
+                      names.keys()}
         for key in combosDict.keys():
             if key == "diameters":
                 for element in combosDict[key]:
@@ -222,10 +240,10 @@ class Main(QtWidgets.QMainWindow):
         options = QtWidgets.QFileDialog.Options()
         options |= QtWidgets.QFileDialog.DontUseNativeDialog
         fileName, *_ = QtWidgets.QFileDialog.getSaveFileName(self,
-                                                            'Save File',
-                                                            '',
-                                                            f'Reinforcement Calculator Files (*{Main.fileExtension})',
-                                                            options=options)
+                                                             'Save File',
+                                                             '',
+                                                             f'Reinforcement Calculator Files (*{Main.fileExtension})',
+                                                             options=options)
         if fileName:
             with open(self.ensureFormat(fileName), 'w') as f:
                 element_properties = self.getElementProperties()
@@ -235,7 +253,10 @@ class Main(QtWidgets.QMainWindow):
                 save_dict = {**element_properties, **element_info}
                 save_json = json.dumps(save_dict, indent=4)
                 f.write(save_json)
-                self.clearStatusLabels()
+
+                status_label = self.getCurrentElement(elements_list=self.element_status_labels,
+                                                      parent=self.getCurrentTab())
+                status_label.clear()
 
     def ensureFormat(self, filePath):
         """
@@ -299,7 +320,8 @@ class Main(QtWidgets.QMainWindow):
             for infoKey in dataFromSave['info'].keys():
                 self.ui.results_stackedWidget.findChild(QtWidgets.QTextBrowser, infoKey).setPlainText(
                     dataFromSave['info'][infoKey])
-        self.clearStatusLabels()
+        status_label = self.getCurrentElement(elements_list=self.element_status_labels, parent=element)
+        status_label.clear()
 
     def showElement(self, buttonClicked):
         """
@@ -324,8 +346,8 @@ class Main(QtWidgets.QMainWindow):
         self.ui.stackedWidget.setCurrentWidget(self.ui.main_page)
 
     def getElementProperties(self):
-        current_tab = self.ui.elements_tabs.currentWidget()
-        status_label = current_tab.findChild(QtWidgets.QLabel, f'{current_tab.objectName()[0]}_status_label')
+        current_tab = self.getCurrentTab()
+        status_label = self.getCurrentElement(elements_list=self.element_status_labels, parent=current_tab)
         for lineEdit in current_tab.findChildren(QtWidgets.QLineEdit):
             if lineEdit.isEnabled():
                 if not lineEdit.text():
@@ -336,14 +358,14 @@ class Main(QtWidgets.QMainWindow):
             'element': current_tab.objectName(),
             'data': {
                 **{lineEdit.objectName(): float(lineEdit.text()) for lineEdit in
-                    current_tab.findChildren(QtWidgets.QLineEdit) if lineEdit.isEnabled()},
+                   current_tab.findChildren(QtWidgets.QLineEdit) if lineEdit.isEnabled()},
                 **{comboBox.objectName(): comboBox.currentText() for comboBox in
-                    current_tab.findChildren(QtWidgets.QComboBox)},
+                   current_tab.findChildren(QtWidgets.QComboBox)},
                 **{radioButton.objectName(): radioButton.isChecked() for radioButton in
-                    current_tab.findChildren(QtWidgets.QRadioButton)}
+                   current_tab.findChildren(QtWidgets.QRadioButton)}
             }
         }
-        status_label.setText('')
+        status_label.clear()
 
         return element_properties
 
@@ -351,8 +373,8 @@ class Main(QtWidgets.QMainWindow):
         element_info = {
             'info': {
                 **{textBrowser.objectName(): textBrowser.toPlainText()
-                    for textBrowser in
-                    self.ui.results_stackedWidget.currentWidget().findChildren(QtWidgets.QTextBrowser)}
+                   for textBrowser in
+                   self.ui.results_stackedWidget.currentWidget().findChildren(QtWidgets.QTextBrowser)}
             }
         }
 
@@ -397,10 +419,10 @@ class Main(QtWidgets.QMainWindow):
 
         token = self.session.get(f'{Main.host}/auth-app-user/')
         response = self.session.post(f'{Main.host}/auth-app-user/',
-                     data={
-                         'username': username,
-                         'password': password,
-                         'csrfmiddlewaretoken': token})
+                                     data={
+                                         'username': username,
+                                         'password': password,
+                                         'csrfmiddlewaretoken': token})
 
         if response.ok:
             self.ui.login_status_lbl.setText('')
@@ -413,19 +435,30 @@ class Main(QtWidgets.QMainWindow):
             return False
 
     def clearStatusLabels(self):
-        status_labels = [status_label for status_label in self.ui.elements_tabs.findChildren(QtWidgets.QLabel) if
-                            status_label.objectName().endswith('_status_label')]
-        for label in status_labels:
+        for label in self.element_status_labels:
             label.setText('')
 
     def clearInterface(self):
         self.clearStatusLabels()
-        # TODO clear all remaining widgets
+        for button in self.report_buttons:
+            button.setEnabled(False)
+        for lineEdit in self.line_edits:
+            lineEdit.setText('')
+        for comboBox in self.combo_boxes:
+            comboBox.setCurrentIndex(0)
+        for textBrowser in self.text_browsers:
+            textBrowser.clear()
+            if textBrowser.objectName().endswith('info_textBrowser'):
+                textBrowser.append("Information about progress")
+            elif textBrowser.objectName().endswith('results_textBrowser'):
+                textBrowser.append("Results")
+        self.ui.p_span_section_radioBtn.setChecked(True)
+        self.ui.b_sup_section_radioBtn.setChecked(True)
 
     def logout(self):
         self.ui.stackedWidget.setCurrentIndex(0)
         self.clearInterface()
-        self.session.get(f'{Main.host}/accounts/logout/', headers={'Connection':'close'})
+        self.session.get(f'{Main.host}/accounts/logout/', headers={'Connection': 'close'})
 
     def signup(self):
         url = QUrl(f'{Main.host}/accounts/signup/')
@@ -461,7 +494,7 @@ class Main(QtWidgets.QMainWindow):
 
         if all(results['required_area']):
             required_area = f"Required reinforcement area for reinforcement group/s: " \
-                f"{', '.join([str(round(area*10_000, 4)) for area in results['required_area']],)} cm^2."
+                            f"{', '.join([str(round(area * 10_000, 4)) for area in results['required_area']], )} cm^2."
             task_results.append(required_area)
 
             if all(results['provided_area']):
@@ -485,10 +518,15 @@ class Main(QtWidgets.QMainWindow):
             task_info.append(remark)
 
     def disableReportButtons(self, current_tab):
-        other_report_buttons = [button for button in self.ui.results_stackedWidget.findChildren(QtWidgets.QPushButton)
-                                if button.objectName().endswith('_report_btn') and button.parent() != current_tab]
-        for button in other_report_buttons:
+        rem_report_buttons = [button for button in self.report_buttons if button.parent() != current_tab]
+        for button in rem_report_buttons:
             button.setEnabled(False)
+
+    def getCurrentElement(self, elements_list, parent):
+        return next((element for element in elements_list if element.parent() == parent), None)
+
+    def getCurrentTab(self):
+        return self.ui.elements_tabs.currentWidget()
 
     def closeEvent(self, event):
         self.logout()
@@ -497,6 +535,7 @@ class Main(QtWidgets.QMainWindow):
 
 if __name__ == '__main__':
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     dialog = QtWidgets.QDialog()
     window = Main()
