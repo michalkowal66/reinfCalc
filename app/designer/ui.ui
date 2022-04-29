@@ -241,31 +241,6 @@ font: 15px &quot;MS Shell Dlg 2&quot;;
         <height>520</height>
        </rect>
       </property>
-      <item>
-       <property name="text">
-        <string>beam_span_example.rcalc</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>beam_support_example.rcalc</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>column_example.rcalc</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>foot_example.rcalc</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>plate_example.rcalc</string>
-       </property>
-      </item>
      </widget>
      <widget class="QLabel" name="welcome_lbl">
       <property name="geometry">
@@ -2281,11 +2256,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionSave"/>
     <addaction name="actionOpen"/>
     <addaction name="separator"/>
-    <addaction name="action_beam_span_example"/>
-    <addaction name="action_beam_sup_example"/>
-    <addaction name="action_column_example"/>
-    <addaction name="action_foot_example"/>
-    <addaction name="action_plate_example"/>
+    <addaction name="actionMain_Screen"/>
     <addaction name="separator"/>
     <addaction name="actionLog_Out"/>
     <addaction name="actionClose"/>
@@ -2402,6 +2373,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionProfile">
    <property name="text">
     <string>Profile</string>
+   </property>
+  </action>
+  <action name="actionMain_Screen">
+   <property name="text">
+    <string>Main Screen</string>
    </property>
   </action>
  </widget>

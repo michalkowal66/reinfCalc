@@ -7,6 +7,7 @@ from materialProperties.properties import diameters
 from materialProperties.properties import translate
 import requests
 import json
+from winreg import ConnectRegistry, HKEY_CURRENT_USER, OpenKey, KEY_ALL_ACCESS, EnumValue, SetValueEx, REG_MULTI_SZ
 
 
 class Main(QtWidgets.QMainWindow):
@@ -18,9 +19,11 @@ class Main(QtWidgets.QMainWindow):
     fileExtension : str
         File extension used by application
     """
+
     fileExtension = '.rcalc'
     host = 'http://127.0.0.1:8000'
-
+    maxMenuRecentFiles = 5
+    maxRecentFiles = 30
     def __init__(self):
         """
         Call parent init method and UI construct methods
@@ -37,6 +40,7 @@ class Main(QtWidgets.QMainWindow):
         self.ui = Ui_MainWindow()
         self.dialog_window = Ui_Dialog()
 
+        self.recentFileActions = []
         self.line_edits = None
         self.combo_boxes = None
         self.text_browsers = None
@@ -47,7 +51,9 @@ class Main(QtWidgets.QMainWindow):
         self.setupDialog()
         self.loadImgs()
         self.loadData()
-        self.loadDemo()
+        self.createRecentActions()
+        self.createRecentMenus()
+        # self.loadDemo()
 
         self.session = requests.session()
 
@@ -100,6 +106,8 @@ class Main(QtWidgets.QMainWindow):
         self.ui.actionSave.triggered.connect(self.saveFile)
         self.ui.actionOpen.triggered.connect(self.openFile)
         self.ui.actionLog_Out.triggered.connect(self.logout)
+        self.ui.actionMain_Screen.setEnabled(False)
+        self.ui.actionMain_Screen.triggered.connect(lambda: self.ui.stackedWidget.setCurrentIndex(1))
         self.ui.actionHome.triggered.connect(lambda: QDesktopServices.openUrl(QUrl(f'{Main.host}')))
         self.ui.actionResults.triggered.connect(lambda: QDesktopServices.openUrl(QUrl(f'{Main.host}/results/')))
         self.ui.actionProfile.triggered.connect(lambda: QDesktopServices.openUrl(QUrl(f'{Main.host}/profile/')))
@@ -218,6 +226,62 @@ class Main(QtWidgets.QMainWindow):
             drawingPlaceholder.setPixmap(QtGui.QPixmap(
                 f'resources/placeholders/{drawingPlaceholder.objectName().split("_elementDraw")[0]}.jpg'))
 
+    def createRecentActions(self):
+        for i in range(Main.maxRecentFiles):
+            self.recentFileActions.append(QtWidgets.QAction(self, visible=False, triggered=self.openRecentFile))
+
+    def createRecentMenus(self):
+        for i in range(Main.maxMenuRecentFiles):
+            self.ui.menuFile.insertAction(self.ui.actionLog_Out, self.recentFileActions[i])
+
+        self.ui.menuFile.insertSeparator(self.ui.actionLog_Out)
+
+    def addRecentFile(self, fileName):
+        settings = QtCore.QSettings('michalkowal66', 'Reinforcement Calculator')
+        files = settings.value('recentFileList', [])
+
+        try:
+            files.remove(fileName)
+        except ValueError:
+            pass
+
+        files.insert(0, fileName)
+        del files[Main.maxRecentFiles:]
+
+        settings.setValue('recentFileList', files)
+
+        self.updateRecentFiles()
+
+    def updateRecentFiles(self):
+        settings = QtCore.QSettings('michalkowal66', 'Reinforcement Calculator')
+        files = settings.value('recentFileList', [])
+
+        numRecentFiles = min(len(files), Main.maxRecentFiles)
+        numMenuRecentFiles = min(len(files), Main.maxMenuRecentFiles)
+
+        for i in range(numMenuRecentFiles):
+            text = QtCore.QFileInfo(files[i]).fileName()
+            self.recentFileActions[i].setText(text)
+            self.recentFileActions[i].setData(files[i])
+            self.recentFileActions[i].setVisible(True)
+
+        for j in range(numMenuRecentFiles, Main.maxRecentFiles):
+            self.recentFileActions[j].setVisible(False)
+
+        recently_opened = self.ui.recently_opened_list
+        recently_opened.clear()
+        for i in range(numRecentFiles):
+            text = QtCore.QFileInfo(files[i]).fileName()
+            item = QtWidgets.QListWidgetItem()
+            item.setText(text)
+            item.setData(QtCore.Qt.UserRole, files[i])
+            recently_opened.addItem(item)
+
+    def openRecentFile(self):
+        action = self.sender()
+        if action:
+            self.openFile(action.data())
+
     def saveFile(self):
         """
         Save values from currently displayed tab to appointed location.
@@ -257,6 +321,7 @@ class Main(QtWidgets.QMainWindow):
                 status_label = self.getCurrentElement(elements_list=self.element_status_labels,
                                                       parent=self.getCurrentTab())
                 status_label.clear()
+                self.addRecentFile(self.ensureFormat(fileName))
 
     def ensureFormat(self, filePath):
         """
@@ -304,24 +369,45 @@ class Main(QtWidgets.QMainWindow):
                                                                 f'Reinforcement Calculator Files (*{Main.fileExtension})',
                                                                 options=options)
         if filePath:
-            with open(filePath, 'r') as f:
-                dataFromSave = json.load(f)
-            element = self.ui.elements_tabs.findChild(QtWidgets.QWidget, dataFromSave['element'])
-            if self.ui.stackedWidget.currentIndex() == 1:
-                self.ui.stackedWidget.setCurrentIndex(2)
-            self.ui.elements_tabs.setCurrentWidget(element)
-            for dataKey in dataFromSave['data'].keys():
-                if dataKey.endswith('lineEdit'):
-                    element.findChild(QtWidgets.QLineEdit, dataKey).setText(str(dataFromSave['data'][dataKey]))
-                elif dataKey.endswith('combo'):
-                    element.findChild(QtWidgets.QComboBox, dataKey).setCurrentText(dataFromSave['data'][dataKey])
-                elif dataKey.endswith('radioBtn'):
-                    element.findChild(QtWidgets.QRadioButton, dataKey).setChecked(dataFromSave['data'][dataKey])
-            for infoKey in dataFromSave['info'].keys():
-                self.ui.results_stackedWidget.findChild(QtWidgets.QTextBrowser, infoKey).setPlainText(
-                    dataFromSave['info'][infoKey])
-        status_label = self.getCurrentElement(elements_list=self.element_status_labels, parent=element)
-        status_label.clear()
+            try:
+                with open(filePath, 'r') as f:
+                    dataFromSave = json.load(f)
+            except FileNotFoundError:
+                settings = QtCore.QSettings('michalkowal66', 'Reinforcement Calculator')
+                files = settings.value('recentFileList', [])
+
+                files.remove(filePath)
+
+                key_path = "Software\\michalkowal66\\Reinforcement Calculator"
+                hive = ConnectRegistry(None, HKEY_CURRENT_USER)
+
+                reg_key = OpenKey(hive, key_path, access=KEY_ALL_ACCESS)
+                SetValueEx(reg_key, 'recentFileList', 0, REG_MULTI_SZ, files)
+
+                self.updateRecentFiles()
+                return False
+            else:
+                element = self.ui.elements_tabs.findChild(QtWidgets.QWidget, dataFromSave['element'])
+                if self.ui.stackedWidget.currentIndex() == 1:
+                    self.ui.stackedWidget.setCurrentIndex(2)
+                self.ui.elements_tabs.setCurrentWidget(element)
+                for dataKey in dataFromSave['data'].keys():
+                    if dataKey.endswith('lineEdit'):
+                        element.findChild(QtWidgets.QLineEdit, dataKey).setText(str(dataFromSave['data'][dataKey]))
+                    elif dataKey.endswith('combo'):
+                        element.findChild(QtWidgets.QComboBox, dataKey).setCurrentText(dataFromSave['data'][dataKey])
+                    elif dataKey.endswith('radioBtn'):
+                        element.findChild(QtWidgets.QRadioButton, dataKey).setChecked(dataFromSave['data'][dataKey])
+                for infoKey in dataFromSave['info'].keys():
+                    self.ui.results_stackedWidget.findChild(QtWidgets.QTextBrowser, infoKey).setPlainText(
+                        dataFromSave['info'][infoKey])
+
+                status_label = self.getCurrentElement(elements_list=self.element_status_labels, parent=element)
+                status_label.clear()
+
+                self.addRecentFile(filePath)
+
+                return True
 
     def showElement(self, buttonClicked):
         """
@@ -400,15 +486,15 @@ class Main(QtWidgets.QMainWindow):
         self.ui.recently_opened_list.item(2).setData(QtCore.Qt.UserRole, 'demo/column_example.rcalc')
         self.ui.recently_opened_list.item(3).setData(QtCore.Qt.UserRole, 'demo/foot_example.rcalc')
         self.ui.recently_opened_list.item(4).setData(QtCore.Qt.UserRole, 'demo/plate_example.rcalc')
-        self.ui.menuFile.actions()[3].triggered.connect(
-            lambda: self.openFile(filePath='demo/beam_span_example.rcalc'))
-        self.ui.menuFile.actions()[4].triggered.connect(
-            lambda: self.openFile(filePath='demo/beam_support_example.rcalc'))
         self.ui.menuFile.actions()[5].triggered.connect(
-            lambda: self.openFile(filePath='demo/column_example.rcalc'))
+            lambda: self.openFile(filePath='demo/beam_span_example.rcalc'))
         self.ui.menuFile.actions()[6].triggered.connect(
-            lambda: self.openFile(filePath='demo/foot_example.rcalc'))
+            lambda: self.openFile(filePath='demo/beam_support_example.rcalc'))
         self.ui.menuFile.actions()[7].triggered.connect(
+            lambda: self.openFile(filePath='demo/column_example.rcalc'))
+        self.ui.menuFile.actions()[8].triggered.connect(
+            lambda: self.openFile(filePath='demo/foot_example.rcalc'))
+        self.ui.menuFile.actions()[9].triggered.connect(
             lambda: self.openFile(filePath='demo/plate_example.rcalc'))
 
     def login(self):
@@ -429,6 +515,8 @@ class Main(QtWidgets.QMainWindow):
             self.ui.password_lineEdit.clear()
             self.ui.username_lineEdit.clear()
 
+            self.updateRecentFiles()
+            self.ui.actionMain_Screen.setEnabled(True)
             self.ui.stackedWidget.setCurrentIndex(1)
         else:
             self.ui.login_status_lbl.setText("Failed to log in.")
@@ -457,6 +545,7 @@ class Main(QtWidgets.QMainWindow):
 
     def logout(self):
         self.ui.stackedWidget.setCurrentIndex(0)
+        self.ui.actionMain_Screen.setEnabled(False)
         self.clearInterface()
         self.session.get(f'{Main.host}/accounts/logout/', headers={'Connection': 'close'})
 
