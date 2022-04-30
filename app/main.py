@@ -7,7 +7,7 @@ from materialProperties.properties import diameters
 from materialProperties.properties import translate
 import requests
 import json
-from winreg import ConnectRegistry, HKEY_CURRENT_USER, OpenKey, KEY_ALL_ACCESS, EnumValue, SetValueEx, REG_MULTI_SZ
+from winreg import ConnectRegistry, HKEY_CURRENT_USER, OpenKey, KEY_ALL_ACCESS, SetValueEx, REG_MULTI_SZ
 
 
 class Main(QtWidgets.QMainWindow):
@@ -24,6 +24,10 @@ class Main(QtWidgets.QMainWindow):
     host = 'http://127.0.0.1:8000'
     maxMenuRecentFiles = 5
     maxRecentFiles = 30
+
+    obtainedResults_signal = QtCore.pyqtSignal()
+    error_signal = QtCore.pyqtSignal(str)
+
     def __init__(self):
         """
         Call parent init method and UI construct methods
@@ -41,11 +45,20 @@ class Main(QtWidgets.QMainWindow):
         self.dialog_window = Ui_Dialog()
 
         self.recentFileActions = []
+        self.last_results = None
         self.line_edits = None
         self.combo_boxes = None
         self.text_browsers = None
         self.report_buttons = None
         self.status_labels = None
+
+        self.login_worker = Worker(self.login)
+        self.logout_worker = Worker(self.logout)
+        self.close_worker = Worker(self.logout, closeAfter=True)
+        self.calculate_worker = Worker(fn=self.getCalculationResults)
+
+        self.obtainedResults_signal.connect(self.loadResults)
+        self.error_signal.connect(self.displayError)
 
         self.setupUi()
         self.setupDialog()
@@ -74,7 +87,7 @@ class Main(QtWidgets.QMainWindow):
         """
         self.ui.setupUi(self)
 
-        self.ui.login_btn.clicked.connect(self.login)
+        self.ui.login_btn.clicked.connect(lambda: self.login_worker.start())
         self.ui.signup_btn.clicked.connect(self.signup)
 
         self.ui.plate_btn.clicked.connect(lambda: self.showElement(self.ui.plate_btn))
@@ -92,20 +105,20 @@ class Main(QtWidgets.QMainWindow):
         self.ui.c_report_btn.clicked.connect(self.generateReport)
         self.ui.f_report_btn.clicked.connect(self.generateReport)
 
-        self.ui.p_run_btn.clicked.connect(self.calculateElement)
-        self.ui.b_run_btn.clicked.connect(self.calculateElement)
-        self.ui.c_run_btn.clicked.connect(self.calculateElement)
-        self.ui.f_run_btn.clicked.connect(self.calculateElement)
+        self.ui.p_run_btn.clicked.connect(self.calculate_worker.start)
+        self.ui.b_run_btn.clicked.connect(self.calculate_worker.start)
+        self.ui.c_run_btn.clicked.connect(self.calculate_worker.start)
+        self.ui.f_run_btn.clicked.connect(self.calculate_worker.start)
 
         self.ui.p_span_section_radioBtn.toggled.connect(self.ui.p_span_elementDraw.raise_)
         self.ui.p_sup_section_radioBtn.toggled.connect(self.ui.p_sup_elementDraw.raise_)
         self.ui.b_span_section_radioBtn.toggled.connect(self.ui.b_span_elementDraw.raise_)
         self.ui.b_sup_section_radioBtn.toggled.connect(self.ui.b_sup_elementDraw.raise_)
 
-        self.ui.actionClose.triggered.connect(self.close)
+        self.ui.actionClose.triggered.connect(self.close_worker.start)
         self.ui.actionSave.triggered.connect(self.saveFile)
         self.ui.actionOpen.triggered.connect(self.openFile)
-        self.ui.actionLog_Out.triggered.connect(self.logout)
+        self.ui.actionLog_Out.triggered.connect(self.logout_worker.start)
         self.ui.actionMain_Screen.setEnabled(False)
         self.ui.actionMain_Screen.triggered.connect(lambda: self.ui.stackedWidget.setCurrentIndex(1))
         self.ui.actionHome.triggered.connect(lambda: QDesktopServices.openUrl(QUrl(f'{Main.host}')))
@@ -122,10 +135,10 @@ class Main(QtWidgets.QMainWindow):
         self.text_browsers = self.ui.results_stackedWidget.findChildren(QtWidgets.QTextBrowser)
         self.report_buttons = [button for button in self.ui.results_stackedWidget.findChildren(QtWidgets.QPushButton)
                                if button.objectName().endswith('report_btn')]
-        self.element_status_labels = [label for label in self.ui.elements_tabs.findChildren(QtWidgets.QLabel) if
+        self.status_labels = [label for label in self.ui.elements_tabs.findChildren(QtWidgets.QLabel) if
                                       label.objectName().endswith('_status_label')]
 
-        self.ui.f_rect_section_radioBtn.clicked.connect(lambda: self.ui.f_status_label.setText("Function not available yet."))
+        self.ui.f_rect_section_radioBtn.clicked.connect(lambda: self.error_signal.emit("Function not available yet."))
 
         for lineEdit in self.line_edits:
             lineEdit.setValidator(double_validator)
@@ -317,8 +330,7 @@ class Main(QtWidgets.QMainWindow):
                 save_dict = {**element_properties, **element_info}
                 save_json = json.dumps(save_dict, indent=4)
                 f.write(save_json)
-
-                status_label = self.getCurrentElement(elements_list=self.element_status_labels,
+                status_label = self.getCurrentElement(elements_list=self.status_labels,
                                                       parent=self.getCurrentTab())
                 status_label.clear()
                 self.addRecentFile(self.ensureFormat(fileName))
@@ -402,7 +414,7 @@ class Main(QtWidgets.QMainWindow):
                     self.ui.results_stackedWidget.findChild(QtWidgets.QTextBrowser, infoKey).setPlainText(
                         dataFromSave['info'][infoKey])
 
-                status_label = self.getCurrentElement(elements_list=self.element_status_labels, parent=element)
+                status_label = self.getCurrentElement(elements_list=self.status_labels, parent=element)
                 status_label.clear()
 
                 self.addRecentFile(filePath)
@@ -433,11 +445,11 @@ class Main(QtWidgets.QMainWindow):
 
     def getElementProperties(self):
         current_tab = self.getCurrentTab()
-        status_label = self.getCurrentElement(elements_list=self.element_status_labels, parent=current_tab)
+        status_label = self.getCurrentElement(elements_list=self.status_labels, parent=current_tab)
         for lineEdit in current_tab.findChildren(QtWidgets.QLineEdit):
             if lineEdit.isEnabled():
                 if not lineEdit.text():
-                    status_label.setText("No box can be left empty. Action was interrupted.")
+                    self.error_signal.emit("No box can be left empty. Action was interrupted.")
                     return False
 
         element_properties = {
@@ -498,33 +510,41 @@ class Main(QtWidgets.QMainWindow):
             lambda: self.openFile(filePath='demo/plate_example.rcalc'))
 
     def login(self):
+        self.ui.login_btn.setEnabled(False)
+
         username = self.ui.username_lineEdit.text()
         password = self.ui.password_lineEdit.text()
-
-        # TODO hash the password
-
-        token = self.session.get(f'{Main.host}/auth-app-user/')
-        response = self.session.post(f'{Main.host}/auth-app-user/',
-                                     data={
-                                         'username': username,
-                                         'password': password,
-                                         'csrfmiddlewaretoken': token})
+        try:
+            token = self.session.get(f'{Main.host}/auth-app-user/')
+            response = self.session.post(f'{Main.host}/auth-app-user/',
+                                         data={
+                                             'username': username,
+                                             'password': password,
+                                             'csrfmiddlewaretoken': token})
+        except Exception as e:
+            self.ui.login_status_label.setText("Couldn\'t establish server connection.")
+            self.ui.login_btn.setEnabled(True)
+            return False
 
         if response.ok:
-            self.ui.login_status_lbl.setText('')
+            self.ui.login_status_label.clear()
             self.ui.password_lineEdit.clear()
             self.ui.username_lineEdit.clear()
 
             self.updateRecentFiles()
+            self.ui.login_btn.setEnabled(True)
             self.ui.actionMain_Screen.setEnabled(True)
             self.ui.stackedWidget.setCurrentIndex(1)
+            return True
+
         else:
-            self.ui.login_status_lbl.setText("Failed to log in.")
+            self.ui.login_status_label.setText("Failed to log in.")
+            self.ui.login_btn.setEnabled(True)
             return False
 
     def clearStatusLabels(self):
-        for label in self.element_status_labels:
-            label.setText('')
+        for label in self.status_labels:
+            label.clear()
 
     def clearInterface(self):
         self.clearStatusLabels()
@@ -543,11 +563,18 @@ class Main(QtWidgets.QMainWindow):
         self.ui.p_span_section_radioBtn.setChecked(True)
         self.ui.b_sup_section_radioBtn.setChecked(True)
 
-    def logout(self):
-        self.ui.stackedWidget.setCurrentIndex(0)
-        self.ui.actionMain_Screen.setEnabled(False)
-        self.clearInterface()
-        self.session.get(f'{Main.host}/accounts/logout/', headers={'Connection': 'close'})
+    def logout(self, closeAfter=False):
+        if self.ui.stackedWidget.currentIndex() != 0:
+            self.ui.stackedWidget.setCurrentIndex(0)
+            self.ui.actionMain_Screen.setEnabled(False)
+            self.clearInterface()
+        try:
+            self.session.get(f'{Main.host}/accounts/logout/', headers={'Connection': 'close'})
+        except Exception as e:
+            return e
+        finally:
+            if closeAfter:
+                self.close()
 
     def signup(self):
         url = QUrl(f'{Main.host}/accounts/signup/')
@@ -557,24 +584,34 @@ class Main(QtWidgets.QMainWindow):
         url = QUrl(f'{Main.host}/results/1')
         QDesktopServices.openUrl(url)
 
-    def calculateElement(self):
-        current_results_tab = self.ui.results_stackedWidget.currentWidget()
-        tab_code = current_results_tab.objectName()[0]
+    def getCalculationResults(self):
         element_parameters = self.getElementProperties()
         if element_parameters:
             parameters_json_string = json.dumps(element_parameters)
-            token = self.session.get(f'{Main.host}/run-calculations/')
-            response = self.session.post(f'{Main.host}/run-calculations/', data={
-                'csrfmiddlewaretoken': token,
-                'task_parameters': parameters_json_string,
-            })
+            try:
+                token = self.session.get(f'{Main.host}/run-calculations/')
+                response = self.session.post(f'{Main.host}/run-calculations/', data={
+                    'csrfmiddlewaretoken': token,
+                    'task_parameters': parameters_json_string,
+                })
+            except ConnectionError:
+                self.error_signal.emit("Error while communicating with the server. Check your connection and try again.")
+                return False
+            except Exception as e:
+                self.error_signal.emit("An unknown error occurred, contact the app administrator.")
+                return False
             if response.ok:
-                task_results = json.loads(response.text)
-                self.loadResults(results=task_results, results_tab=current_results_tab, tab_code=tab_code)
-                current_results_tab.findChild(QtWidgets.QPushButton, f'{tab_code}_report_btn').setEnabled(True)
-                self.disableReportButtons(current_tab=current_results_tab)
+                self.last_results = json.loads(response.text)
+                self.obtainedResults_signal.emit()
+                return True
+        return False
 
-    def loadResults(self, results, results_tab, tab_code):
+    def loadResults(self):
+        results_tab = self.ui.results_stackedWidget.currentWidget()
+        tab_code = results_tab.objectName()[0]
+
+        results = self.last_results
+
         task_info = results_tab.findChild(QtWidgets.QTextBrowser, f'{tab_code}_info_textBrowser')
         task_results = results_tab.findChild(QtWidgets.QTextBrowser, f'{tab_code}_results_textBrowser')
 
@@ -606,6 +643,9 @@ class Main(QtWidgets.QMainWindow):
         for remark in results['remarks']:
             task_info.append(remark)
 
+        results_tab.findChild(QtWidgets.QPushButton, f'{tab_code}_report_btn').setEnabled(True)
+        self.disableReportButtons(current_tab=results_tab)
+
     def disableReportButtons(self, current_tab):
         rem_report_buttons = [button for button in self.report_buttons if button.parent() != current_tab]
         for button in rem_report_buttons:
@@ -617,9 +657,20 @@ class Main(QtWidgets.QMainWindow):
     def getCurrentTab(self):
         return self.ui.elements_tabs.currentWidget()
 
-    def closeEvent(self, event):
-        self.logout()
-        event.accept()
+    def displayError(self, error_message):
+        current_tab = self.getCurrentTab()
+        status_label = self.getCurrentElement(self.status_labels, current_tab)
+        status_label.setText(error_message)
+
+
+class Worker(QtCore.QThread):
+    def __init__(self, fn, **kwargs):
+        super().__init__()
+        self.fn = fn
+        self.kwargs = kwargs
+
+    def run(self):
+        self.fn(self.kwargs)
 
 
 if __name__ == '__main__':
