@@ -27,6 +27,7 @@ class Main(QtWidgets.QMainWindow):
 
     obtainedResults_signal = QtCore.pyqtSignal()
     error_signal = QtCore.pyqtSignal(str)
+    logout_signal = QtCore.pyqtSignal()
 
     def __init__(self):
         """
@@ -59,6 +60,7 @@ class Main(QtWidgets.QMainWindow):
 
         self.obtainedResults_signal.connect(self.loadResults)
         self.error_signal.connect(self.displayError)
+        self.logout_signal.connect(self.clearInterface)
 
         self.setupUi()
         self.setupDialog()
@@ -135,7 +137,7 @@ class Main(QtWidgets.QMainWindow):
         self.text_browsers = self.ui.results_stackedWidget.findChildren(QtWidgets.QTextBrowser)
         self.report_buttons = [button for button in self.ui.results_stackedWidget.findChildren(QtWidgets.QPushButton)
                                if button.objectName().endswith('report_btn')]
-        self.status_labels = [label for label in self.ui.elements_tabs.findChildren(QtWidgets.QLabel) if
+        self.status_labels = [label for label in self.ui.stackedWidget.findChildren(QtWidgets.QLabel) if
                                       label.objectName().endswith('_status_label')]
 
         self.ui.f_rect_section_radioBtn.clicked.connect(lambda: self.error_signal.emit("Function not available yet."))
@@ -522,7 +524,7 @@ class Main(QtWidgets.QMainWindow):
                                              'password': password,
                                              'csrfmiddlewaretoken': token})
         except Exception as e:
-            self.ui.login_status_label.setText("Couldn\'t establish server connection.")
+            self.error_signal.emit("Couldn\'t establish server connection.")
             self.ui.login_btn.setEnabled(True)
             return False
 
@@ -538,7 +540,7 @@ class Main(QtWidgets.QMainWindow):
             return True
 
         else:
-            self.ui.login_status_label.setText("Failed to log in.")
+            self.error_signal.emit("Failed to log in.")
             self.ui.login_btn.setEnabled(True)
             return False
 
@@ -547,6 +549,9 @@ class Main(QtWidgets.QMainWindow):
             label.clear()
 
     def clearInterface(self):
+        self.ui.stackedWidget.setCurrentIndex(0)
+        self.ui.actionMain_Screen.setEnabled(False)
+
         self.clearStatusLabels()
         for button in self.report_buttons:
             button.setEnabled(False)
@@ -565,9 +570,7 @@ class Main(QtWidgets.QMainWindow):
 
     def logout(self, closeAfter=False):
         if self.ui.stackedWidget.currentIndex() != 0:
-            self.ui.stackedWidget.setCurrentIndex(0)
-            self.ui.actionMain_Screen.setEnabled(False)
-            self.clearInterface()
+            self.logout_signal.emit()
         try:
             self.session.get(f'{Main.host}/accounts/logout/', headers={'Connection': 'close'})
         except Exception as e:
@@ -655,6 +658,8 @@ class Main(QtWidgets.QMainWindow):
         return next((element for element in elements_list if element.parent() == parent), None)
 
     def getCurrentTab(self):
+        if self.ui.stackedWidget.currentIndex() == 0:
+            return self.ui.login_page
         return self.ui.elements_tabs.currentWidget()
 
     def displayError(self, error_message):
@@ -670,7 +675,10 @@ class Worker(QtCore.QThread):
         self.kwargs = kwargs
 
     def run(self):
-        self.fn(self.kwargs)
+        if self.kwargs:
+            self.fn(self.kwargs)
+        else:
+            self.fn()
 
 
 if __name__ == '__main__':
