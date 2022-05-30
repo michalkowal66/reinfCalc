@@ -363,7 +363,7 @@ class Main(QtWidgets.QMainWindow):
 
         If filePath not specified open file dialog and parse appointed '.rcalc'
         file to Python dictionary. Open appropriate element tab and set containers
-        content using dictionary values.
+        content using dictionary values. Update recent files container.
 
         Parameters
         ----------
@@ -372,7 +372,7 @@ class Main(QtWidgets.QMainWindow):
 
         Returns
         -------
-        None
+        Bool
         """
         if self.ui.stackedWidget.currentIndex() == 0:
             return False
@@ -420,6 +420,7 @@ class Main(QtWidgets.QMainWindow):
                 status_label.clear()
 
                 self.addRecentFile(filePath)
+                self.disableReportButtons(current_tab=self.ui.results_stackedWidget.currentWidget())
 
                 return True
 
@@ -523,12 +524,12 @@ class Main(QtWidgets.QMainWindow):
                                              'username': username,
                                              'password': password,
                                              'csrfmiddlewaretoken': token})
-        except Exception as e:
+        except Exception:
             self.error_signal.emit("Couldn\'t establish server connection.")
             self.ui.login_btn.setEnabled(True)
             return False
 
-        if response.ok:
+        if response.status_code == 200:
             self.ui.login_status_label.clear()
             self.ui.password_lineEdit.clear()
             self.ui.username_lineEdit.clear()
@@ -647,11 +648,13 @@ class Main(QtWidgets.QMainWindow):
             task_info.append(remark)
 
         results_tab.findChild(QtWidgets.QPushButton, f'{tab_code}_report_btn').setEnabled(True)
-        self.disableReportButtons(current_tab=results_tab)
+        self.disableReportButtons(current_tab=results_tab, leave_current=True)
 
-    def disableReportButtons(self, current_tab):
-        rem_report_buttons = [button for button in self.report_buttons if button.parent() != current_tab]
-        for button in rem_report_buttons:
+    def disableReportButtons(self, current_tab, leave_current=False):
+        report_buttons = [button for button in self.report_buttons]
+        if leave_current:
+            report_buttons = [button for button in report_buttons if button.parent() != current_tab]
+        for button in report_buttons:
             button.setEnabled(False)
 
     def getCurrentElement(self, elements_list, parent):
