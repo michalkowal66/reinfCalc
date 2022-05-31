@@ -89,8 +89,8 @@ class Main(QtWidgets.QMainWindow):
         """
         self.ui.setupUi(self)
 
-        self.ui.login_btn.clicked.connect(lambda: self.login_worker.start())
-        self.ui.signup_btn.clicked.connect(self.signup)
+        self.ui.login_btn.clicked.connect(self.login_worker.start)
+        self.ui.signup_btn.clicked.connect(lambda: QDesktopServices.openUrl(QUrl(f'{Main.host}/accounts/signup/')))
 
         self.ui.plate_btn.clicked.connect(lambda: self.showElement(self.ui.plate_btn))
         self.ui.beam_btn.clicked.connect(lambda: self.showElement(self.ui.beam_btn))
@@ -579,10 +579,6 @@ class Main(QtWidgets.QMainWindow):
         finally:
             if closeAfter:
                 self.close()
-
-    def signup(self):
-        url = QUrl(f'{Main.host}/accounts/signup/')
-        QDesktopServices.openUrl(url)
 
     def generateReport(self):
         url = QUrl(f'{Main.host}/results/1')
