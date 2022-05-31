@@ -53,9 +53,9 @@ class Main(QtWidgets.QMainWindow):
         self.report_buttons = None
         self.status_labels = None
 
-        self.login_worker = Worker(self.login)
-        self.logout_worker = Worker(self.logout)
-        self.close_worker = Worker(self.logout, closeAfter=True)
+        self.login_worker = Worker(fn=self.login)
+        self.logout_worker = Worker(fn=self.logout)
+        self.close_worker = Worker(fn=self.logout, closeAfter=True)
         self.calculate_worker = Worker(fn=self.getCalculationResults)
 
         self.obtainedResults_signal.connect(self.loadResults)
