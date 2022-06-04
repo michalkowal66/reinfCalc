@@ -600,7 +600,7 @@ class Main(QtWidgets.QMainWindow):
             except Exception as e:
                 self.error_signal.emit("An unknown error occurred, contact the app administrator.")
                 return False
-            if response.ok:
+            if response.status_code == 200:
                 self.last_results = json.loads(response.text)
                 self.obtainedResults_signal.emit()
                 return True
