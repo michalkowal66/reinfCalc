@@ -18,6 +18,18 @@ class Main(QtWidgets.QMainWindow):
     ----------
     fileExtension : str
         File extension used by application
+    host : str
+        Web application host address
+    maxMenuRecentFiles : int
+        Maximum number of recent files displayed in the file menu
+    maxRecentFiles : int
+        Maximum number of recent files displayed in the Main Screen container
+    obtainedResults_signal : pyqtSignal
+        Signal emitted on successful calculation request
+    error_signal : pyqtSignal
+        Signal emitted to display an error
+    logout_signal : pyqtSignal
+        Signal emitted to clear the interface before logging user out
     """
 
     fileExtension = '.rcalc'
@@ -68,7 +80,6 @@ class Main(QtWidgets.QMainWindow):
         self.loadData()
         self.createRecentActions()
         self.createRecentMenus()
-        # self.loadDemo()
 
         self.session = requests.session()
 
@@ -102,10 +113,10 @@ class Main(QtWidgets.QMainWindow):
 
         self.ui.menuResources.actions()[0].triggered.connect(dialog.show)
 
-        self.ui.p_report_btn.clicked.connect(self.generateReport)
-        self.ui.b_report_btn.clicked.connect(self.generateReport)
-        self.ui.c_report_btn.clicked.connect(self.generateReport)
-        self.ui.f_report_btn.clicked.connect(self.generateReport)
+        self.ui.p_report_btn.clicked.connect(lambda: QDesktopServices.openUrl(QUrl(f'{Main.host}/results/1')))
+        self.ui.b_report_btn.clicked.connect(lambda: QDesktopServices.openUrl(QUrl(f'{Main.host}/results/1')))
+        self.ui.c_report_btn.clicked.connect(lambda: QDesktopServices.openUrl(QUrl(f'{Main.host}/results/1')))
+        self.ui.f_report_btn.clicked.connect(lambda: QDesktopServices.openUrl(QUrl(f'{Main.host}/results/1')))
 
         self.ui.p_run_btn.clicked.connect(self.calculate_worker.start)
         self.ui.b_run_btn.clicked.connect(self.calculate_worker.start)
@@ -242,25 +253,67 @@ class Main(QtWidgets.QMainWindow):
                 f'resources/placeholders/{drawingPlaceholder.objectName().split("_elementDraw")[0]}.jpg'))
 
     def createRecentActions(self):
+        """
+        Initialize QAction objects within the container lsit
+
+        Create n = Main.maxRecentFiles QAction objects, within a recetFileActions list
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+        """
         for i in range(Main.maxRecentFiles):
             self.recentFileActions.append(QtWidgets.QAction(self, visible=False, triggered=self.openRecentFile))
 
     def createRecentMenus(self):
+        """
+        Insert recent file objects to the file menu
+
+        Insert n = Main.maxMenuRecentFiles QAction objects to the file menu, finally, insert a separator in the end
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+        """
         for i in range(Main.maxMenuRecentFiles):
             self.ui.menuFile.insertAction(self.ui.actionLog_Out, self.recentFileActions[i])
 
         self.ui.menuFile.insertSeparator(self.ui.actionLog_Out)
 
-    def addRecentFile(self, fileName):
+    def addRecentFile(self, filePath):
+        """
+        Add file path to the recent files list
+
+        Specify registry location to store the information using QSettings object,
+        insert the file to the beginning of the recent files list, remove files exceeding
+        the maximum number, update the recent files list
+
+        Parameters
+        ----------
+        filePath : str
+            Path to the file
+
+        Returns
+        -------
+        None
+        """
         settings = QtCore.QSettings('michalkowal66', 'Reinforcement Calculator')
         files = settings.value('recentFileList', [])
 
         try:
-            files.remove(fileName)
+            files.remove(filePath)
         except ValueError:
             pass
 
-        files.insert(0, fileName)
+        files.insert(0, filePath)
         del files[Main.maxRecentFiles:]
 
         settings.setValue('recentFileList', files)
@@ -268,6 +321,22 @@ class Main(QtWidgets.QMainWindow):
         self.updateRecentFiles()
 
     def updateRecentFiles(self):
+        """
+        Update lists of recently opened files
+
+        Specify registry location of information using QSettings object,
+        set appropriate information to the QAction objects (displayed name, path to the file).
+        In case of file menu, after assigning the information, display only specified number of objects.
+        In case of Main Screen container, clear the container, add objects one-by-one after assigning the information.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+        """
         settings = QtCore.QSettings('michalkowal66', 'Reinforcement Calculator')
         files = settings.value('recentFileList', [])
 
@@ -293,6 +362,19 @@ class Main(QtWidgets.QMainWindow):
             recently_opened.addItem(item)
 
     def openRecentFile(self):
+        """
+        Open a file from a file menu recently opened list
+
+        Check whether sender object contains file information, if yes, call openFile method passing object's data
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+        """
         action = self.sender()
         if action:
             self.openFile(action.data())
@@ -305,6 +387,7 @@ class Main(QtWidgets.QMainWindow):
         on the path and save values from currently active tab to that location.
         File is saved in '.rcalc' format containing JSON object with attributes
         containing extracted values.
+        File is added to the recently opened files list.
 
         Parameters
         ----------
@@ -372,7 +455,7 @@ class Main(QtWidgets.QMainWindow):
 
         Returns
         -------
-        Bool
+        bool
         """
         if self.ui.stackedWidget.currentIndex() == 0:
             return False
@@ -447,6 +530,21 @@ class Main(QtWidgets.QMainWindow):
         self.ui.stackedWidget.setCurrentWidget(self.ui.main_page)
 
     def getElementProperties(self):
+        """
+        Read and return parameters of the current element
+
+        Access current element and check whether all information was provided, display error if not.
+        Save element's parameters to a dictionary according to a set scheme.
+        Clear current status label. return the dictionary containing parameters of the element.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        dict
+        """
         current_tab = self.getCurrentTab()
         status_label = self.getCurrentElement(elements_list=self.status_labels, parent=current_tab)
         for lineEdit in current_tab.findChildren(QtWidgets.QLineEdit):
@@ -471,6 +569,20 @@ class Main(QtWidgets.QMainWindow):
         return element_properties
 
     def getElementInfo(self):
+        """
+        Read and return information about the current element
+
+        Save element's information to a dictionary according to a set scheme.
+        Return the dictionary containing information about the element.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        dict
+        """
         element_info = {
             'info': {
                 **{textBrowser.objectName(): textBrowser.toPlainText()
@@ -513,6 +625,22 @@ class Main(QtWidgets.QMainWindow):
             lambda: self.openFile(filePath='demo/plate_example.rcalc'))
 
     def login(self):
+        """
+        Log the user in using provided credentials
+
+        Read user's credentials, make a request to the application login dedicated URL.
+        Store the information about the session in the instance's session parameter.
+        On a successful request (response status code = 200), clean and prepare the GUI, display Main Screen.
+        When encountering an error while making request or receiving a status code different than 200, display an error.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        bool
+        """
         self.ui.login_btn.setEnabled(False)
 
         username = self.ui.username_lineEdit.text()
@@ -546,10 +674,36 @@ class Main(QtWidgets.QMainWindow):
             return False
 
     def clearStatusLabels(self):
+        """
+        Clear all status labels of the GUI
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+        """
         for label in self.status_labels:
             label.clear()
 
     def clearInterface(self):
+        """
+        Clear components of the GUI
+
+        Set current screen to the Login Screen.
+        Clear all status labels, line edits, disable all report buttons, select default items of combo boxes,
+        set default messages to the text boxes, check default radio buttons.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+        """
         self.ui.stackedWidget.setCurrentIndex(0)
         self.ui.actionMain_Screen.setEnabled(False)
 
@@ -570,21 +724,47 @@ class Main(QtWidgets.QMainWindow):
         self.ui.b_sup_section_radioBtn.setChecked(True)
 
     def logout(self, closeAfter=False):
+        """
+        Log the user out from the session
+
+        Check whether user was logged in, make a request to the log out URL in order
+        to log the user out from the session. If closeAfter is True, close the application after the request.
+
+        Parameters
+        ----------
+        closeAfter : bool, optional
+            If true, close the application after logging the user out
+
+        Returns
+        -------
+        None
+        """
         if self.ui.stackedWidget.currentIndex() != 0:
             self.logout_signal.emit()
         try:
             self.session.get(f'{Main.host}/accounts/logout/', headers={'Connection': 'close'})
-        except Exception as e:
-            return e
+        except Exception:
+            pass
         finally:
             if closeAfter:
                 self.close()
 
-    def generateReport(self):
-        url = QUrl(f'{Main.host}/results/1')
-        QDesktopServices.openUrl(url)
-
     def getCalculationResults(self):
+        """
+        Request calculations of the element. If successful, call function to load the results, otherwise display error.
+
+        Read properties of the element, parse them to the json format and send them in the POST request to the
+        dedicated calculation URL. If the server's response status code is equal to 200, emit obtainedResults signal
+        and save the results to an instance parameter. Otherwise, display error message depending on the reason.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        bool
+        """
         element_parameters = self.getElementProperties()
         if element_parameters:
             parameters_json_string = json.dumps(element_parameters)
@@ -597,7 +777,7 @@ class Main(QtWidgets.QMainWindow):
             except ConnectionError:
                 self.error_signal.emit("Error while communicating with the server. Check your connection and try again.")
                 return False
-            except Exception as e:
+            except Exception:
                 self.error_signal.emit("An unknown error occurred, contact the app administrator.")
                 return False
             if response.status_code == 200:
@@ -607,6 +787,21 @@ class Main(QtWidgets.QMainWindow):
         return False
 
     def loadResults(self):
+        """
+        Load the calculation results to the GUI components
+
+        Access the information container objects of the currently displayed screen and clear them.
+        Depending on the range of completed calculations, display various messages to the information container objects.
+        Enable report button on the currently displayed screem, disable others.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+        """
         results_tab = self.ui.results_stackedWidget.currentWidget()
         tab_code = results_tab.objectName()[0]
 
@@ -647,6 +842,23 @@ class Main(QtWidgets.QMainWindow):
         self.disableReportButtons(current_tab=results_tab, leave_current=True)
 
     def disableReportButtons(self, current_tab, leave_current=False):
+        """
+        Disable report buttons
+
+        Prepare a list of button objects, including or excluding the one on the current screen,
+        depending on the leave_current parameter. Disable each button in the list using setEnabled method.
+
+        Parameters
+        ----------
+        current_tab : QWidget
+            Object of the currently displayed GUI tab
+        leave_current : bool, optional
+            Prevent from disabling the button on the current GUI screen if set to True
+
+        Returns
+        -------
+        None
+        """
         report_buttons = [button for button in self.report_buttons]
         if leave_current:
             report_buttons = [button for button in report_buttons if button.parent() != current_tab]
@@ -654,26 +866,93 @@ class Main(QtWidgets.QMainWindow):
             button.setEnabled(False)
 
     def getCurrentElement(self, elements_list, parent):
+        """
+        Return object from a list that is a child of provided parent object
+
+        Parameters
+        ----------
+        elements_list : list
+            List containing certain type of Qt objects
+        parent : QWidget
+            Parent object of desired returned object
+        Returns
+        -------
+        QtWidgets object
+        """
         return next((element for element in elements_list if element.parent() == parent), None)
 
     def getCurrentTab(self):
+        """
+        Return the object of currently displayed tab
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        QtWidget
+        """
         if self.ui.stackedWidget.currentIndex() == 0:
             return self.ui.login_page
         return self.ui.elements_tabs.currentWidget()
 
     def displayError(self, error_message):
+        """
+        Display error message on the status label of the currently displayed screen
+
+        Parameters
+        ----------
+        error_message : str
+
+        Returns
+        -------
+        None
+        """
         current_tab = self.getCurrentTab()
         status_label = self.getCurrentElement(self.status_labels, current_tab)
         status_label.setText(error_message)
 
 
 class Worker(QtCore.QThread):
+    """
+    Thread worker class
+
+    Attributes
+    ----------
+    None
+    """
     def __init__(self, fn, **kwargs):
+        """
+        Extend QThread __init__ method, initialize instance parameters
+
+        Parameters
+        ----------
+        fn : function
+            Function to be run concurrently by the thread worker
+        kwargs : dict
+            List of keyword arguments to be provided to the function
+
+        Returns
+        -------
+        None
+        """
         super().__init__()
         self.fn = fn
         self.kwargs = kwargs
 
     def run(self):
+        """
+        Run function provided on instance definition, provide keyword arguments if given.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+        """
         if self.kwargs:
             self.fn(self.kwargs)
         else:
