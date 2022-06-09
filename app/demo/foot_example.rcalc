@@ -12,10 +12,12 @@
         "f_exp_combo": "XC2",
         "f_steel_grade_combo": "RB500W",
         "f_concr_class_combo": "C25/30",
-        "f_col_bar_diam_combo": "16"
+        "f_col_bar_diam_combo": "16",
+        "f_rect_section_radioBtn": false,
+        "f_square_section_radioBtn": true
     },
     "info": {
-        "f_info_textBrowser": "All data correct.",
-        "f_results_textBrowser": "Required reinforcement area per running meter: 9.43 cm^2\nAssumed reinforcement area per running meter: 10.47 cm^2\nResulting reinforcement: rebars 20mm every 30 cm"
+        "f_info_textBrowser": "The file is valid, starting calculations...\nRecommended nominal concrete cover value is 50 mm.\nHeight of the element correct.\nPunching verification.\nEC requirement fulfilled, nu_ed value correct.\nEC requirement fulfilled, nu_ed_red value correct.\nCalculations finished.",
+        "f_results_textBrowser": "Required reinforcement area for reinforcement group/s: 22.1653 cm^2.\nAssumed reinforcement area for reinforcement group/s: 24.6091 cm^2.\nResulting reinforcement for reinforcement group/s: rebars placed every 30.0 cm."
     }
 }

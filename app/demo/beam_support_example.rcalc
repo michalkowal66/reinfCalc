@@ -13,7 +13,7 @@
         "b_sup_section_radioBtn": true
     },
     "info": {
-        "b_info_textBrowser": "All data correct.",
-        "b_results_textBrowser": "Required reinforcement area: 9.61 cm^2\nAssumed reinforcement area: 12.57 cm^2\nResulting reinforcement: 4 rebars 20 mm"
+        "b_info_textBrowser": "The file is valid, starting calculations...\nRecommended nominal concrete cover value is 30 mm.\nMu value correct.\nCalculations finished.",
+        "b_results_textBrowser": "Required reinforcement area for reinforcement group/s: 9.6067 cm^2.\nAssumed reinforcement area for reinforcement group/s: 12.5664 cm^2.\nResulting reinforcement for reinforcement group/s: 4 rebars."
     }
 }

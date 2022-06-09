@@ -1,7 +1,7 @@
 {
     "element": "column_tab",
     "data": {
-        "c_concr_cover_lineEdit": 5.0,
+        "c_concr_cover_lineEdit": 2.5,
         "c_height_lineEdit": 40.0,
         "c_width_lineEdit": 40.0,
         "c_moment_lineEdit": 45.0,
@@ -12,7 +12,7 @@
         "c_concr_class_combo": "C25/30"
     },
     "info": {
-        "c_info_textBrowser": "All data correct.",
-        "c_results_textBrowser": "Required reinforcement area: 2.62 cm^2\nAssumed reinforcement area: 3.39 cm^2\nResulting reinforcement: 3 rebars 12 mm"
+        "c_info_textBrowser": "The file is valid, starting calculations...\nRecommended nominal concrete cover value is 25 mm.\nNo need to modify bending moment value.\nAlpha values calculated.\nCalculations finished.",
+        "c_results_textBrowser": "Required reinforcement area for reinforcement group/s: 2.619, 3.9818 cm^2.\nAssumed reinforcement area for reinforcement group/s: 3.3929, 4.5239 cm^2.\nResulting reinforcement for reinforcement group/s: 3, 4 rebars."
     }
 }
