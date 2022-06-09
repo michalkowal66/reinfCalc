@@ -5,11 +5,14 @@
 Reinforcement Calculator is a desktop application that can be used for dimensioning of simple reinforced concrete elements.
 The app is written in Python, PyQt5 and built-in Python libraries.
 
-## App's Tech
+## App's Tech Stack
 
- - [Python3] - Main coding language of the application
- - [PyQt5] - Framework used for creating app's GUI
- - [Django] - Web framework used for project's web application 
+   - [Python3] - Main coding language of the application
+   - [PyQt5] - Framework used for creating app's GUI
+   - [requests] - Python module allowing easier web requests handling
+
+*The application is a part of Reinforcement Calculator Project, see its other parts: [web application], [engine module]*
+
 
 ## Using the calculator
 
@@ -84,5 +87,7 @@ The dummy files can be loaded by selecting appropriate file in `File`->`<directo
    [Python3]: <https://www.python.org/> 
    [Django]: <https://www.djangoproject.com/>
    [PyQt5]: <https://riverbankcomputing.com/software/pyqt/intro> 
-   [Web application]: <>
+   [Web application]: <https://github.com/michalkowal66/reinfCalcServer>
+   [engine module]: <https://github.com/michalkowal66/reinfCalcEngine>
    [Python docs on venv installation]: <https://docs.python.org/3/library/venv.html>
+   [requests]: <https://requests.readthedocs.io/en/latest/>
